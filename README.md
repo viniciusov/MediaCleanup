@@ -10,9 +10,10 @@ So, the purpose of this program (Mediacleanup) is scan all folders inside a dire
 have any Media File within'.
 
 ## How to use it
-I create the 'cleanup.py' execute this task. All of allowed extensions (media extensions that are usefull to maintain) must be in the file
+I create the 'cleanup.py' to execute this task. All of allowed extensions (media extensions that are usefull to maintain) must be in the file
 'allowedextensions.txt'.
-So you should check the extensions inside dthe 'allowedextensions.txt' and run 'cleanup.py'.
+So you should check the extensions inside dthe 'allowedextensions.txt', place all Mediacleanup files inside the directory you want to scan and 
+run 'cleanup.py'.
 For security reasons (this program is under development) I currently disabled the remove commands.
 So it won't delete any file, but it can point out the folders for you.
 
