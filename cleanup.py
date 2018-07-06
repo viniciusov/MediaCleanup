@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-#----------------------------------------------------------------------
+#-----------------------------------------------------------------------
 # Copyright (C) 2018, Vinícius Orsi Valente (viniciusov@hotmail.com)
 #
 # This file is part of Mediacleanup.
@@ -17,8 +17,8 @@
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with Foobar.  If not, see <https://www.gnu.org/licenses/>.
-#----------------------------------------------------------------------
+# along with Mediacleanup.  If not, see <https://www.gnu.org/licenses/>.
+#-----------------------------------------------------------------------
 
 import os
 
