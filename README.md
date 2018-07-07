@@ -1,4 +1,4 @@
-# Mediacleanup
+# MediaCleanup
 
 ## About
 Initially I started to code this program to help me with a issue.
@@ -6,14 +6,11 @@ I download a lot of media files and organize them in folders with these files, s
 a lot of folders contain just a bunch of useless files, like website informations, spams, or some of them are even empty.
 Besides, I use a media server that have the funcionality to delete only the media files, leaving the folder empty or with the subtitles.
 
-So, the purpose of this program (Mediacleanup) is scan all folders inside a directory and list all 'Empty Folders' and 'Folders that don't 
-have any Media File within'.
+So, the purpose of this program (MediaCleanup) is scan all folders inside a directory and list all 'Empty Folders' and 'Folders that don't have any Media File within'.
 
 ## How to use it
-I create the 'cleanup.py' to execute this task. All of allowed extensions (media extensions that are usefull to maintain) must be in the file
-'allowedextensions.txt'.
-So you should check the extensions inside dthe 'allowedextensions.txt', place all Mediacleanup files inside the directory you want to scan and 
-run 'cleanup.py'.
+The 'cleanup.py' is in charge of this task. All of allowed extensions (media extensions that are usefull to maintain) must be in the file 'allowedextensions.txt'.
+So you should check the extensions inside dthe 'allowedextensions.txt' and run 'cleanup.py'.
 For security reasons (this program is under development) I currently disabled the remove commands.
 So it won't delete any file, but it can point out the folders for you.
 

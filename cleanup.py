@@ -4,7 +4,7 @@
 #-----------------------------------------------------------------------
 # Copyright (C) 2018, Vinícius Orsi Valente (viniciusov@hotmail.com)
 #
-# This file is part of Mediacleanup.
+# This file is part of MediaCleanup.
 #
 # Mediacleanup is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 import os
 
+print('Welcome to the MediaCleanup!')
 allowedextensions = []
 
 while True:
@@ -32,12 +33,15 @@ while True:
         print("\nError when oppenning 'allowedextensions.txt'. Verify if the file is in the same folder.")
         input('Press any key to Retry:')
     else:
+        allowedextensions = [x.strip() for x in data]
         break
-            
-allowedextensions = [x.strip() for x in data]
-initialdir = os.getcwd()
 
 while True:
+
+    initialdir = input('\nPlease enter the Path do you wanto to Scan (for example, /home/user):\n')
+    
+    while not os.access(initialdir, os.W_OK):
+        initialdir = input("\nInvalid Path or you don't have permission to Read it.\nType the Path again or type 'q' to quit:\n")
 
     folders,files = 0,0
     remove_folders = []
