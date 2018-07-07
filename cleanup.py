@@ -40,8 +40,11 @@ while True:
 
     initialdir = input('\nPlease enter the Path do you wanto to Scan (for example, /home/user):\n')
     
-    while not os.access(initialdir, os.W_OK):
+    while not (os.access(initialdir, os.W_OK) or initialdir=='q'):
         initialdir = input("\nInvalid Path or you don't have permission to Read it.\nType the Path again or type 'q' to quit:\n")
+        
+    if initialdir=='q':
+        break
 
     folders,files = 0,0
     remove_folders = []
@@ -105,6 +108,8 @@ while True:
     repeat = input("\nPress 'r' to Reescan or another Key to Exit:").lower()
     if repeat!='r':
         break
+    else:
+        print('------------------------------\n')
 
     
     
