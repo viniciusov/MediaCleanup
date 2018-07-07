@@ -22,21 +22,21 @@
 
 import os
 
-print('Welcome to the MediaCleanup!')
-allowedextensions = []
-
 while True:
-    try:
-        with open('allowedextensions.txt','r') as file:
-            data = file.readlines()
-    except:
-        print("\nError when oppenning 'allowedextensions.txt'. Verify if the file is in the same folder.")
-        input('Press any key to Retry:')
-    else:
-        allowedextensions = [x.strip() for x in data]
-        break
 
-while True:
+    print('Welcome to the MediaCleanup!')
+
+    while True:
+        try:
+            with open('allowedextensions.txt','r') as file:
+                data = file.readlines()
+        except:
+            print("\nError when oppenning 'allowedextensions.txt'. Verify if the file is in the same folder.")
+            input('Press any key to Retry:')
+        else:
+            allowedextensions = []
+            allowedextensions = [x.strip() for x in data]
+            break
 
     initialdir = input('\nPlease enter the Path do you wanto to Scan (for example, /home/user):\n')
     
@@ -70,9 +70,11 @@ while True:
 
     print('\nScanning Directory:',initialdir)
     print('Folders:',folders)
-    print('Files:',files)
+    print('Files:',files) 
 
     if len(remove_folders):
+        remove_folders.sort(key=lambda x: x[0]) #sort Inplace
+        
         print('\nFolders to be Removed [',len(remove_folders),']:')
 
         thereis = 0
