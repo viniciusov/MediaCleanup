@@ -4,7 +4,7 @@
 Initially I started to code this program to help me with a issue.
 I download a lot of media files and organize them in folders with these files, subtitles, audio, images, etc., but I realize that 
 a lot of folders contain just a bunch of useless files, like website informations, spams, or some of them are even empty.
-Besides, I use a media server that have the funcionality to delete only the media files, leaving the folder empty or with the subtitles.
+Besides, I use a media server that have the funcionality to delete only the media files, leaving the folder empty or with the subtitles only.
 
 So, the purpose of this program (MediaCleanup) is scan all folders inside a directory and list all 'Empty Folders' and 'Folders that don't have any Media File within'.
 
