@@ -9,8 +9,8 @@ Besides, I use a media server that have the funcionality to delete only the medi
 So, the purpose of this program (MediaCleanup) is scan all folders inside a directory and list all 'Empty Folders' and 'Folders that don't have any Media File within'.
 
 ## How to use it
-The 'cleanup.py' is in charge of this task. All of media extensions must be in the file 'mediaextensions.txt'.
-So you should check the extensions inside dthe 'mediaextensions.txt' and run 'cleanup.py'.
+The 'mediacleanup.py' is in charge of this task. All of media extensions must be in the file 'mediaextensions.txt'.
+So you should check the extensions inside dthe 'mediaextensions.txt' and run 'mediacleanup.py'.
 For security reasons (this program is under development) I currently disabled the remove commands.
 So it won't delete any file, but it can point out the folders for you.
 
