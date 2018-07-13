@@ -22,7 +22,7 @@
 
 import os
 
-#---------------------- Scan Directories ----------------------
+#-------------------------- Scan Directories --------------------------
 
 def scandir():
     
@@ -30,9 +30,6 @@ def scandir():
     remove_folders = []
 
     for dirpath, dirnames, filenames in os.walk(initialdir):
-        #print('\nCurrent Path:', dirpath)
-        #print('Directories:', dirnames)
-        #print('Files:',filenames)
 
         folders += len(dirnames)
         files += len(filenames)
@@ -76,7 +73,7 @@ def scandir():
                 thereis = 1
                 print(folder)
 
-        confirm = input("\nDo you want to remove ALL of them? Press 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION):").lower()
+        confirm = input("\nDo you want to remove ALL of them? Press 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if confirm == 'y':
             print('Files removed!')
         else:
@@ -85,12 +82,11 @@ def scandir():
     else:
         print('\nNo Folders to be Removed!')
 
-#---------------------- Main Program starts below ----------------------
-    
+#---------------------- Main Program starts below ---------------------
+
+print('Welcome to the MediaCleanup!\n')
+
 while True:
-
-    print('Welcome to the MediaCleanup!\n')
-
     while True:
         try:
             with open('mediaextensions.txt','r') as file:
@@ -103,20 +99,22 @@ while True:
             allowedextensions = [x.strip() for x in data]
             break    
 
-    option = input("""What can I help you now? Choose one of the options below:
-    'd' - Find empty directories or with no media files within;
-    'f' - Find files with no media extensions;
-    'l' - Create a list with all your media files, like a catalog;
-    'i' - Serch on IMDB for media information and put it in a .txt file;
-    'A' - Run ALL above.\nAnd enter the respective character:""")
+    option = input("""Choose one of the options below:
+    d - Scan for empty directories or with no media files within;
+    f - Scan for files with no media extensions;
+    l - Create a list with all your media files, like a catalog;
+    i - Serch on IMDB for media information and put into a .txt file;
+    A - Run ALL above;
+    h - View help;
+    q - Quit.\nAnd enter the respective key: """)
 
     while not (option in ['d','f','l','i','A'] or option=='q'):
-        option = input("Invalid Option. Please choose one of the options bellow or type 'q' to quit:")
+        option = input("Invalid Option. Please choose one of the options above or type 'q' to quit: ")
 
     if option=='q':
         break    
 
-    initialdir = input('\nPlease enter the Path do you wanto to Scan (for example, /home/user):\n')
+    initialdir = input('\nType the Path do you wanto to Scan (for example, /home/user):\n')
     
     while not (os.access(initialdir, os.W_OK) or initialdir=='q'):
         initialdir = input("\nInvalid Path or you don't have permission to Read it.\nType the Path again or type 'q' to quit:\n")
@@ -127,10 +125,8 @@ while True:
     if option=='d':
         scandir()
 
-    
-
-    repeat = input("\nPress 'r' to Reescan or another Key to Exit:").lower()
+    repeat = input("\nPress 'r' to Run again or another Key to Exit: ").lower()
     if repeat!='r':
         break
     else:
-        print('------------------------------\n')
+        print('------------------------------------------------------------\n')
