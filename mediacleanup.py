@@ -120,7 +120,7 @@ while True:
     h - View help;
     q - Quit.\nAnd enter the respective key: """)
 
-    while not (option in ['d','f','l','i','A'] or option=='q'):
+    while not (option in ['d','f','l','i','A','h','q']):
         option = input("Invalid Option. Please choose one of the options above or type 'q' to quit: ")
 
     if option=='q':
