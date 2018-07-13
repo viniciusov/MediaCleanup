@@ -24,10 +24,22 @@ import os
 
 #-------------------------- Scan Directories --------------------------
 
-def scandir():
+def scan():
+
+    while True:
+        try:
+            with open('mediaextensions.txt','r') as file:
+                data = file.readlines()
+        except:
+            print("\nError when oppenning 'mediaextensions.txt'. Verify if the file is in the same folder.")
+            input('Press any key to Retry:')
+        else:
+            allowedextensions = []
+            allowedextensions = [x.strip() for x in data]
+            break  
     
     folders,files = 0,0
-    remove_folders = []
+    remove_list = []
 
     for dirpath, dirnames, filenames in os.walk(initialdir):
 
@@ -35,30 +47,33 @@ def scandir():
         files += len(filenames)
 
         #CONDITIONS TO REMOVE:
-        if len(dirnames)==0:
-
+        if (option=='d' or option=='A') and len(dirnames)==0:
             if len(filenames)==0:  #Se a pasta não tem diretórios E não tem arquivos sera apagada
-                remove_folders.append([dirpath,0]) #Motivo 0: Pasta vazia 
+                remove_list.append([dirpath,0]) #Motivo 0: Pasta vazia 
                 
             else: #Se existe algum arquivo arquivos
-
                 for file in filenames:        
-                    if (os.path.splitext(dirpath+'\\'+file)[1] in allowedextensions): #obs: o [1] indica que é o segundo item do tuple gerado, neste caso a extensão
+                    if (os.path.splitext(dirpath+'\\'+file)[1].lower() in allowedextensions): #obs: o [1] indica que é o segundo item do tuple gerado, neste caso a extensão
                         break
                 else:
-                    remove_folders.append([dirpath,1]) #Motivo 1: Sem arquivo de vídeo                                       
+                    remove_list.append([dirpath,1]) #Motivo 1: Sem arquivo de vídeo
 
+        elif (option=='f' or option=='A'):
+            for file in filenames:
+                if not (os.path.splitext(dirpath+'\\'+file)[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' evita que ele exclua .AVI quando o arquivo .txt contém .avi
+                    remove_list.append([dirpath+'\\'+file,2])
+              
     print('\nScanning Directory:',initialdir)
-    print('Folders:',folders)
-    print('Files:',files) 
+    print('Total Folders:',folders)
+    print('Total Files:',files) 
 
-    if len(remove_folders):
-        remove_folders.sort(key=lambda x: x[0]) #sort Inplace
+    if len(remove_list):
+        remove_list.sort(key=lambda x: x[0]) #sort Inplace
         
-        print('\nFolders to be Removed [',len(remove_folders),']:')
+        print('\nItens to be Removed [',len(remove_list),']:')
 
         thereis = 0
-        for folder,reason in remove_folders:
+        for folder,reason in remove_list:
             if reason==0:
                 if not thereis:
                     print('\nEMPTY FOLDERS')
@@ -66,38 +81,35 @@ def scandir():
                 print(folder)
         
         thereis = 0
-        for folder,reason in remove_folders:
+        for folder,reason in remove_list:
             if reason==1:
                 if not thereis:
                     print('\nNO VIDEO FILES WITHIN')
                 thereis = 1
                 print(folder)
 
+        thereis = 0
+        for file,reason in remove_list:
+            if reason==2:
+                if not thereis:
+                    print("\nFILE EXTENSION DON'T MATCH")
+                thereis = 1
+                print(file)        
+
         confirm = input("\nDo you want to remove ALL of them? Press 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if confirm == 'y':
-            print('Files removed!')
+            print('Itens removed!')
         else:
             print('Operation canceled.')
         
     else:
-        print('\nNo Folders to be Removed!')
+        print('\nNo itens to be Removed!')
 
 #---------------------- Main Program starts below ---------------------
 
 print('Welcome to the MediaCleanup!\n')
 
-while True:
-    while True:
-        try:
-            with open('mediaextensions.txt','r') as file:
-                data = file.readlines()
-        except:
-            print("Error when oppenning 'mediaextensions.txt'. Verify if the file is in the same folder.")
-            input('Press any key to Retry:')
-        else:
-            allowedextensions = []
-            allowedextensions = [x.strip() for x in data]
-            break    
+while True:  
 
     option = input("""Choose one of the options below:
     d - Scan for empty directories or with no media files within;
@@ -122,11 +134,12 @@ while True:
     if initialdir=='q':
         break
 
-    if option=='d':
-        scandir()
+    if option in ['d','f','A']:
+        scan()
 
-    repeat = input("\nPress 'r' to Run again or another Key to Exit: ").lower()
-    if repeat!='r':
-        break
-    else:
+    repeat = input("\nPress 'r' to Run again or another key to Exit: ").lower()
+    if repeat=='r':
         print('------------------------------------------------------------\n')
+    else:
+        break
+        
