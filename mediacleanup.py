@@ -35,7 +35,9 @@ def scan():
             input('Press any key to Retry:')
         else:
             allowedextensions = []
-            allowedextensions = [x.strip() for x in data]
+            for x in data: #Analyze every line that starts with #
+                if not x.startswith('#'):
+                    allowedextensions.append(x.strip().lower())
             break  
     
     folders,files = 0,0
@@ -48,19 +50,19 @@ def scan():
 
         #CONDITIONS TO REMOVE:
         if (option=='d' or option=='A') and len(dirnames)==0:
-            if len(filenames)==0:  #Se a pasta não tem diretórios E não tem arquivos sera apagada
-                remove_list.append([dirpath,0]) #Motivo 0: Pasta vazia 
+            if len(filenames)==0:  #If don't have any directory within AND don't have any file
+                remove_list.append([dirpath,0]) #Reason 0: Empty Folder 
                 
-            else: #Se existe algum arquivo arquivos
+            else: #If there is files
                 for file in filenames:        
-                    if (os.path.splitext(dirpath+'\\'+file)[1].lower() in allowedextensions): #obs: o [1] indica que é o segundo item do tuple gerado, neste caso a extensão
+                    if (os.path.splitext(dirpath+'\\'+file)[1].lower() in allowedextensions): #ps: [1] is the second item of the generated tuple (the extension, in this case)
                         break
                 else:
-                    remove_list.append([dirpath,1]) #Motivo 1: Sem arquivo de vídeo
+                    remove_list.append([dirpath,1]) #Reason 1: With NO Video File
 
         elif (option=='f' or option=='A'):
             for file in filenames:
-                if not (os.path.splitext(dirpath+'\\'+file)[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' evita que ele exclua .AVI quando o arquivo .txt contém .avi
+                if not (os.path.splitext(dirpath+'\\'+file)[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' avoids it remove the file if its extension is .AVI
                     remove_list.append([dirpath+'\\'+file,2])
               
     print('\nScanning Directory:',initialdir)
@@ -68,7 +70,7 @@ def scan():
     print('Total Files:',files) 
 
     if len(remove_list):
-        remove_list.sort(key=lambda x: x[0]) #sort Inplace
+        remove_list.sort(key=lambda x: x[0]) #sorts Inplace
         
         print('\nItens to be Removed [',len(remove_list),']:')
 
@@ -113,14 +115,16 @@ while True:
 
     option = input("""Choose one of the options below:
     d - Scan for empty directories or with no media files within;
-    f - Scan for files with no media extensions;
+    f - Scan for files with no media or subtitles extensions;
     l - Create a list with all your media files, like a catalog;
-    i - Serch on IMDB for media information and put into a .txt file;
     A - Run ALL above;
     h - View help;
     q - Quit.\nAnd enter the respective key: """)
+    #Soon it will include:
+    #c - Clean up folder and file names
+    #i - Serch on IMDB for media information and put into a .txt file;
 
-    while not (option in ['d','f','l','i','A','h','q']):
+    while not (option in ['d','f','l','A','h','q']):
         option = input("Invalid Option. Please choose one of the options above or type 'q' to quit: ")
 
     if option=='q':
