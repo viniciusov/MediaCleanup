@@ -20,7 +20,7 @@
 # along with Mediacleanup. If not, see <https://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------
 
-import os
+import os, datetime
 
 #-------------------------- Scan Directories --------------------------
 
@@ -35,13 +35,14 @@ def scan():
             input('Press any key to Retry:')
         else:
             allowedextensions = []
-            for x in data: #Analyze every line that starts with #
+            for x in data: #Analyze every line that starts with '#'
                 if not x.startswith('#'):
                     allowedextensions.append(x.strip().lower())
             break  
     
     folders,files = 0,0
     remove_list = []
+    catalog = []
 
     for dirpath, dirnames, filenames in os.walk(initialdir):
 
@@ -55,16 +56,21 @@ def scan():
                 
             else: #If there is files
                 for file in filenames:        
-                    if (os.path.splitext(dirpath+'\\'+file)[1].lower() in allowedextensions): #ps: [1] is the second item of the generated tuple (the extension, in this case)
+                    if (os.path.splitext(dirpath+'/'+file)[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
                         break
                 else:
                     remove_list.append([dirpath,1]) #Reason 1: With NO Video File
 
-        elif (option=='f' or option=='A'):
+        if (option=='f' or option=='A'):
             for file in filenames:
-                if not (os.path.splitext(dirpath+'\\'+file)[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' avoids it remove the file if its extension is .AVI
-                    remove_list.append([dirpath+'\\'+file,2])
-              
+                if not (os.path.splitext(dirpath+'/'+file)[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' avoids it remove the file if its extension is .AVI
+                    remove_list.append([dirpath+'/'+file,2])
+
+        if (option=='l' or option=='A'):
+            for file in filenames:
+                if (os.path.splitext(dirpath+'/'+file)[1].lower() in allowedextensions):
+                    catalog.append(file)
+             
     print('\nScanning Directory:',initialdir)
     print('Total Folders:',folders)
     print('Total Files:',files) 
@@ -98,14 +104,49 @@ def scan():
                 thereis = 1
                 print(file)        
 
-        confirm = input("\nDo you want to remove ALL of them? Press 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
-        if confirm == 'y':
+        remove_confirm = input("\nDo you want to remove ALL of them? Press 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
+        if remove_confirm == 'y':
             print('Itens removed!')
         else:
             print('Operation canceled.')
-        
     else:
-        print('\nNo itens to be Removed!')
+        print('\nNo itens to Remove!')
+
+    if len(catalog):
+        print('\nYour Media Files [',len(catalog),']:\n')
+        
+        catalog.sort()
+        for file in catalog:
+            print(file)
+
+        write_confirm = input("\nDo you want save the above list as a '.txt' file? Press 'y' to proceed: ").lower()
+        if write_confirm == 'y':
+            write_path = input("\nType the Path where do you want to to save or 's' to use the same directory:\n")
+
+            while not (os.access(write_path, os.W_OK) or write_path=='s'):
+                write_path = input("\nInvalid Path. Type the Path again:\n")
+
+            if write_path=='s':
+                write_path=initialdir
+
+            f= open(write_path+"/media_catalog.txt","w+")
+            f.write("Media files in '{}':\n\n".format(initialdir))
+            
+            for number,file in enumerate(catalog):
+                f.write("("+str(number+1)+") "+str(file)+"\n")
+                
+            now = datetime.datetime.now()
+            f.write("\n\nCreated at {} with MediaCleanup.\n(https://github.com/viniciusov/mediacleanup)".format(now.strftime("%Y-%m-%d %H:%M")))
+            f.close()
+
+            print("'media_catalog.txt' successfully created!")
+        
+        else:
+            print('Operation canceled.')
+    else:
+        print('\nNo itens to Show!')
+        
+            
 
 #---------------------- Main Program starts below ---------------------
 
@@ -138,12 +179,12 @@ while True:
     if initialdir=='q':
         break
 
-    if option in ['d','f','A']:
+    if option in ['d','f','l','A']:
         scan()
 
     repeat = input("\nPress 'r' to Run again or another key to Exit: ").lower()
     if repeat=='r':
-        print('------------------------------------------------------------\n')
+        print('------------------------------------------------\n')
     else:
         break
         
