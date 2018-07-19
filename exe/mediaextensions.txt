@@ -1,0 +1,19 @@
+#Write all the media extensions that you want to keep here:
+#When checking for files (option 'f'), .srt .sub are already included in the search.
+.avi
+.mkv
+.flv
+.vob
+.rmvb
+.rm
+.mp4
+.mpg
+.mpg2
+.mpeg
+.m2v
+.m4v
+.asf
+.mov
+.qt
+.wmv
+.3gp
