@@ -135,7 +135,7 @@ def scan():
                 f.write("("+str(number)+") "+str(file)+"\n")
                 
             now = datetime.datetime.now()
-            f.write("\n\nCreated at {} with MediaCleanup.\n(https://github.com/viniciusov/mediacleanup)".format(now.strftime("%Y-%m-%d %H:%M")))
+            f.write("\nCreated at {} with MediaCleanup.\n(https://github.com/viniciusov/mediacleanup)".format(now.strftime("%Y-%m-%d %H:%M")))
             f.close()
 
             print("'media_catalog.txt' successfully created!")
