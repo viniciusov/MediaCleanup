@@ -31,8 +31,7 @@ def scan():
             with open('mediaextensions.txt','r') as file:
                 data = file.readlines()
         except:
-            print("\nError when oppenning 'mediaextensions.txt'. Verify if the file is in the same folder.")
-            input('Press any key to Retry:')
+            input("\nError when oppenning 'mediaextensions.txt'.\nVerify if the file is at same location and press any key to Retry: ")
         else:
             allowedextensions = []
             for x in data: #Analyze every line that starts with '#'
@@ -146,8 +145,6 @@ def scan():
     else:
         print('\nNo itens to Show!')
         
-            
-
 #---------------------- Main Program starts below ---------------------
 
 print('Welcome to the MediaCleanup!\n')
