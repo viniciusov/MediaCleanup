@@ -31,7 +31,7 @@ def scan():
             with open('mediaextensions.txt','r') as file:
                 data = file.readlines()
         except:
-            input("\nError when oppenning 'mediaextensions.txt'.\nVerify if the file is at same location and press any key to Retry: ")
+            input("\nError when oppenning 'mediaextensions.txt'.\nVerify if the file is at the same location and press any key to Retry: ")
         else:
             allowedextensions = []
             for x in data: #Analyze every line that starts with '#'
@@ -91,7 +91,7 @@ def scan():
         for folder,reason in remove_list:
             if reason==1:
                 if not thereis:
-                    print('\nNO VIDEO FILES WITHIN')
+                    print('\nFOLDERS WITH NO VIDEO FILES WITHIN')
                 thereis = 1
                 print(folder)
 
@@ -99,7 +99,7 @@ def scan():
         for file,reason in remove_list:
             if reason==2:
                 if not thereis:
-                    print("\nFILE EXTENSION DON'T MATCH")
+                    print("\nFILE EXTENSIONS DOESN'T MATCH")
                 thereis = 1
                 print(file)        
 
@@ -128,11 +128,11 @@ def scan():
             if write_path=='s':
                 write_path=initialdir
 
-            f= open(write_path+"/media_catalog.txt","w+")
+            f= open(write_path+"/media_catalog.txt","w+", encoding="utf-8")
             f.write("Media files in '{}':\n\n".format(initialdir))
             
-            for number,file in enumerate(catalog):
-                f.write("("+str(number+1)+") "+str(file)+"\n")
+            for number,file in enumerate(catalog,1): #counting starts with 1
+                f.write("("+str(number)+") "+str(file)+"\n")
                 
             now = datetime.datetime.now()
             f.write("\n\nCreated at {} with MediaCleanup.\n(https://github.com/viniciusov/mediacleanup)".format(now.strftime("%Y-%m-%d %H:%M")))
@@ -168,7 +168,7 @@ while True:
     if option=='q':
         break    
 
-    initialdir = input('\nType the Path do you wanto to Scan (for example, /home/user):\n')
+    initialdir = input('\nType the Path do you wanto to Scan (like /home/<user> or C:\\users\\<user>):\n')
     
     while not (os.access(initialdir, os.W_OK) or initialdir=='q'):
         initialdir = input("\nInvalid Path or you don't have permission to Read it.\nType the Path again or type 'q' to quit:\n")

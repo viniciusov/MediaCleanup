@@ -1,5 +1,5 @@
 #Write all the media extensions that you want to keep here:
-#When checking for files (option 'f'), .srt .sub are already included in the search.
+#When checking for files (options 'f' and 'A'), .srt .sub are already included in the search.
 .avi
 .mkv
 .flv
