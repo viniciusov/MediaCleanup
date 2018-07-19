@@ -28,17 +28,24 @@ def scan():
 
     while True:
         try:
-            with open('mediaextensions.txt','r') as file:
+            with open('./config/mediaextensions.txt','r') as file:
                 data = file.readlines()
         except:
-            input("\nError when oppenning 'mediaextensions.txt'.\nVerify if the file is at the same location and press any key to Retry: ")
+            try:
+                with open('../config/mediaextensions.txt','r') as file:
+                    data = file.readlines()
+            except:     
+                input("\nError when oppenning 'mediaextensions.txt'.\nVerify if the file is inside the 'config/' folder and press any key to Retry: ")
+            else:
+                break
         else:
-            allowedextensions = []
-            for x in data: #Analyze every line that starts with '#'
-                if not x.startswith('#'):
-                    allowedextensions.append(x.strip().lower())
-            break  
-    
+            break
+        
+    allowedextensions = []
+    for x in data: #Analyze every line that starts with '#'
+        if not x.startswith('#'):
+            allowedextensions.append(x.strip().lower())
+              
     folders,files = 0,0
     remove_list = []
     catalog = []
@@ -108,7 +115,8 @@ def scan():
             print('Itens removed!')
         else:
             print('Operation canceled.')
-    else:
+            
+    elif option in ['d','f','A']: #Print this only to these options
         print('\nNo itens to Remove!')
 
     if len(catalog):
@@ -142,8 +150,9 @@ def scan():
         
         else:
             print('Operation canceled.')
-    else:
-        print('\nNo itens to Show!')
+            
+    elif option in ['l','A']: #Print this only to these options
+        print('\nNo Media Files to show!')
         
 #---------------------- Main Program starts below ---------------------
 
