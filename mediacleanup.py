@@ -28,26 +28,49 @@ def scan():
 
     while True:
         try:
-            with open('./config/mediaextensions.txt','r') as file:
+            with open('./config/mediaextensions.txt','r') as file: #if running .py script
                 data = file.readlines()
         except:
             try:
-                with open('../config/mediaextensions.txt','r') as file:
+                with open('../config/mediaextensions.txt','r') as file: #if running .exe
                     data = file.readlines()
             except:     
-                input("\nError when oppenning 'mediaextensions.txt'.\nVerify if the file is inside the 'config/' folder and press any key to Retry: ")
+                input("\nError when oppenning 'mediaextensions.txt'.\nVerify if the file is inside the 'config' folder and press any key to Retry: ")
             else:
                 break
         else:
             break
         
     allowedextensions = []
-    for x in data: #Analyze every line that starts with '#'
-        if not x.startswith('#'):
-            allowedextensions.append(x.strip().lower())
-              
+    for line in data: #Analyze every line that don't start with '#'
+        if not line.startswith('#'):
+            allowedextensions.append(line.strip().lower())
+
+    if option=='c' or option=='A':
+        while True:
+            try:
+                with open('./config/expressions.txt','r') as file: #if running .py script
+                    data = file.readlines()
+            except:
+                try:
+                    with open('../config/expressions.txt','r') as file: #if running .exe
+                        data = file.readlines()
+                except:     
+                    input("\nError when oppenning 'expressions.txt'.\nVerify if the file is inside the 'config/' folder and press any key to Retry: ")
+                else:
+                    break
+            else:
+                break
+            
+    expressions_dict = {}
+    for line in data: #Analyze every line that don't start with '#'
+        if not line.startswith('#'):
+            old, new = line.strip().split('=')
+            expressions_dict.update({old:new})
+          
     folders,files = 0,0
-    remove_list = []
+    rename_list = [] #Format: [[old,new],...]
+    remove_list = [] #Format: [[path,reason],...]
     catalog = []
 
     for dirpath, dirnames, filenames in os.walk(initialdir):
@@ -56,67 +79,108 @@ def scan():
         files += len(filenames)
 
         #CONDITIONS TO REMOVE:
+        if (option=='c' or option=='A'):
+            found_path = False #Using this flag to avoid reporting several times the same path
+            for file in filenames:
+                found_file = False #Using this flag to avoid reporting several times the same file
+                for expression in expressions_dict.keys():
+                    if (expression in dirpath) and not found_path:
+                        rename_list.append([dirpath,dirpath.replace(expression,expressions_dict[expression])])
+                        found_path = True
+                    if (expression in os.path.splitext(dirpath+os.sep+file)[0]) and not found_file: #[0] is the first item of the generated tuple (the filename, in this case)
+                        rename_list.append([dirpath+os.sep+file,(dirpath+os.sep+file).replace(expression,expressions_dict[expression])])
+                        found_file = True
+                    
         if (option=='d' or option=='A') and len(dirnames)==0:
             if len(filenames)==0:  #If don't have any directory within AND don't have any file
                 remove_list.append([dirpath,0]) #Reason 0: Empty Folder 
                 
             else: #If there is files
                 for file in filenames:        
-                    if (os.path.splitext(dirpath+'/'+file)[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
+                    if (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
                         break
                 else:
                     remove_list.append([dirpath,1]) #Reason 1: With NO Video File
 
         if (option=='f' or option=='A'):
             for file in filenames:
-                if not (os.path.splitext(dirpath+'/'+file)[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' avoids it remove the file if its extension is .AVI
-                    remove_list.append([dirpath+'/'+file,2])
+                if not (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' avoids it remove the file if its extension is .AVI
+                    remove_list.append([dirpath+os.sep+file,2])
 
         if (option=='l' or option=='A'):
             for file in filenames:
-                if (os.path.splitext(dirpath+'/'+file)[1].lower() in allowedextensions):
+                if (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions):
                     catalog.append(file)
-             
+                    
     print('\nScanning Directory:',initialdir)
     print('Total Folders:',folders)
-    print('Total Files:',files) 
+    print('Total Files:',files)
+
+    if len(rename_list):
+        rename_list.sort(key=lambda x: x[0]) #sorts Inplace
+        print('\nFiles and Paths to be Renamed [',len(rename_list),']:')
+
+        thereis = False
+        for old,new in rename_list:
+            if not thereis:
+                    print('\nOLD FILE/PATH NAMES')
+            thereis = True
+            print(old)
+
+        thereis = False
+        for old,new in rename_list:
+            if not thereis:
+                    print('\nNEW FILE/PATH NAMES')
+            thereis = True
+            print(new)
+
+        rename_confirm = input("\nDo you want to Rename ALL of them? Press 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
+        if rename_confirm == 'y':
+            ##########
+            print('Itens renamed!')
+        else:
+            print('Operation canceled.')    
+
+    elif option in ['c','A']: #Print this only for this options
+        print('\nNo itens to Rename!')        
 
     if len(remove_list):
         remove_list.sort(key=lambda x: x[0]) #sorts Inplace
         
         print('\nItens to be Removed [',len(remove_list),']:')
 
-        thereis = 0
+        thereis = False
         for folder,reason in remove_list:
             if reason==0:
                 if not thereis:
                     print('\nEMPTY FOLDERS')
-                thereis = 1
+                thereis = True
                 print(folder)
         
-        thereis = 0
+        thereis = False
         for folder,reason in remove_list:
             if reason==1:
                 if not thereis:
                     print('\nFOLDERS WITH NO VIDEO FILES WITHIN')
-                thereis = 1
+                thereis = True
                 print(folder)
 
-        thereis = 0
+        thereis = False
         for file,reason in remove_list:
             if reason==2:
                 if not thereis:
                     print("\nFILE EXTENSIONS DOESN'T MATCH")
-                thereis = 1
+                thereis = True
                 print(file)        
 
-        remove_confirm = input("\nDo you want to remove ALL of them? Press 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
+        remove_confirm = input("\nDo you want to Remove ALL of them? Press 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if remove_confirm == 'y':
+            ##########
             print('Itens removed!')
         else:
             print('Operation canceled.')
             
-    elif option in ['d','f','A']: #Print this only to these options
+    elif option in ['d','f','A']: #Print this only for these options
         print('\nNo itens to Remove!')
 
     if len(catalog):
@@ -161,6 +225,7 @@ print('Welcome to the MediaCleanup!\n')
 while True:  
 
     option = input("""Choose one of the options below:
+    c - Clean up folder and file names
     d - Scan for empty directories or with no media files within;
     f - Scan for files with no media or subtitles extensions;
     l - Create a list with all your media files, like a catalog;
@@ -168,10 +233,9 @@ while True:
     h - View help;
     q - Quit.\nAnd enter the respective key: """)
     #Soon it will include:
-    #c - Clean up folder and file names
     #i - Serch on IMDB for media information and put into a .txt file;
 
-    while not (option in ['d','f','l','A','h','q']):
+    while not (option in ['c','d','f','l','A','h','q']):
         option = input("Invalid Option. Please choose one of the options above or type 'q' to quit: ")
 
     if option=='q':
@@ -185,7 +249,7 @@ while True:
     if initialdir=='q':
         break
 
-    if option in ['d','f','l','A']:
+    if option in ['c','d','f','l','A']:
         scan()
 
     repeat = input("\nPress 'r' to Run again or another key to Exit: ").lower()
