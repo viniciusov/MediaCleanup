@@ -20,7 +20,7 @@
 # along with Mediacleanup. If not, see <https://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------
 
-import os, shutil, datetime
+import os, glob, shutil, datetime
 
 #----------------------- Open 'expressions.txt' -----------------------
 
@@ -81,7 +81,7 @@ def scan_rename(expressions_dict):
     folders,files = 0,0
     rename_list = [] #Format: [[old,new,isdir],...]
 
-    for dirpath, dirnames, filenames in os.walk(initialdir):
+    for dirpath, dirnames, filenames in os.walk(initialdir, topdown=False):
 
         folders += len(dirnames)
         files += len(filenames)
@@ -102,7 +102,7 @@ def scan_rename(expressions_dict):
     print('Total Files:',files)
     
     if len(rename_list): #Run if 'c' or 'A' are chosen
-        rename_list.sort(key=lambda x: x[0]) #sorts Inplace
+        #rename_list.sort(key=lambda x: x[0]) #sorts Inplace
         print('\nFiles and Paths to be Renamed [',len(rename_list),']:')
 
         thereis = False
@@ -132,44 +132,50 @@ def scan_rename(expressions_dict):
     else:
         print('\nNo itens to Rename!')        
 
-#-------------------------- Scan and Remove ---------------------------
+#--------------------------- Scan for Dirs ----------------------------
 
-def scan_remove(allowedextensions):
+def scan_dir(allowedextensions):
           
     folders,files = 0,0
     remove_list = [] #Format: [[path,reason,isdir],...]
 
-    for dirpath, dirnames, filenames in os.walk(initialdir):
+    for dirpath, dirnames, filenames in os.walk(initialdir, topdown=False):
 
         folders += len(dirnames)
         files += len(filenames)
 
-###---NOT WORKING FOR EMPTY FOLDERS INSIDE FOLDERS---###
         if len(dirnames)==0:
             if len(filenames)==0:  #If don't have any directory within AND don't have any file
-                remove_list.append([dirpath,0,1]) #Reason 0: Empty Folder 
+                remove_list.append([dirpath,0]) #Reason 0: Empty Folder
             else: #If there is files
                 for file in filenames:        
                     if (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
                         break
                 else:
-                    remove_list.append([dirpath,1,1]) #Reason 1: Folder with No Video File
+                    remove_list.append([dirpath,1]) #Reason 1: Folder with No Video Files inside
 
-            for file in filenames:
-                if not (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' avoids it remove the file if its extension is .AVI
-                    remove_list.append([dirpath+os.sep+file,2,0]) #Reason 2: File with No Media Extension
-                        
+        else:
+            if not len(glob.glob(dirpath+'/**/*.*', recursive=True)): #If path DOESN'T have any file
+                remove_list.append([dirpath,0]) #Reason 0: Empty Folder
+
+            else: #If path DOES have files
+                for file in glob.iglob(dirpath+'/**/*.*', recursive=True):
+                    if ('.'+file.split('.')[1]) in allowedextensions:
+                        break
+                else:
+                    remove_list.append([dirpath,1]) #Reason 1: Folder with No Video Files inside
+    
     print('\nScanning Directory:',initialdir)
     print('Total Folders:',folders)
     print('Total Files:',files)
     
-    if len(remove_list): #Run if 'd', 'f' or 'A' are chosen
-        remove_list.sort(key=lambda x: x[0]) #sorts Inplace
+    if len(remove_list):
+        #remove_list.sort(key=lambda x: x[0]) #sorts Inplace
         
         print('\nItens to be Removed [',len(remove_list),']:')
 
         thereis = False
-        for path,reason,isdir in remove_list:
+        for path,reason in remove_list:
             if reason==0:
                 if not thereis:
                     print('\nEMPTY FOLDERS')
@@ -177,38 +183,46 @@ def scan_remove(allowedextensions):
                 print(path)
         
         thereis = False
-        for path,reason,isdir in remove_list:
+        for path,reason, in remove_list:
             if reason==1:
                 if not thereis:
                     print('\nFOLDERS WITH NO VIDEO FILES WITHIN')
                 thereis = True
-                print(path)
-
-        thereis = False
-        for file,reason,isdir in remove_list:
-            if reason==2:
-                if not thereis:
-                    print("\nFILE EXTENSIONS DOESN'T MATCH")
-                thereis = True
-                print(file)        
+                print(path)    
 
         remove_confirm = input("\nDo you want to Remove ALL of them? Press 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if remove_confirm == 'y':
-            for x in range(0,2): #isdir can be 0 or 1
-                for path,reason,isdir in remove_list:
-                    if isdir==x:
+            for x in range(0,2):
+                for path,reason in remove_list:
+                    if reason==x: #Remove empty folders first 
                         if reason==0:
                             os.rmdir(path) #Remove only empty folders
-                        elif reason==1:
-                            shutil.rmtree(path) #Remove folders containing files
-                        else:        
-                            os.remove(path)          
+                        else:
+                            shutil.rmtree(path) #Remove folders containing files       
             print('***Itens removed!***')
         else:
             print('Operation canceled.')
             
     else:
         print('\nNo itens to Remove!')
+
+#-------------------------- Scan for Files ----------------------------
+
+def scan_files(allowedextensions):
+
+    folders,files = 0,0
+    rename_list = [] #Format: [[old,new,isdir],...]
+    remove_list = [] #Format: [[path,reason,isdir],...]
+    catalog = []
+
+    for dirpath, dirnames, filenames in os.walk(initialdir):
+
+        folders += len(dirnames)
+        files += len(filenames)
+
+        for file in filenames:
+                if not (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' avoids it remove the file if its extension is .AVI
+                    remove_list.append([dirpath+os.sep+file,2,0]) #Reason 2: File with No Media Extension
 
 #--------------------------- Scan and List ----------------------------
 
@@ -299,8 +313,11 @@ while True:
     if option in ['c','A']:
         scan_rename(open_expressionsfile())
 
-    if option in ['d','f','A']:
-        scan_remove(open_mediaextensionsfile())
+    if option in ['d','A']:
+        scan_dir(open_mediaextensionsfile())
+
+    if option in ['f','A']:
+        scan_file(open_mediaextensionsfile())    
 
     if option in ['l','A']:
         scan_list(open_mediaextensionsfile())
