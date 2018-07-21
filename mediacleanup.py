@@ -22,9 +22,36 @@
 
 import os, shutil, datetime
 
-#----------------------- Scan Directories/Files -----------------------
-def scan():
+#----------------------- Open 'expressions.txt' -----------------------
 
+def open_expressionsfile():
+    
+    while True:
+            try:
+                with open('./config/expressions.txt','r') as file: #if running .py script
+                    data = file.readlines()
+            except:
+                try:
+                    with open('../config/expressions.txt','r') as file: #if running .exe
+                        data = file.readlines()
+                except:     
+                    input("\nError when oppenning 'expressions.txt'.\nVerify if the file is inside the 'config/' folder and press any key to Retry: ")
+                else:
+                    break
+            else:
+                break
+            
+    expressions_dict = {}
+    for line in data: #Analyze every line that don't start with '#'
+        if not line.startswith('#'):
+            old, new = line.strip().split('=')
+            expressions_dict.update({old:new})
+    return expressions_dict
+
+#--------------------- Open 'mediaextensions.txt' ---------------------
+
+def open_mediaextensionsfile():
+    
     while True:
         try:
             with open('./config/mediaextensions.txt','r') as file: #if running .py script
@@ -45,69 +72,30 @@ def scan():
         if not line.startswith('#'):
             allowedextensions.append(line.strip().lower())
 
-    if option=='c' or option=='A':
-        while True:
-            try:
-                with open('./config/expressions.txt','r') as file: #if running .py script
-                    data = file.readlines()
-            except:
-                try:
-                    with open('../config/expressions.txt','r') as file: #if running .exe
-                        data = file.readlines()
-                except:     
-                    input("\nError when oppenning 'expressions.txt'.\nVerify if the file is inside the 'config/' folder and press any key to Retry: ")
-                else:
-                    break
-            else:
-                break
-            
-    expressions_dict = {}
-    for line in data: #Analyze every line that don't start with '#'
-        if not line.startswith('#'):
-            old, new = line.strip().split('=')
-            expressions_dict.update({old:new})
+    return allowedextensions        
+
+#-------------------------- Scan and Rename ---------------------------
+
+def scan_rename(expressions_dict):
           
     folders,files = 0,0
     rename_list = [] #Format: [[old,new,isdir],...]
-    remove_list = [] #Format: [[path,reason,isdir],...]
-    catalog = []
 
     for dirpath, dirnames, filenames in os.walk(initialdir):
 
         folders += len(dirnames)
         files += len(filenames)
 
-        if (option=='c' or option=='A'):
-            found_path = False #Using this flag to avoid reporting several times the same path
-            for file in filenames:
-                found_file = False #Using this flag to avoid reporting several times the same file
-                for expression in expressions_dict.keys():
-                    if (expression in dirpath) and not found_path:
-                        rename_list.append([dirpath, dirpath.replace(expression,expressions_dict[expression]), 1])
-                        found_path = True
-                    if (expression in file) and not found_file: #[0] is the first item of the generated tuple (the filename, in this case)
-                        rename_list.append([dirpath+os.sep+file, (dirpath+os.sep)+file.replace(expression,expressions_dict[expression]) ,0])
-                        found_file = True
-                    
-        if (option=='d' or option=='A') and len(dirnames)==0:
-            if len(filenames)==0:  #If don't have any directory within AND don't have any file
-                remove_list.append([dirpath,0,1]) #Reason 0: Empty Folder 
-            else: #If there is files
-                for file in filenames:        
-                    if (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
-                        break
-                else:
-                    remove_list.append([dirpath,1,1]) #Reason 1: Folder with No Video File
-
-        if (option=='f' or option=='A'):
-            for file in filenames:
-                if not (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' avoids it remove the file if its extension is .AVI
-                    remove_list.append([dirpath+os.sep+file,2,0]) #Reason 2: File with No Media Extension
-
-        if (option=='l' or option=='A'):
-            for file in filenames:
-                if (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions):
-                    catalog.append(file)
+        found_path = False #Using this flag to avoid reporting several times the same path
+        for file in filenames:
+            found_file = False #Using this flag to avoid reporting several times the same file
+            for expression in expressions_dict.keys():
+                if (expression in dirpath) and not found_path:
+                    rename_list.append([dirpath, dirpath.replace(expression,expressions_dict[expression]), 1])
+                    found_path = True
+                if (expression in file) and not found_file: #[0] is the first item of the generated tuple (the filename, in this case)
+                    rename_list.append([dirpath+os.sep+file, (dirpath+os.sep)+file.replace(expression,expressions_dict[expression]) ,0])
+                    found_file = True
                     
     print('\nScanning Directory:',initialdir)
     print('Total Folders:',folders)
@@ -141,9 +129,40 @@ def scan():
         else:
             print('Operation canceled.')    
 
-    elif option in ['c','A']:
+    else:
         print('\nNo itens to Rename!')        
 
+#-------------------------- Scan and Remove ---------------------------
+
+def scan_remove(allowedextensions):
+          
+    folders,files = 0,0
+    remove_list = [] #Format: [[path,reason,isdir],...]
+
+    for dirpath, dirnames, filenames in os.walk(initialdir):
+
+        folders += len(dirnames)
+        files += len(filenames)
+
+###---NOT WORKING FOR EMPTY FOLDERS INSIDE FOLDERS---###
+        if len(dirnames)==0:
+            if len(filenames)==0:  #If don't have any directory within AND don't have any file
+                remove_list.append([dirpath,0,1]) #Reason 0: Empty Folder 
+            else: #If there is files
+                for file in filenames:        
+                    if (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
+                        break
+                else:
+                    remove_list.append([dirpath,1,1]) #Reason 1: Folder with No Video File
+
+            for file in filenames:
+                if not (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' avoids it remove the file if its extension is .AVI
+                    remove_list.append([dirpath+os.sep+file,2,0]) #Reason 2: File with No Media Extension
+                        
+    print('\nScanning Directory:',initialdir)
+    print('Total Folders:',folders)
+    print('Total Files:',files)
+    
     if len(remove_list): #Run if 'd', 'f' or 'A' are chosen
         remove_list.sort(key=lambda x: x[0]) #sorts Inplace
         
@@ -188,10 +207,30 @@ def scan():
         else:
             print('Operation canceled.')
             
-    elif option in ['d','f','A']:
+    else:
         print('\nNo itens to Remove!')
 
-    if len(catalog): #Run if 'l' or 'A' are chosen
+#--------------------------- Scan and List ----------------------------
+
+def scan_list(allowedextensions): 
+
+    folders,files = 0,0
+    catalog = []
+
+    for dirpath, dirnames, filenames in os.walk(initialdir):
+
+        folders += len(dirnames)
+        files += len(filenames)
+
+        for file in filenames:
+            if (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions):
+                catalog.append(file)
+                    
+    print('\nScanning Directory:',initialdir)
+    print('Total Folders:',folders)
+    print('Total Files:',files)
+        
+    if len(catalog):
         print('\nYour Media Files [',len(catalog),']:\n')
         
         catalog.sort()
@@ -223,8 +262,8 @@ def scan():
         else:
             print('Operation canceled.')
             
-    elif option in ['l','A']:
-        print('\nNo Media Files to show!')
+    else:
+        print('\nNo Media Files to show!')       
         
 #---------------------- Main Program starts below ---------------------
 
@@ -257,8 +296,18 @@ while True:
     if initialdir=='q':
         break
 
-    if option in ['c','d','f','l','A']:
-        scan()
+    if option in ['c','A']:
+        scan_rename(open_expressionsfile())
+
+    if option in ['d','f','A']:
+        scan_remove(open_mediaextensionsfile())
+
+    if option in ['l','A']:
+        scan_list(open_mediaextensionsfile())
+
+###---MISSING HELP FUNCTION---###
+    if option=='h':
+        show_help()
 
     repeat = input("\nPress 'r' to Run again or another key to Exit: ").lower()
     if repeat=='r':
