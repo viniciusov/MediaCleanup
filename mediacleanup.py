@@ -44,7 +44,7 @@ def open_expressionsfile():
     expressions_dict = {}
     for line in data: #Analyze every line that don't start with '#'
         if not line.startswith('#'):
-            old, new = line.strip().split('=')
+            old, new = line.strip().strip("'").split('=')
             expressions_dict.update({old:new})
     return expressions_dict
 
@@ -79,53 +79,71 @@ def open_mediaextensionsfile():
 def scan_rename(expressions_dict):
           
     folders,files = 0,0
-    rename_list = [] #Format: [[old,new,isdir],...]
+    rename_files = {} #Format: {'old':'new',...}
+    rename_folders = {} #Format: {'old':'new',...}
+    rename_dic = {}
 
     for dirpath, dirnames, filenames in os.walk(initialdir, topdown=False):
 
         folders += len(dirnames)
         files += len(filenames)
 
-        found_path = False #Using this flag to avoid reporting several times the same path
-        for file in filenames:
-            found_file = False #Using this flag to avoid reporting several times the same file
-            for expression in expressions_dict.keys():
-                if (expression in dirpath) and not found_path:
-                    rename_list.append([dirpath, dirpath.replace(expression,expressions_dict[expression]), 1])
-                    found_path = True
-                if (expression in file) and not found_file: #[0] is the first item of the generated tuple (the filename, in this case)
-                    rename_list.append([dirpath+os.sep+file, (dirpath+os.sep)+file.replace(expression,expressions_dict[expression]) ,0])
-                    found_file = True
-                    
-    print('\nScanning Directory:',initialdir)
+        for file in filenames: #For each file
+            for expression in expressions_dict.keys(): #Compare with each expression
+                if expression in os.path.splitext(os.path.join(dirpath,file))[0]: #Only filename, without extension
+                    if os.path.join(dirpath,file) not in rename_files.keys(): #If Path NOT in dict  
+                        temp_file = os.path.splitext(os.path.join(dirpath,file))[0]
+                        temp_extension = os.path.splitext(os.path.join(dirpath,file))[1]
+                    else: #If Path ALREADY in dict   
+                        temp_file = os.path.splitext(rename_files[os.path.join(dirpath,file)])[0]
+                        temp_extension = os.path.splitext(rename_files[os.path.join(dirpath,file)])[1]
+                    temp_file = temp_file.replace(expression,expressions_dict[expression])      
+                    rename_files[os.path.join(dirpath,file)]=os.path.join(dirpath,temp_file+temp_extension)
+
+        for directory in dirnames: #Only folders
+            for expression in expressions_dict.keys(): #Compare with each expression
+                if expression in os.path.join(dirpath,directory): #Only filename, without extension
+                    if os.path.join(dirpath,directory) not in rename_folders.keys(): #If Path NOT in dict  
+                        temp_path = os.path.join(dirpath,directory)
+                    else: #If Path ALREADY in dict   
+                        temp_path = rename_folders[os.path.join(dirpath,directory)]
+                    temp_path = temp_path.replace(expression,expressions_dict[expression])    
+                    rename_folders[os.path.join(dirpath,directory)]=temp_path
+                                        
+    print("\nScanning '{}' for Folders and Filenames that match 'expressions.txt'...".format(initialdir))
     print('Total Folders:',folders)
     print('Total Files:',files)
     
-    if len(rename_list): #Run if 'c' or 'A' are chosen
-        #rename_list.sort(key=lambda x: x[0]) #sorts Inplace
-        print('\nFiles and Paths to be Renamed [',len(rename_list),']:')
+    rename_dict = rename_files.copy() #Organize dicts to show files first
+    rename_dict.update(rename_folders)
+
+    if len(rename_dict):
+        #rename_list.sort(key=lambda x: x[2]) #sorts Inplace to show DIRS as last itens
+        print('\nFiles and Paths to be Renamed [',len(rename_dict),']:')
 
         thereis = False
-        for old,new,isdir in rename_list:
+        for old in rename_dict.keys():
             if not thereis:
-                    print('\nOLD FILE/PATH NAMES')
+                    print('\nOLD NAMES')
             thereis = True
             print(old)
 
         thereis = False
-        for old,new,isdir in rename_list:
+        for new in rename_dict.values():
             if not thereis:
-                    print('\nNEW FILE/PATH NAMES')
+                    print('\nNEW NAMES')
             thereis = True
             print(new)
 
         rename_confirm = input("\nDo you want to Rename ALL of them? Press 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if rename_confirm == 'y':
-            for x in range(0,2): #isdir can be 0 or 1
-                for old,new,isdir in rename_list:
-                    if isdir==x: #Checks if is a dir (directories should be the last removed)
-                        os.replace(old,new) #os.replace() was chosen because is cross-plataform                
-            print('***Itens renamed!***')
+            try:
+                for old,new in rename_dict.items():
+                    os.replace(old,new) #os.replace() was chosen because is cross-plataform
+            except:
+                print("Error when removing Files/Folders!/nVerify if you have Write Permissions to rename them.")
+            else:
+                print('***Itens renamed!***')
         else:
             print('Operation canceled.')    
 
@@ -134,10 +152,10 @@ def scan_rename(expressions_dict):
 
 #--------------------------- Scan for Dirs ----------------------------
 
-def scan_dir(allowedextensions):
+def scan_dirs(allowedextensions):
           
     folders,files = 0,0
-    remove_list = [] #Format: [[path,reason,isdir],...]
+    remove_list = [] #Format: [[path,reason],...]
 
     for dirpath, dirnames, filenames in os.walk(initialdir, topdown=False):
 
@@ -149,7 +167,7 @@ def scan_dir(allowedextensions):
                 remove_list.append([dirpath,0]) #Reason 0: Empty Folder
             else: #If there is files
                 for file in filenames:        
-                    if (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
+                    if (os.path.splitext(os.path.join(dirpath,file))[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
                         break
                 else:
                     remove_list.append([dirpath,1]) #Reason 1: Folder with No Video Files inside
@@ -165,12 +183,12 @@ def scan_dir(allowedextensions):
                 else:
                     remove_list.append([dirpath,1]) #Reason 1: Folder with No Video Files inside
     
-    print('\nScanning Directory:',initialdir)
+    print("\nScanning '{}' for Empty Folders or with no Media Files inside...".format(initialdir))
     print('Total Folders:',folders)
     print('Total Files:',files)
     
     if len(remove_list):
-        #remove_list.sort(key=lambda x: x[0]) #sorts Inplace
+        remove_list.sort(key=lambda x: x[1]) #sorts Inplace
         
         print('\nItens to be Removed [',len(remove_list),']:')
 
@@ -192,17 +210,18 @@ def scan_dir(allowedextensions):
 
         remove_confirm = input("\nDo you want to Remove ALL of them? Press 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if remove_confirm == 'y':
-            for x in range(0,2):
+            try:
                 for path,reason in remove_list:
-                    if reason==x: #Remove empty folders first 
-                        if reason==0:
-                            os.rmdir(path) #Remove only empty folders
-                        else:
-                            shutil.rmtree(path) #Remove folders containing files       
-            print('***Itens removed!***')
+                    if reason==0:
+                        os.rmdir(path) #Remove only empty folders                   
+                    else:
+                        shutil.rmtree(path) #Remove folders containing files              
+            except:
+                print("Error when removing Files/Folders!/nVerify if you have Write Permissions or if they are not Read-Only.")
+            else:
+                print('***Itens removed!***')
         else:
             print('Operation canceled.')
-            
     else:
         print('\nNo itens to Remove!')
 
@@ -211,18 +230,42 @@ def scan_dir(allowedextensions):
 def scan_files(allowedextensions):
 
     folders,files = 0,0
-    rename_list = [] #Format: [[old,new,isdir],...]
-    remove_list = [] #Format: [[path,reason,isdir],...]
-    catalog = []
-
+    remove_list = []
+    
     for dirpath, dirnames, filenames in os.walk(initialdir):
 
         folders += len(dirnames)
         files += len(filenames)
 
         for file in filenames:
-                if not (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' avoids it remove the file if its extension is .AVI
-                    remove_list.append([dirpath+os.sep+file,2,0]) #Reason 2: File with No Media Extension
+                if not (os.path.splitext(os.path.join(dirpath,file))[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' avoids it remove the file if its extension is .AVI
+                    remove_list.append(os.path.join(dirpath,file)) #Reason 2: File with No Media Extension
+                    
+    print("\nScanning '{}' for extensions that match 'allowedextensions.txt'...".format(initialdir))
+    print('Total Folders:',folders)
+    print('Total Files:',files)
+
+    thereis = False
+    for path in remove_list:
+        if not thereis:
+            print("\nFILE EXTENSIONS DOESN'T MATCH")
+        thereis = True
+        print(path)
+
+    if len(remove_list):
+        remove_confirm = input("\nDo you want to Remove ALL of them? Press 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
+        if remove_confirm == 'y':
+            try:
+                for file in remove_list:
+                    os.remove(file)
+            except:
+                print("Error when removing Files!/nVerify if you have Write Permissions or if they are not Read-Only.")
+            else:
+                print('***Itens removed!***')
+        else:
+            print('Operation canceled.')
+    else:
+        print('\nNo itens to Remove!')
 
 #--------------------------- Scan and List ----------------------------
 
@@ -237,10 +280,10 @@ def scan_list(allowedextensions):
         files += len(filenames)
 
         for file in filenames:
-            if (os.path.splitext(dirpath+os.sep+file)[1].lower() in allowedextensions):
+            if (os.path.splitext(os.path.join(dirpath,file))[1].lower() in allowedextensions):
                 catalog.append(file)
                     
-    print('\nScanning Directory:',initialdir)
+    print("\nScanning '{}' for Media Files...".format(initialdir))
     print('Total Folders:',folders)
     print('Total Files:',files)
         
@@ -314,10 +357,10 @@ while True:
         scan_rename(open_expressionsfile())
 
     if option in ['d','A']:
-        scan_dir(open_mediaextensionsfile())
+        scan_dirs(open_mediaextensionsfile())
 
     if option in ['f','A']:
-        scan_file(open_mediaextensionsfile())    
+        scan_files(open_mediaextensionsfile())    
 
     if option in ['l','A']:
         scan_list(open_mediaextensionsfile())

@@ -1,4 +1,6 @@
 #Format 'old=new'
-HD=HighResolution
-TV=x
-xD=k
+'HD=720p'
+'_= '
+'.= '
+'[=('
+']=)'
