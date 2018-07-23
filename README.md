@@ -10,7 +10,7 @@ renaming unwanted expressions from folders and filenames, removing files with un
 And this is how MediaCleanup was born...
 I though that this project could help some other users to, so I decided to open it here on GitHub.
 
-##About
+## About
 MediaCleanup is a free tool to cleanup your media files and folders.
 It will scan a provided path for folders and media files and can automatically:
 - Find folders and files with specific expressions and rename them;
@@ -24,23 +24,23 @@ User can see all changes and must confirm every step before the script apply it,
 reading carefully all the instructions before using it.
 
 ## How to use it
-###Download
+### Download
 First you need to download the MediaCleanup files.
 On the top of this page you shoud see a button with 'Clone or download' label. Click on it and choose 'Download ZIP'.
 After completing the download, Unzip the downloaded file (Right-click and 'Extract Here').
 
-###How to run
+### How to run
 Now you have to run the main script.
 
 There's two mains ways for running this script:
-###If you have Python>=3 installed on your OS:
+### If you have Python>=3 installed on your OS:
 Open up your OS Terminal/Prompt, do to the media cleanup folder, i.e.:
 
 
 2) If you don't Python>=3
 On Windows:
 
-###Functionalities
+### Functionalities
 Now you are with the main script running let's go trought the its functionalities...
 
 
