@@ -101,13 +101,13 @@ def scan_rename(expressions_dict):
 
         for directory in dirnames: #Only folders
             for expression in expressions_dict.keys(): #Compare with each expression
-                if expression in os.path.join(dirpath,directory): #Only filename, without extension
+                if expression in directory: #Only directories
                     if os.path.join(dirpath,directory) not in rename_folders.keys(): #If Path NOT in dict  
-                        temp_path = os.path.join(dirpath,directory)
+                        temp_dir = directory
                     else: #If Path ALREADY in dict   
-                        temp_path = rename_folders[os.path.join(dirpath,directory)]
-                    temp_path = temp_path.replace(expression,expressions_dict[expression])    
-                    rename_folders[os.path.join(dirpath,directory)]=temp_path
+                        temp_dir = os.path.split(rename_folders[os.path.join(dirpath,directory)])[1] #Get only last DIR
+                    temp_dir = temp_dir.replace(expression,expressions_dict[expression])    
+                    rename_folders[os.path.join(dirpath,directory)]= os.path.join(os.path.split(os.path.join(dirpath,directory))[0],temp_dir)
 
     print('-------------------------')
     print("\nScanning '{}' for Folders and Filenames that match 'expressions.txt'...".format(initialdir))
@@ -121,18 +121,18 @@ def scan_rename(expressions_dict):
         print('\nFiles and Paths to be Renamed [',len(rename_dict),']:')
 
         thereis = False
-        for old in rename_dict.keys():
+        for number,old in enumerate(rename_dict.keys(),1):
             if not thereis:
                     print('\nOLD NAMES')
             thereis = True
-            print(old)
+            print('({}) {}'.format(number,old))
 
         thereis = False
-        for new in rename_dict.values():
+        for number,new in enumerate(rename_dict.values(),1):
             if not thereis:
                     print('\nNEW NAMES')
             thereis = True
-            print(new)
+            print('({}) {}'.format(number,new))
 
         rename_confirm = input("\nDo you want to Rename ALL of them?\nType 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if rename_confirm == 'y':
@@ -179,14 +179,16 @@ def scan_dirs(allowedextensions):
 
         else:
             if not len(glob.glob(dirpath+'/**/*.*', recursive=True)): #If path DOESN'T have any file
-                remove_list.append([dirpath,0]) #Reason 0: Empty Folder
+                if dirpath != initialdir: #Avoid deleting the top folder even if it is empty
+                    remove_list.append([dirpath,0]) #Reason 0: Empty Folder
 
             else: #If path DOES have files
                 for file in glob.iglob(dirpath+'/**/*.*', recursive=True):
                     if ('.'+file.split('.')[1]) in allowedextensions:
                         break
                 else:
-                    remove_list.append([dirpath,1]) #Reason 1: Folder with No Video Files inside
+                    if dirpath != initialdir: #Avoid deleting the top folder even if it doesn't have media files
+                        remove_list.append([dirpath,1]) #Reason 1: Folder with No Video Files inside
     
     print('-------------------------')
     print("\nScanning '{}' for Empty Folders or with no Media Files inside...".format(initialdir))
@@ -352,32 +354,33 @@ def scan_list(allowedextensions):
 def show_help():
     clear_screen() 
     print("""MediaCleanup is a free tool to cleanup your media files and folders.
-It will scan the provided path to media files and can rename files with specific expressions or remove unwanted files.
+It will scan a provided path for folders and media files, can find specific expressions and extensions, allowing to rename or remove them.
 
 Help:
 To start with it, run MediaCleanup, choose one from main options, type the respective key and press Enter.
-'c' - Will scan a specific path for files and folders that match expressions inside the file 'config/expressions.txt'.
+'c' - Will scan a specific path for folders and filenames that match expressions inside the file 'config/expressions.txt'.
       If any file/folder match, the software will list it to rename with the desired expression in 'config/expressions.txt'.
-      After the listing process, the user will be asked to confirm the files/folders renaming.
+      After the listing process, the user will be asked to confirm the files and folders renaming.
 'd' - Will scan a specific path for folders that are empty or don't have any file with media extensions.
       The software will use all extensions inside 'config/mediaextensions.txt' to compare and determine if a file is a media file or not.
-      After the listing process, the user will be asked to confirm the folders removing.
+      After the listing process, the user will be asked to confirm the removing.
 'f' - Will scan a specific path for files that don't have media extensions.
       Like the 'd' option, it will use all extensions inside 'config/mediaextensions.txt' to compare against the files extensions.
       If files extensions don't match, the software will list all and the user will be asked to remove them.
 'l' - MediaCleanup will list all your media files (according 'config/mediaextensions.txt') and show them.
       The user will be asked to save the list as a .txt file (media_catalog.txt) and the software will ask for destination path.
-      If user type 's' to the destination path, the .txt file will be crated in the same scanned path.
+      If user type 'ENTER' to the destination path, the .txt file will be crated in the same scanned path.
+'A' - Will run ALL above options in a sequence.   
 'h' - Show up all this information.
-'q' - If user type 'q' and press Enter, the software will stop and quit.
+'q' - The software will stop and quit.
 After choosing the desired option, MediaCleanup will ask for the path to be scanned.
 
 About:
-- Created by Vinícius Orsi Valente (2018)
-- Licensed under GPLv3
-- Version 0.6 (Beta)
+* Created by Vinícius Orsi Valente (2018)
+* Licensed under GPLv3
+* Version 0.6 (Beta)
 
-MediaCleanup is freely avaliable at 'https://github.com/viniciusov/mediacleanup/'.
+MediaCleanup is freely available at 'https://github.com/viniciusov/mediacleanup/'.
 Check it out to see more detailed information or download the newest versions.\n""")
     input("(Press ENTER to Quit help/about and return)")
 
