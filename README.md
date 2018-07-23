@@ -143,4 +143,4 @@ Although the script always shows what's going to be renamed or removed and asks 
 inside the path informed I recommend you backup your data.
 
 ## Contact
-If you have any doubts, suggestions or want to contact me, use my email viniciusov@hotmail.com.
+If you have any doubt, suggestions or want to contact me, use my email viniciusov@hotmail.com.
