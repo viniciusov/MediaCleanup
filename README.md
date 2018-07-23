@@ -32,15 +32,38 @@ After completing the download, Unzip the downloaded file (Right-click and 'Extra
 ### How to run
 Now you have to run the main script.
 There's two mains ways for running this script:
+ 
 #### 1) If you have Python>=3 installed on your OS:
-Open up your OS Terminal/Prompt, do to the media cleanup folder, i.e.:
 
+Open up your OS Terminal/Prompt:
+- Ctrl + Alt + T (for Linux)
+- Click on 'Start Menu', type CMD and hit ENTER (for Windows)
 
-#### 2) If you don't Python>=3
-On Windows:
+Go to the mediacleanup folder, i.e. type:
+> cd /home/\<user>/downloads/mediacleanup (for Linux, Mac OS)
+
+>cd C:\Users\<user>\downloads\mediacleanup (for Windows)
+
+And then type the command below to execute the script:
+> mediacleanup.py
+
+If you can't get it running, try execute:
+> python mediacleanup.py
+
+#### 2) If you don't have Python>=3
+If you are on Windows: there's no need to install python. I've already create a .exe file ready to be executed. 
+- Go to the folder 'mediacleanup/exe/'
+- Click on the executable file 'mediacleanup.exe'
+
+If you are on another OS:
+- Download python>=3 from [Python.org](https://www.python.org/getit/) and install
+- Follow the steps above
+
+##### *ps.1: Not sure if is fully supported by Python2.
+##### *ps.2: Not tested on mac OS, but I think it should work fine.
 
 ### Functionalities
-Now you are with the main script running let's go trought the its functionalities...
+Now you are with the main script running let's go trought its functionalities...
 
 
 Further I'll add more funcionalities to the code...
@@ -52,4 +75,4 @@ These files and notes MUST NOT been removed if you're using or sharing this proj
 ## Contact
 If you have any doubts, suggestions or want to contact me, use my email viniciusov@hotmail.com.
 
-*WARNING: USE AT YOUR OWN RISK!
+**WARNING: USE AT YOUR OWN RISK!**
