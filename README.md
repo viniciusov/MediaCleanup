@@ -7,8 +7,8 @@ a lot of those folders contain just a bunch of useless files, like website infor
 Besides, I use a media server that have the functionality to delete only the media files, leaving the folder empty or with the subtitles only.
 So, I decided to code some script that could help me to cleanup these folders, removing automatically empty folders or with no media inside,
 renaming unwanted expressions from folders and filenames, removing files with unwanted extensions and list all of them as a catalog.
-And this is how MediaCleanup was born...
 I though that this project could help some other users to, so I decided to open it here on GitHub.
+*And this is how MediaCleanup was born...*
 
 ## About
 MediaCleanup is a free tool to cleanup your media files and folders.
@@ -31,7 +31,7 @@ After completing the download, Unzip the downloaded file (Right-click and 'Extra
 
 ### Run
 Now you have to run the main script.
-There's two mains ways for running this script:  
+There are two ways for running this script:  
   
 #### 1) If you have Python>=3 installed on your OS:
 
