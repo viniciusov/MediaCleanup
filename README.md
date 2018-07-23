@@ -31,13 +31,12 @@ After completing the download, Unzip the downloaded file (Right-click and 'Extra
 
 ### How to run
 Now you have to run the main script.
-
 There's two mains ways for running this script:
-#### 1)If you have Python>=3 installed on your OS:
+#### 1) If you have Python>=3 installed on your OS:
 Open up your OS Terminal/Prompt, do to the media cleanup folder, i.e.:
 
 
-### 2)If you don't Python>=3
+#### 2) If you don't Python>=3
 On Windows:
 
 ### Functionalities
