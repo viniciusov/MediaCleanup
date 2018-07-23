@@ -40,8 +40,8 @@ There's two mains ways for running this script:
   - Click on 'Start Menu', type CM and hit ENTER (for Windows)
 
 - Go to the medicament folder, i.e. type:
-  > CD /home/\<user>/downloads/medicament (for **Linux**, **Mac OS**)  
-  > CD C:\Users\<user>\downloads\medicament (for **Windows**)
+  > cd /home/\<user>/downloads/medicament (for **Linux**, **Mac OS**)  
+  > cd C:\Users\<user>\downloads\medicament (for **Windows**)
 
 - And then type the command below to execute the script:
   > mediacleanup.py
