@@ -51,12 +51,12 @@ There are two ways for running this script:
 
 #### 2) If you don't have Python>=3
 If you are on **Windows**: there's no need to install python. I've already create a .Exe file ready to be executed. 
-- Go to the folder 'medicament/exe/'
-- Click on the executable file 'mediacleanup.exe'
+- Go to the folder 'medicament/exe/';
+- Click on the executable file 'mediacleanup.exe'.
 
 If you are on **another OS**:
-- Download python>=3 from [Python.org](https://www.python.org/getit/) and install
-- Follow the steps above  
+- Download the latest Python version from [Python.org](https://www.python.org/getit/) and install it;
+- Follow the steps above.
 
 ##### *ps.1: Not sure if is supported by Python.*
 ##### *ps.2: Not tested on Mac OS, but I think it should work fine.*
