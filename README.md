@@ -38,7 +38,7 @@ There are two ways for running this script:
 
 - Open up your OS Terminal/Prompt:
   - Ctrl + Alt + T (for Linux)
-  - Click on 'Start Menu', type CMD and hit ENTER (for Windows)
+  - Click on 'Start Menu', type 'cmd' and hit ENTER (for Windows)
 
 - Go to the folder where do you extracted MediaCleanup, for example, type:
   > cd /home/\<user>/downloads/mediacleanup (for **Linux**, **Mac OS**)  
