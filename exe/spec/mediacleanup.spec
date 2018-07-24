@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['..\\..\\mediacleanup.py'],
-             pathex=['exe/spec/'],
+             pathex=['./exe/spec'],
              binaries=[],
              datas=[],
              hiddenimports=[],

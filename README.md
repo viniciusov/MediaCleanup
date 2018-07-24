@@ -4,10 +4,10 @@
 Initially I started to code this program to help me with a issue.
 I download a lot of media files and organize them in folders with these files, subtitles, audio, images, etc., but I realize that 
 a lot of those folders contain just a bunch of useless files, like website information, spam, or some of them are even empty.
-Besides, I use a media server that have the functionality to delete only the media files, leaving the folder empty or with the subtitles only.
-So, I decided to code some script that could help me to cleanup these folders, removing automatically empty folders or with no media inside,
-renaming unwanted expressions from folders and filenames, removing files with unwanted extensions and list all of them as a catalog.
-I though that this project could help some other users to, so I decided to open it here on GitHub.  
+Besides, I use a media server that has the functionality to delete only the media files, leaving the folder empty or with the subtitles only.
+So, I decided to code a script to cleanup these folders, removing automatically empty folders or with no media inside, renaming unwanted 
+expressions from folders and filenames, removing files with unwanted extensions and listing all of them as a catalog.
+I though this project could help some other users too, so I decided to open it here on GitHub.  
 *And this is how MediaCleanup was born...*
 
 ## About
@@ -20,14 +20,15 @@ It will scan a provided path for folders and media files and can automatically:
 
 It's simple script but can be very useful to maintain large collections of media.
 MediaCleanup runs directly on your OS Terminal/Prompt and can manage files recursively inside a path provided by user.
-User can see all changes and must confirm every step before the script apply it, so it is relative safe but I recommend 
+User can see all changes and must confirm every step before the script apply it, so it is relatively safe but I recommend 
 reading carefully all the instructions before using it.
 
 ## How to use it
 ### Download
-First you need to download the MediaCleanup files.
-On the top of this page you should see a button with 'Clone or download' label. Click on it and choose 'Download ZIP'.
-After completing the download, Unzip the downloaded file (Right-click and 'Extract Here').
+First you need to download the MediaCleanup files.  
+On the top of this page you should see a button with 'Clone or download' label. 
+- Click on it and choose 'Download ZIP'.
+- After completing the download, Unzip the downloaded file (Right-click and 'Extract Here').
 
 ### Run
 Now you have to run the main script.
@@ -36,12 +37,12 @@ There are two ways for running this script:
 #### 1) If you have Python>=3 installed on your OS:
 
 - Open up your OS Terminal/Prompt:
-  - CTR + Alt + T (for Linux)
-  - Click on 'Start Menu', type CM and hit ENTER (for Windows)
+  - Ctrl + Alt + T (for Linux)
+  - Click on 'Start Menu', type 'cmd' and hit ENTER (for Windows)
 
-- Go to the medicament folder, i.e. type:
-  > cd /home/\<user>/downloads/medicament (for **Linux**, **Mac OS**)  
-  > cd C:\Users\<user>\downloads\medicament (for **Windows**)
+- Go to the folder where do you extracted MediaCleanup, for example, type:
+  > cd /home/\<user>/downloads/mediacleanup (for **Linux**, **Mac OS**)  
+  > cd C:\Users\<user>\downloads\mediacleanup (for **Windows**)
 
 - And then type the command below to execute the script:
   > mediacleanup.py
@@ -51,14 +52,14 @@ There are two ways for running this script:
 
 #### 2) If you don't have Python>=3
 If you are on **Windows**: there's no need to install python. I've already create a .Exe file ready to be executed. 
-- Go to the folder 'medicament/exe/';
+- Go to the folder 'mediacleanup/exe/';
 - Click on the executable file 'mediacleanup.exe'.
 
 If you are on **another OS**:
 - Download the latest Python version from [Python.org](https://www.python.org/getit/) and install it;
 - Follow the steps above.
 
-##### *ps.1: Not sure if is supported by Python.*
+##### *ps.1: Not sure if it is supported by Python2.*
 ##### *ps.2: Not tested on Mac OS, but I think it should work fine.*
 
 ### Functionalities
@@ -81,7 +82,7 @@ If files extensions don't match, the software will list all and the user will be
 
 - **l**:
 *MediaCleanup will list all media files (according 'config/mediaextensions.txt') inside the provide path and show them.
-The user will be asked to save the list as a .txt file (media_catalog.txt) and the software will ask for destination path.
+The user will be asked to save the list as a .txt file (mediacatalog.txt) and the software will ask for destination path.
 If user type 'ENTER' to the destination path, the .txt file will be crated in the same scanned path.*
 
 - **A**:
@@ -105,14 +106,17 @@ If a selected path was entered, the script will start the scanning process.
 this can take a while, depending on how many files and folders are there, sizes, etc.
 
 As soon as it completed the scanning, it will show up the information according the chosen option.
-**Everytime some file or folder is about to be renamed or removed, the software will wait for user to confirm, 
-typing 'y' and pressing ENTER.**
+Everytime some file or folder is about to be renamed or removed, the software will wait for user to confirm, 
+typing 'y' and pressing ENTER.
 When it is done with the processing, it will wait for user press ENTER to continue until it reach the end.
 
 When all the operation is completed, the script gives the option to run again if user type 'r' and press ENTER.
 
-Further I'll add more functionalities to the code...
-
+Further I'll add more functionalities to the code...  
+    
+##### *ps.3: May occur issues with your OS Terminal when displaying long lists of files/folders due its limited number of lines.*
+##### *I recommend changing the Terminal preferences to the MAXIMUM scrollback or screen buffer size.*  
+  
 ## Configuration Files
 As seen in the **Functionalities** section, some of MediaCleanup steps relies on configuration files.
 The configuration files are .txt files inside 'config/' folder.
@@ -120,7 +124,7 @@ The configuration files are .txt files inside 'config/' folder.
 There are 2 configuration files:
 - **mediaextensions.txt**:
 The content of this file tells to the MediaCleanup which extensions will be considered MEDIA EXTENSIONS.
-All extensions written in a single line that don't start with '#' will be used to compare against the files extensions.
+All extensions written in a single line that doesn't start with '#' will be used to compare against the files extensions.
 You can edit this this file, as long you maintain the same format: one extension per line, starting with a dot.
 If this file is removed or renamed, the script will show an error.
 
