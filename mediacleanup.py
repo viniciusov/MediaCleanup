@@ -84,7 +84,6 @@ def scan_rename(expressions_dict):
     rename_folders = {} #Format: {'old':'new',...}
     rename_dic = {}
 
-    print('-------------------------')
     print("\nScanning '{}' for Folders and Filenames that match 'expressions.txt'...".format(initialdir))
 
     for dirpath, dirnames, filenames in os.walk(initialdir, topdown=False):
@@ -157,7 +156,8 @@ def scan_rename(expressions_dict):
         print('\nNo items to Rename.')
 
     if option == 'A':     
-        input('\n(Press ENTER to continue)')    
+        input('\n(Press ENTER to continue)')
+        print('-------------------------')
 
 #--------------------------- Scan for Dirs ----------------------------
 
@@ -166,7 +166,6 @@ def scan_dirs(allowedextensions):
     folders,files = 0,0
     remove_list = [] #Format: [[path,reason],...]
 
-    print('-------------------------')
     print("\nScanning '{}' for Empty Folders or with no Media Files inside...".format(initialdir))
 
     for dirpath, dirnames, filenames in os.walk(initialdir, topdown=False):
@@ -244,7 +243,8 @@ def scan_dirs(allowedextensions):
         print('\nNo items to Remove.')
 
     if option == 'A':  
-        input('\n(Press ENTER to continue)')    
+        input('\n(Press ENTER to continue)')
+        print('-------------------------')
 
 #-------------------------- Scan for Files ----------------------------
 
@@ -253,7 +253,6 @@ def scan_files(allowedextensions):
     folders,files = 0,0
     remove_list = []
 
-    print('-------------------------')
     print("\nScanning '{}' for extensions that match 'mediaextensions.txt'...".format(initialdir))
     
     for dirpath, dirnames, filenames in os.walk(initialdir):
@@ -262,10 +261,8 @@ def scan_files(allowedextensions):
         files += len(filenames)
 
         for file in filenames:
-            if not (os.path.basename(file)=='mediacatalog.txt' or os.path.basename(file)=='info.txt'):
-                if not (os.path.splitext(os.path.join(dirpath,file))[1].lower() in allowedextensions+['.srt','.sub']): #'.lower' avoids it remove the file if its extension is .AVI
-                    if not (os.path.splitext(os.path.join(dirpath,file))[0] == 'info.txt' or os.path.splitext(os.path.join(dirpath,file))[0] == 'mediacatalog.txt'):
-                        remove_list.append(os.path.join(dirpath,file)) #Reason 2: File with No Media Extension
+            if not ((os.path.splitext(file)[1].lower() in allowedextensions+['.srt','.sub']) or ('(IMDB).info' in file) or file=='mediacatalog.txt'): #'.lower' avoids it remove the file if its extension is .AVI
+                remove_list.append(os.path.join(dirpath,file)) #Reason 2: File with No Media Extension
                 
     print('\nTotal Folders:',folders)
     print('Total Files:',files)
@@ -301,6 +298,7 @@ def scan_files(allowedextensions):
 
     if option == 'A': 
         input('\n(Press ENTER to continue)')
+        print('-------------------------')
 
 #-------------------------- Scan from IMDB ----------------------------
 
@@ -311,38 +309,42 @@ def scan_imdb(allowedextensions):
 
     ia = imdb.IMDb()
 
-    print('-------------------------')
-    print("\nScanning '{}' for Titles on IMDB...\n(May take a while to get IMDB information)".format(initialdir))
+    print("\nScanning '{}' for Titles on IMDB...\n(May take a while to fetch IMDB information)".format(initialdir))
 
     for dirpath, dirnames, filenames in os.walk(initialdir, topdown=False):
-
+    
         folders += len(dirnames)
         files += len(filenames)
 
         for file in filenames:
             if os.path.splitext(file)[1].lower() in allowedextensions: #'.lower' avoids it remove the file if its extension is .AVI
-
                 if len(ia.search_movie(os.path.splitext(file)[0]))>0:
                     movie = ia.search_movie(os.path.splitext(file)[0])[0]
-                    if hasattr(movie, 'movieID'):
-                        imdb_catalog[os.path.join(dirpath,file)] = movie #{'path':'movie'}
-                        break
+                else:
+                    movie = ia.search_movie(os.path.splitext(file)[0])
+                if hasattr(movie, 'movieID'): #Can be a company listed on IMDB, etc.
+                    imdb_catalog[os.path.join(dirpath,file)] = movie #{'path':'movie'}
+            print('.',end='',flush=True)
                     
-    print('\nTotal Folders:',folders)
+    print('\n\nTotal Folders:',folders)
     print('Total Files:',files)
 
-    if len(imdb_catalog):
-        print('\nTitles found on IMDB [',len(imdb_catalog),']:')
+    final_catalog = {} #Format: {'path':'movie',...}
+    for path,movie in imdb_catalog.items():
+        if str(movie) not in str(final_catalog.values()):
+            final_catalog[path]=movie   
 
-        for path, movie in imdb_catalog.items():
-            print('{} - "{}"'.format(os.path.dirname(path),movie['title'])) #Show path and title
+    if len(final_catalog):
+        print('\nTitles found on IMDB [',len(final_catalog),']:')
 
-        info_confirm = input("\nDo you want to Save information about each one of them in a .txt file?\nType 'y' to proceed: ").lower()
+        for path, movie in final_catalog.items():
+            print('{} - "{}"'.format(os.path.dirname(path),str(movie))) #Show path and title
+
+        info_confirm = input("\nDo you want to Save information about each one of them in a '.info' file?\nType 'y' to proceed: ").lower()
         if info_confirm == 'y':
-            info = ''
             errors = 0
 
-            for path, movie in imdb_catalog.items():
+            for path, movie in final_catalog.items(): #Show ALL Items
                 try:
                     info = 'IMDB INFORMATION\n\n'
                     ia.update(movie)
@@ -357,19 +359,28 @@ def scan_imdb(allowedextensions):
                             else:
                                 info += str(movie[item]) + '\n\n'
                     now = datetime.datetime.now()            
-                    info += '\nCreated at {} with MediaCleanup.\n(https://github.com/viniciusov/mediacleanup)'.format(now.strftime("%Y-%m-%d %H:%M"))
+                    info += '---------------------------------------------\nCreated at {} with MediaCleanup\n(https://github.com/viniciusov/mediacleanup)'.format(now.strftime("%Y-%m-%d %H:%M"))
+                    print('.',end='',flush=True)
             
                 except:
                     print('Unable to get information about for "{}".'.format(str(movie['title'])))
                     errors += 1 
-            try:
+
+            for path, movie in final_catalog.items():
                 destination = os.path.dirname(path)
-                f= open(os.path.join(destination,'info.txt'),"w+", encoding="utf-8")
-                f.write(info)
-                f.close()
-            except:
-                print("Error when saving in '{}'.\n(Verify if you have Permission to save in that location).".format(destination))
-                errors += 1
+                try:
+                    final_name = str(movie)
+                    safe_name = ''
+                    for letter in final_name:
+                        if letter not in ' !$%^&*_+|~-=`{}[]:";<>?,./':
+                            safe_name += letter
+                    safe_name+='(IMDB).info'                                 
+                    f= open(os.path.join(destination,safe_name),"w+", encoding="utf-8")
+                    f.write(info)
+                    f.close()
+                except:
+                    print("Error when saving in '{}'.\n(Verify if you have Permission to save in that location).".format(destination))
+                    errors += 1
             else:
                 if not errors:
                     print('\n***All information saved!***')
@@ -382,7 +393,8 @@ def scan_imdb(allowedextensions):
         print('\nNo items to Show.')
 
     if option == 'A':         
-        input('\n(Press ENTER to continue)')      
+        input('\n(Press ENTER to continue)')
+        print('-------------------------')
 
 #--------------------------- Scan and List ----------------------------
 
@@ -393,8 +405,7 @@ def scan_list(allowedextensions):
 
     ia = imdb.IMDb()
 
-    print('-------------------------')
-    print("\nScanning '{}' for Media Files...\n(May take a while to get IMDB information)".format(initialdir))
+    print("\nScanning '{}' for Media Files...\n(May take a while to fetch IMDB information)".format(initialdir))
 
     for dirpath, dirnames, filenames in os.walk(initialdir):
 
@@ -403,13 +414,17 @@ def scan_list(allowedextensions):
 
         for file in filenames:
             if os.path.splitext(file)[1].lower() in allowedextensions: #'.lower' avoids it remove the file if its extension is .AVI
-                movie = ia.search_movie(os.path.splitext(file)[0])[0]
-                if hasattr(movie, 'movieID'):
-                    catalog.append("["+os.path.splitext(file)[0]+"] - "+str(movie['title'])+" ("+str(movie['year'])+")")
+                if len(ia.search_movie(os.path.splitext(file)[0]))>0:
+                    movie = ia.search_movie(os.path.splitext(file)[0])[0]
                 else:
-                    catalog.append("["+os.path.splitext(file)[0]+"]")
+                    movie = ia.search_movie(os.path.splitext(file)[0])
+                if hasattr(movie, 'movieID'):
+                    catalog.append("["+file+"] - "+str(movie)+" ("+str(movie['year'])+")")
+                else:
+                    catalog.append("["+file+"]")
+            print('.',end='',flush=True)         
     
-    print('\nTotal Folders:',folders)
+    print('\n\nTotal Folders:',folders)
     print('Total Files:',files)
         
     if len(catalog):
@@ -436,12 +451,12 @@ def scan_list(allowedextensions):
                     f.write("("+str(number)+") "+str(file)+"\n")
                     
                 now = datetime.datetime.now()
-                f.write("\nCreated at {} with MediaCleanup.\n(https://github.com/viniciusov/mediacleanup)".format(now.strftime("%Y-%m-%d %H:%M")))
+                f.write("\n---------------------------------------------\nCreated at {} with MediaCleanup\n(https://github.com/viniciusov/mediacleanup)".format(now.strftime("%Y-%m-%d %H:%M")))
                 f.close()
             except:    
                 print("Error when creating 'mediacatalog.txt'.\n(Verify if you have permission to write in {}).".format(write_path))
             else:
-                print("***'mediacatalog.txt' successfully created at '{}'.***".format(write_path))
+                print("***'mediacatalog.txt' successfully created at '{}'!***".format(write_path))
         
         else:
             print('Operation canceled.')
@@ -478,7 +493,7 @@ After choosing the desired option, MediaCleanup will ask for the path to be scan
 About:
 * Created by Vinícius Orsi Valente (2018)
 * Licensed under GPLv3
-* Version 0.8 (Beta)
+* Version 0.9 (Beta)
 
 MediaCleanup is freely available at 'https://github.com/viniciusov/mediacleanup/'.
 Check it out to see more detailed information or download the newest versions.\n""")
@@ -501,7 +516,7 @@ while True:
     c - Clean up folder and file names;
     d - Scan for empty directories or with no media files inside;
     f - Scan for files with no media or subtitles extensions;
-    i - Serch on IMDB for media information and put into a .txt file;
+    i - Serch on IMDB for media information and put into a .info file;
     l - Create a list with all your media files, like a catalog;
     A - Run ALL above;
     h - View help/about;
@@ -528,6 +543,9 @@ while True:
     if initialdir=='q':
         break
 
+    n=len(initialdir)
+    print('-'*n)
+
     if option in ['c','A']:
         scan_rename(open_expressionsfile())
 
@@ -543,8 +561,8 @@ while True:
     if option in ['l','A']:
         scan_list(open_mediaextensionsfile())
 
-    print('-------------------------')
-    repeat = input("\nType 'r' to Run again or presse ENTER to Exit: ").lower()
+    print('-'*45)
+    repeat = input("\nType 'r' to Run again or press ENTER to Exit: ").lower()
     if repeat=='r':
         continue
     else:
