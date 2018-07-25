@@ -1,9 +1,8 @@
 # MediaCleanup
 
 ## The problem
-Initially I started to code this program to help me with a issue.
-I download a lot of media files and organize them in folders with these files, subtitles, audio, images, etc., but I realize that 
-a lot of those folders contain just a bunch of useless files, like website information, spam, or some of them are even empty.
+I started to code this program to help me with an issue.  
+I download a lot of media files and organize them in folders with these files, subtitles, audio, images, etc., but I realize that a lot of those folders contain just a bunch of useless files, like website information, spam, or some of them are even empty.
 Besides, I use a media server that has the functionality to delete only the media files, leaving the folder empty or with the subtitles only.
 So, I decided to code a script to cleanup these folders, removing automatically empty folders or with no media inside, renaming unwanted 
 expressions from folders and filenames, removing files with unwanted extensions and listing all of them as a catalog.
@@ -38,7 +37,7 @@ There are two ways for running this script:
 
 - Open up your OS Terminal/Prompt:
   - Ctrl + Alt + T (for Linux)
-  - Click on 'Start Menu', type CM and hit ENTER (for Windows)
+  - Click on 'Start Menu', type 'cmd' and hit ENTER (for Windows)
 
 - Go to the folder where do you extracted MediaCleanup, for example, type:
   > cd /home/\<user>/downloads/mediacleanup (for **Linux**, **Mac OS**)  
