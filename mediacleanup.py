@@ -338,7 +338,7 @@ def scan_list(allowedextensions):
             if write_path=='':
                 write_path=initialdir
             try:
-                f= open(write_path+"/media_catalog.txt","w+", encoding="utf-8")
+                f= open(write_path+"/mediacatalog.txt","w+", encoding="utf-8")
                 f.write("Media files in '{}':\n\n".format(initialdir))
                 
                 for number,file in enumerate(catalog,1): #counting starts with 1
@@ -348,9 +348,9 @@ def scan_list(allowedextensions):
                 f.write("\nCreated at {} with MediaCleanup.\n(https://github.com/viniciusov/mediacleanup)".format(now.strftime("%Y-%m-%d %H:%M")))
                 f.close()
             except:    
-                print("Error when creating 'media_catalog.txt'.\n(Verify if you have permission to write in {}).".format(write_path))
+                print("Error when creating 'mediacatalog.txt'.\n(Verify if you have permission to write in {}).".format(write_path))
             else:
-                print("***'media_catalog.txt' successfully created at '{}'.***".format(write_path))
+                print("***'mediacatalog.txt' successfully created at '{}'.***".format(write_path))
         
         else:
             print('Operation aborted.')
@@ -377,7 +377,7 @@ To start with it, run MediaCleanup, choose one from main options, type the respe
       Like the 'd' option, it will use all extensions inside 'config/mediaextensions.txt' to compare against the files extensions.
       If files extensions don't match, the software will list all and the user will be asked to remove them.
 'l' - MediaCleanup will list all your media files (according 'config/mediaextensions.txt') and show them.
-      The user will be asked to save the list as a .txt file (media_catalog.txt) and the software will ask for destination path.
+      The user will be asked to save the list as a .txt file (mediacatalog.txt) and the software will ask for destination path.
       If user type 'ENTER' to the destination path, the .txt file will be crated in the same scanned path.
 'A' - Will run ALL above options in a sequence.   
 'h' - Show up all this information.

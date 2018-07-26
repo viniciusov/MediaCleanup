@@ -1,12 +1,23 @@
 #Expressions to find and replace in folders and filenames
 #You must maintain the format 'old=new'
+<<<<<<< HEAD
+=======
+'_= '
+'.= '
+'  = '
+'[=('
+']=)'
+>>>>>>> 4b0e2cf68b2a4479a7f1fecc67f87eee035cff60
 'DvDrip='
 '[DVDRip]='
 'DVDRip='
 'XviD='
 'XViD='
 'Xvid='
+<<<<<<< HEAD
 'xvid='
+=======
+>>>>>>> 4b0e2cf68b2a4479a7f1fecc67f87eee035cff60
 'aXXo='
 '.com='
 'STV='
@@ -14,6 +25,11 @@
 'torrent='
 'www='
 '.br='
+<<<<<<< HEAD
+=======
+'YTS.AM='
+'()='
+>>>>>>> 4b0e2cf68b2a4479a7f1fecc67f87eee035cff60
 'ETRG='
 'AAC='
 'aac='
@@ -28,13 +44,17 @@
 '[Eng]='
 'AC3='
 'BRRip='
+<<<<<<< HEAD
 'BrRip='
+=======
+>>>>>>> 4b0e2cf68b2a4479a7f1fecc67f87eee035cff60
 'ViZNU='
 '[VX]='
 'P2PDL='
 '[TuGAZx]='
 'NODLABS='
 'LiMiTED='
+<<<<<<< HEAD
 'YIFY='
 'e™='
 '[YTS.AM]='
@@ -51,3 +71,5 @@
 ' )= '
 '( = ' 
 '()='
+=======
+>>>>>>> 4b0e2cf68b2a4479a7f1fecc67f87eee035cff60
