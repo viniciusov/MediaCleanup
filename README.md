@@ -6,6 +6,10 @@ I download a lot of media files and organize them in folders with these files, s
 Besides, I use a media server that has the functionality to delete only the media files, leaving the folder empty or with the subtitles only.
 So, I decided to code a script to cleanup these folders, removing automatically empty folders or with no media inside, renaming unwanted 
 expressions from folders and filenames, removing files with unwanted extensions and listing all of them as a catalog.
+
+I know there is some alternatives on the web with more complex features like graphical interface and other stuff, but I would like to create something efficient but simple. Just more portable, just click and run.
+Just to give you an idea, I tried 2 different softwares for execute these tasks: one of them I couldn't run on my OS (and I can unninstall it - a lot of bugs!), and another that require Java updates as soon as it was installed.
+
 I though this project could help some other users too, so I decided to open it here on GitHub.  
 *And this is how MediaCleanup was born...*
 

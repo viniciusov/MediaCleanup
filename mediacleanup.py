@@ -20,7 +20,7 @@
 # along with Mediacleanup. If not, see <https://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------
 
-import os, glob, shutil, datetime
+import re, os, glob, shutil, datetime
 
 #----------------------- Open 'expressions.txt' -----------------------
 
@@ -28,11 +28,11 @@ def open_expressionsfile():
     
     while True:
             try:
-                with open('./config/expressions.txt','r') as file: #if running .py script
+                with open('./config/expressions.txt','r', encoding="utf-8-sig") as file: #if running .py script
                     data = file.readlines()
             except:
                 try:
-                    with open('../config/expressions.txt','r') as file: #if running .exe
+                    with open('../config/expressions.txt','r', encoding="utf-8-sig") as file: #if running .exe
                         data = file.readlines()
                 except:     
                     input("\nError when oppenning 'expressions.txt'.\nVerify if the file is inside the 'config/' folder and press any key to Retry: ")
@@ -41,9 +41,9 @@ def open_expressionsfile():
             else:
                 break
             
-    expressions_list = []
+    expressions_list = [] #Format: [(old,new)...]
     for line in data: #Analyze every line that don't start with '#'
-        if not (line.startswith('#') or line==[]): #Avoid reading empty lines
+        if not (line.startswith('#') or line==''): #Avoid reading empty lines
             old, new = line.strip().strip("'").split('=')
             expressions_list.append((old,new))
 
@@ -55,11 +55,11 @@ def open_mediaextensionsfile():
     
     while True:
         try:
-            with open('./config/mediaextensions.txt','r') as file: #if running .py script
+            with open('./config/mediaextensions.txt','r', encoding="utf-8") as file: #if running .py script
                 data = file.readlines()
         except:
             try:
-                with open('../config/mediaextensions.txt','r') as file: #if running .exe
+                with open('../config/mediaextensions.txt','r', encoding="utf-8") as file: #if running .exe
                     data = file.readlines()
             except:     
                 input("\nError when oppenning 'mediaextensions.txt'.\nVerify if the file is inside the 'config' folder and press any key to Retry: ")
@@ -70,7 +70,7 @@ def open_mediaextensionsfile():
         
     allowedextensions = []
     for line in data: #Analyze every line that don't start with '#'
-        if not (line.startswith('#') or line==[]): #Avoid reading empty lines
+        if not (line.startswith('#') or line==''): #Avoid reading empty lines
             allowedextensions.append(line.strip().lower())
 
     return allowedextensions         
@@ -92,24 +92,26 @@ def scan_rename(expressions_list):
         files += len(filenames)
 
         for file in filenames:
+            extension = os.path.splitext(file)[1]
             for exp_old, exp_new in expressions_list:
-                if exp_old in os.path.splitext(file)[0]:
-                    if os.path.join(dirpath,file) not in rename_files.keys(): #If Path NOT in dict  
-                        temp_file = os.path.splitext(file)[0]
-                    else: #If Path ALREADY in dict   
-                        temp_file = os.path.splitext(os.path.basename(rename_files[os.path.join(dirpath,file)]))[0] #.basename is needed here to separate file from path
-                    temp_file = ' '.join(temp_file.replace(exp_old,exp_new).split())
-                    temp_extension = os.path.splitext(file)[1]
-                    rename_files[os.path.join(dirpath,file)]=os.path.join(dirpath,temp_file+temp_extension)
+                if os.path.join(dirpath,file) not in rename_files.keys(): #If Path NOT in dict  
+                        temp_file = os.path.splitext(file)[0] #Using filename without extension
+                else: #If Path ALREADY in dict  
+                    temp_file = os.path.splitext(os.path.basename(rename_files[os.path.join(dirpath,file)]))[0] #.basename is needed here to separate file from path
+                if exp_old in temp_file:
+                    temp_file = ' '.join(temp_file.replace(exp_old,exp_new).split()) #Removes extra spacing
+                    temp_file = re.sub(r'[\(\)]','',temp_file) #Don't let '()' remaining in the string
+                    rename_files[os.path.join(dirpath,file)]=os.path.join(dirpath,temp_file+extension)
 
         for directory in dirnames: #Only folders
             for exp_old, exp_new in expressions_list: #Compare with each expression
-                if exp_old in directory: #Only directories
-                    if os.path.join(dirpath,directory) not in rename_folders.keys(): #If Path NOT in dict  
+                if os.path.join(dirpath,directory) not in rename_folders.keys(): #If Path NOT in dict  
                         temp_dir = directory
-                    else: #If Path ALREADY in dict   
-                        temp_dir = os.path.split(rename_folders[os.path.join(dirpath,directory)])[1] #Get only last DIR
+                else: #If Path ALREADY in dict   
+                    temp_dir = os.path.split(rename_folders[os.path.join(dirpath,directory)])[1] #Get only last DIR
+                if exp_old in temp_directory: #Only directories
                     temp_dir = ' '.join(temp_dir.replace(exp_old,exp_new).split())
+                    temp_dir = re.sub(r'[\(\)]','',temp_dir) #Don't let '()' remaining in the string
                     rename_folders[os.path.join(dirpath,directory)]=os.path.join(os.path.split(os.path.join(dirpath,directory))[0],temp_dir)
 
     print('Total Folders:',folders)
@@ -152,6 +154,8 @@ def scan_rename(expressions_list):
     if len(rename_files) or len(rename_folders):    
         rename_confirm = input("\nDo you want to Rename ALL of them?\nType 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if rename_confirm == 'y':
+            rename_dict = rename_files.copy()
+            rename_dict.update(rename_folders)
             errors = 0
             for old,new in rename_dict.items():
                 try:
@@ -165,7 +169,7 @@ def scan_rename(expressions_list):
                 else:
                     print('***{} error(s) occurred.***'.format(errors))
         else:
-            print('Operation aborted.')    
+            print('Operation canceled.')    
 
     else:
         print('\nNo items to Rename.')
@@ -254,7 +258,10 @@ def scan_dirs(allowedextensions):
                 else:
                     print('***{} error(s) occurred.***'.format(errors))
         else:
-            print('Operation aborted.')
+            print('Operation canceled.')
+
+    else:
+        print('\nNo items to Remove.')       
 
     if option == 'A':  
         input('\n(Press ENTER to continue)')
@@ -306,7 +313,7 @@ def scan_files(allowedextensions):
                 else:
                     print('***{} error(s) occurred.***'.format(errors))
         else:
-            print('Operation aborted.')
+            print('Operation canceled.')
 
     else:
         print('\nNo items to Remove.')
@@ -368,7 +375,7 @@ def scan_list(allowedextensions):
                 print("***'mediacatalog.txt' successfully created at '{}'.***".format(write_path))
         
         else:
-            print('Operation aborted.')
+            print('Operation canceled.')
             
     else:
         print('\nNo Media Files to show.')       
