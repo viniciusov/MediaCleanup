@@ -112,7 +112,7 @@ def scan_rename(expressions_list):
                 if exp_old in temp_dir: #Only directories
                     temp_dir = ' '.join(temp_dir.replace(exp_old,exp_new).split())
                     temp_dir = re.sub(r'[\(\)]','',temp_dir) #Don't let '()' remaining in the string
-                    rename_folders[os.path.join(dirpath,directory)]=os.path.join(os.path.split(os.path.dirname(dirpath))[0],temp_dir)
+                    rename_folders[os.path.join(dirpath,directory)]=os.path.join(dirpath,temp_dir)
 
     print('Total Folders:',folders)
     print('Total Files:',files)
