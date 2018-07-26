@@ -150,7 +150,7 @@ def scan_rename(expressions_dict):
                 else:
                     print('\n***{} error(s) occurred.***'.format(errors))
         else:
-            print('Operation canceled.')    
+            print('Operation cancelled.')    
 
     else:
         print('\nNo items to Rename.')
@@ -190,7 +190,7 @@ def scan_dirs(allowedextensions):
 
             else: #If path DOES have files
                 for file in glob.iglob(dirpath+'/**/*.*', recursive=True):
-                    if ('.'+file.split('.')[1]) in allowedextensions:
+                    if (os.path.splitext(file)[1]) in allowedextensions:
                         break
                 else:
                     if dirpath != initialdir: #Avoid deleting the top folder even if it doesn't have media files
@@ -238,7 +238,7 @@ def scan_dirs(allowedextensions):
                 else:
                     print('\n***{} error(s) occurred.***'.format(errors))
         else:
-            print('Operation canceled.')
+            print('Operation cancelled.')
     else:
         print('\nNo items to Remove.')
 
@@ -292,7 +292,7 @@ def scan_files(allowedextensions):
                 else:
                     print('\n***{} error(s) occurred.***'.format(errors))
         else:
-            print('Operation canceled.')
+            print('Operation cancelled.')
     else:
         print('\nNo items to Remove.')
 
@@ -318,8 +318,19 @@ def scan_imdb(allowedextensions):
 
         for file in filenames:
             if os.path.splitext(file)[1].lower() in allowedextensions: #'.lower' avoids it remove the file if its extension is .AVI
-                if len(ia.search_movie(os.path.splitext(file)[0]))>0:
-                    movie = ia.search_movie(os.path.splitext(file)[0])[0]
+                temp_movie = ia.search_movie(os.path.splitext(file)[0])
+                if len(temp_movie)>0:
+                    movie_confirm = ''
+                    while movie_confirm != 'y':
+                        print()
+                        for n in range(0,len(temp_movie)-1):
+                            movie_confirm = input("{} = {}. Is this correct? Type 'y' if yes or press ENTER to change: ".format(os.path.join(dirpath,file),temp_movie[n]))
+                            if movie_confirm =='y':
+                                movie = temp_movie[n]
+                                print('(Title Added!)')
+                                break
+                            else:
+                                print('(Title Removed.)')
                 else:
                     movie = ia.search_movie(os.path.splitext(file)[0])
                 if hasattr(movie, 'movieID'): #Can be a company listed on IMDB, etc.
@@ -387,7 +398,7 @@ def scan_imdb(allowedextensions):
                 else:
                     print('\n***{} error(s) occurred.***'.format(errors))
         else:
-            print('Operation canceled.')    
+            print('Operation cancelled.')    
 
     else:
         print('\nNo items to Show.')
@@ -459,7 +470,7 @@ def scan_list(allowedextensions):
                 print("***'mediacatalog.txt' successfully created at '{}'!***".format(write_path))
         
         else:
-            print('Operation canceled.')
+            print('Operation cancelled.')
             
     else:
         print('\nNo Media Files to show.')    
