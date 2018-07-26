@@ -2,13 +2,13 @@
 
 ## The problem
 I started to code this program to help me with an issue.  
-I download a lot of media files and organize them in folders with these files, subtitles, audio, images, etc., but I realize that a lot of those folders contain just a bunch of useless files, like website information, spam, or some of them are even empty.
-Besides, I use a media server that has the functionality to delete only the media files, leaving the folder empty or with the subtitles only.
+I download a lot of media files and organize them in folders with these files, subtitles, audio, images, etc., but I realize that a lot of those folders are empty or contain just a bunch of useless files, like website information, spam, etc.  
+Besides, I use a media server that has the functionality to remotely delete only the media files, leaving the folder empty or only with the subtitles files inside.  
 So, I decided to code a script to cleanup these folders, removing automatically empty folders or with no media inside, renaming unwanted 
 expressions from folders and filenames, removing files with unwanted extensions and listing all of them as a catalog.
 
-I know there are some alternatives on the web with more complex features like graphical interface and other stuff, but I would like to create something efficient and simple. More portable, just click and run.
-Just to give you an idea, I tried 2 different software for execute these tasks: one of them I couldn't run on my OS (and I can unninstall it - a lot of bugs!); and another require Java updates as soon as it was installed.
+I know there are some alternatives on the web with more complex features like graphical interface and other stuff, but I would like to create something efficient and simple. More portable, just click and run.  
+Just to give you an idea, I tried 2 different software for execute these tasks: I couldn't run one of them on my OS (and I can't unninstall it completely - a lot of bugs!); and another require Java updates as soon as it was installed.
 
 *And this is how MediaCleanup was born...*
 
@@ -22,17 +22,17 @@ It will scan a provided path for folders and media files and can automatically:
 - Find files without specific extensions and remove them;
 - List all of 'media files' and save it in a .txt file (like catalog).
 
-It's simple script but can be very useful to maintain large collections of media.
-MediaCleanup runs directly on your OS Terminal/Prompt and can manage files recursively inside a path provided by user.
-User can see all changes and must confirm every step before the script apply it, so it is relatively safe but I recommend 
+It's simple script but can be very useful to maintain large collections of media.  
+MediaCleanup runs directly on your OS Terminal/Prompt and can manage files **recursively** inside a path provided by user.  
+User can see all changes and must confirm every step before the script apply them, so it is relatively safe but I recommend 
 reading carefully all the instructions before using it.
 
 ## How to use it
 ### Download
 First you need to download the MediaCleanup files.  
-On the top of this page you should see a button with 'Clone or download' label. 
-- Click on it and choose 'Download ZIP'.
-- After completing the download, Unzip the downloaded file (Right-click and 'Extract Here').
+On the top of this page you should see a button with a 'Clone or download' label. 
+- Click on it and choose **Download ZIP**.
+- After completing the download, **Unzip** the downloaded file (Right-click and 'Extract Here').
 
 ### Run
 Now you have to run the main script.
@@ -46,8 +46,10 @@ There are two ways for running this script:
 
 - Go to the folder where do you extracted MediaCleanup, for example, type:
 
-  > cd /home/\<user>/downloads/mediacleanup (for **Linux**, **Mac OS**)  
-  > cd C:\Users\<user>\downloads\mediacleanup (for **Windows**)
+  > cd /home/\<user>/downloads/MediaCleanup-master (for **Linux**, **Mac OS**)  
+  > cd C:\Users\<user>\downloads\MediaCleanup-master (for **Windows**)  
+
+  Where \<user> should be the name of your user.
 
 - And then type the command below to execute the script:
   > mediacleanup.py
@@ -56,16 +58,16 @@ There are two ways for running this script:
   > python mediacleanup.py
 
 #### 2) If you don't have Python>=3
-If you are on **Windows**: there's no need to install python. I've already create a .Exe file ready to be executed. 
-- Go to the folder 'mediacleanup/exe/';
-- Click on the executable file 'mediacleanup.exe'.
+- If you are on **Windows**: there's no need to install python. I've already create a .Exe file ready to be executed. 
+  - Go to the folder 'mediacleanup/exe/';
+  - Click on the executable file 'mediacleanup.exe'.
 
-If you are on **another OS**:
-- Download the latest Python version from [Python.org](https://www.python.org/getit/) and install it;
-- Follow the steps above.
+- If you are on **another OS**:
+  - Download the latest Python version from [Python.org](https://www.python.org/getit/) and install it;
+  - Follow the steps above.
 
 ##### *ps.1: Not sure if it is supported by Python2.*
-##### *ps.2: Not tested on Mac OS, but I think it should work fine.*
+##### *ps.2: Not tested on MacOS, but I think it should work fine.*
 
 ### Functionalities
 Now you are with the main script running let's go through its functionalities.  
@@ -104,17 +106,17 @@ Choose one of the options above, type the respective letter and press ENTER.
 After choosing the desired option, MediaCleanup will ask for the path to be scanned.
 
 Provide a path for the search, like:  
-> /home/\<user>/videos (for **Linux**, **Mac OS**)  
+> /home/\<user>/videos (for **Linux**, **MacOS**)  
 > C:\Users\<user>\Videos (for **Windows**)  
 
-If a selected path was entered, the script will start the scanning process.
-this can take a while, depending on how many files and folders are there, sizes, etc.
+If a selected path was entered, the script will start the scanning process (this can take a while, depending on how many files and folders are there).  
+You should **choose a path that doesn't contain the MediaCleanup files or any other installed software**, otherwise you may have problems when running them.
 
-As soon as it completed the scanning, it will show up the information according the chosen option.
+As soon as it completed the scanning, it will show up the information according the chosen option.  
 Everytime some file or folder is about to be renamed or removed, the software will wait for user to confirm, 
-typing 'y' and pressing ENTER.
-When it is done with the processing, it will wait for user press ENTER to continue until it reach the end.
-
+typing 'y' and pressing ENTER.  
+When it is done with the processing, it will wait for user press ENTER to continue until it reach the end.  
+  
 When all the operation is completed, the script gives the option to run again if user type 'r' and press ENTER.
     
 ##### *ps.3: May occur issues with your OS Terminal when displaying long lists of files/folders due its limited number of lines.*
