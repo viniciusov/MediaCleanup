@@ -95,7 +95,7 @@ def scan_rename(expressions_list):
             extension = os.path.splitext(file)[1]
             for exp_old, exp_new in expressions_list:
                 if os.path.join(dirpath,file) not in rename_files.keys(): #If Path NOT in dict  
-                        temp_file = os.path.splitext(file)[0] #Using filename without extension
+                    temp_file = os.path.splitext(file)[0] #Using filename without extension
                 else: #If Path ALREADY in dict  
                     temp_file = os.path.splitext(os.path.basename(rename_files[os.path.join(dirpath,file)]))[0] #.basename is needed here to separate file from path
                 if exp_old in temp_file:
@@ -106,13 +106,13 @@ def scan_rename(expressions_list):
         for directory in dirnames: #Only folders
             for exp_old, exp_new in expressions_list: #Compare with each expression
                 if os.path.join(dirpath,directory) not in rename_folders.keys(): #If Path NOT in dict  
-                        temp_dir = directory
+                    temp_dir = directory
                 else: #If Path ALREADY in dict   
                     temp_dir = os.path.split(rename_folders[os.path.join(dirpath,directory)])[1] #Get only last DIR
-                if exp_old in temp_directory: #Only directories
+                if exp_old in temp_dir: #Only directories
                     temp_dir = ' '.join(temp_dir.replace(exp_old,exp_new).split())
                     temp_dir = re.sub(r'[\(\)]','',temp_dir) #Don't let '()' remaining in the string
-                    rename_folders[os.path.join(dirpath,directory)]=os.path.join(os.path.split(os.path.join(dirpath,directory))[0],temp_dir)
+                    rename_folders[os.path.join(dirpath,directory)]=os.path.join(os.path.split(os.path.dirname(dirpath))[0],temp_dir)
 
     print('Total Folders:',folders)
     print('Total Files:',files)
@@ -409,7 +409,7 @@ After choosing the desired option, MediaCleanup will ask for the path to be scan
 About:
 * Created by Vinícius Orsi Valente (2018)
 * Licensed under GPLv3
-* Version 0.7 (Beta)
+* Version 1.0b (Beta)
 
 MediaCleanup is freely available at 'https://github.com/viniciusov/mediacleanup/'.
 Check it out to see more detailed information or download the newest versions.\n""")
