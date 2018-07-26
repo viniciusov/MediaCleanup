@@ -20,7 +20,7 @@ It will scan a provided path for folders and media files and can automatically:
 - Find folders and files with specific expressions and rename them;
 - Find empty folders or with no media files inside and remove them;
 - Find files without specific extensions and remove them;
-- List all of 'media files' and save it in a .txt file (like catalog).
+- List all 'media files' and save it in a .txt file (like catalog).
 
 It's simple script but can be very useful to maintain large collections of media.  
 MediaCleanup runs directly on your OS Terminal/Prompt and can manage files **recursively** inside a path provided by user.  
