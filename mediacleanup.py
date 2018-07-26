@@ -41,13 +41,13 @@ def open_expressionsfile():
             else:
                 break
             
-    expressions_dict = {}
+    expressions_list = []
     for line in data: #Analyze every line that don't start with '#'
         if not (line.startswith('#') or line==[]): #Avoid reading empty lines
             old, new = line.strip().strip("'").split('=')
-            expressions_dict.update({old:new})
+            expressions_list.append((old,new))
 
-    return expressions_dict
+    return expressions_list
 
 #--------------------- Open 'mediaextensions.txt' ---------------------
 
@@ -77,7 +77,7 @@ def open_mediaextensionsfile():
 
 #-------------------------- Scan and Rename ---------------------------
 
-def scan_rename(expressions_dict):
+def scan_rename(expressions_list):
           
     folders,files = 0,0
     rename_files = {} #Format: {'old':'new',...}
@@ -91,50 +91,65 @@ def scan_rename(expressions_dict):
         folders += len(dirnames)
         files += len(filenames)
 
-        for file in filenames: #For each file
-            for expression in expressions_dict.keys(): #Compare with each expression
-                if expression in os.path.splitext(file)[0]: #Only filename, without extension
+        for file in filenames:
+            for exp_old, exp_new in expressions_list:
+                if exp_old in os.path.splitext(file)[0]:
                     if os.path.join(dirpath,file) not in rename_files.keys(): #If Path NOT in dict  
                         temp_file = os.path.splitext(file)[0]
                     else: #If Path ALREADY in dict   
                         temp_file = os.path.splitext(os.path.basename(rename_files[os.path.join(dirpath,file)]))[0] #.basename is needed here to separate file from path
-                    temp_file = ' '.join(temp_file.replace(expression,expressions_dict[expression]).split())
+                    temp_file = ' '.join(temp_file.replace(exp_old,exp_new).split())
                     temp_extension = os.path.splitext(file)[1]
                     rename_files[os.path.join(dirpath,file)]=os.path.join(dirpath,temp_file+temp_extension)
 
         for directory in dirnames: #Only folders
-            for expression in expressions_dict.keys(): #Compare with each expression
-                if expression in directory: #Only directories
+            for exp_old, exp_new in expressions_list: #Compare with each expression
+                if exp_old in directory: #Only directories
                     if os.path.join(dirpath,directory) not in rename_folders.keys(): #If Path NOT in dict  
                         temp_dir = directory
                     else: #If Path ALREADY in dict   
                         temp_dir = os.path.split(rename_folders[os.path.join(dirpath,directory)])[1] #Get only last DIR
-                    temp_dir = ' '.join(temp_dir.replace(expression,expressions_dict[expression]).split())
+                    temp_dir = ' '.join(temp_dir.replace(exp_old,exp_new).split())
                     rename_folders[os.path.join(dirpath,directory)]=os.path.join(os.path.split(os.path.join(dirpath,directory))[0],temp_dir)
 
     print('Total Folders:',folders)
     print('Total Files:',files)
-    
-    rename_dict = rename_files.copy() #Organize dicts to show files first
-    rename_dict.update(rename_folders)
 
-    if len(rename_dict):
-        print('\nFiles and Paths to be Renamed [',len(rename_dict),']:')
+    if len(rename_files):
+        print('\nFiles to be Renamed [',len(rename_files),']:')
 
         thereis = False
-        for number,old in enumerate(rename_dict.keys(),1):
+        for number,old in enumerate(rename_files.keys(),1):
             if not thereis:
-                    print('\nOLD NAMES')
+                    print('\nOLD FILE NAMES')
             thereis = True
             print('({}) {}'.format(number,old))
 
         thereis = False
-        for number,new in enumerate(rename_dict.values(),1):
+        for number,new in enumerate(rename_files.values(),1):
             if not thereis:
-                    print('\nNEW NAMES')
+                    print('\nNEW FILE NAMES')
             thereis = True
             print('({}) {}'.format(number,new))
 
+    if len(rename_folders):
+        print('\nFiles to be Renamed [',len(rename_folders),']:')
+
+        thereis = False
+        for number,old in enumerate(rename_folders.keys(),1):
+            if not thereis:
+                    print('\nOLD FOLDER NAMES')
+            thereis = True
+            print('({}) {}'.format(number,old))
+
+        thereis = False
+        for number,new in enumerate(rename_folders.values(),1):
+            if not thereis:
+                    print('\nNEW FOLDER NAMES')
+            thereis = True
+            print('({}) {}'.format(number,new))        
+
+    if len(rename_files) or len(rename_folders):    
         rename_confirm = input("\nDo you want to Rename ALL of them?\nType 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if rename_confirm == 'y':
             errors = 0
@@ -316,7 +331,7 @@ def scan_list(allowedextensions):
 
         for file in filenames:
             if (os.path.splitext(os.path.join(dirpath,file))[1].lower() in allowedextensions):
-                catalog.append(file)
+                catalog.append(os.path.join(os.path.basename(dirpath),file))
                     
     print('Total Folders:',folders)
     print('Total Files:',files)
@@ -345,7 +360,7 @@ def scan_list(allowedextensions):
                     f.write("("+str(number)+") "+str(file)+"\n")
                     
                 now = datetime.datetime.now()
-                f.write("\nCreated at {} with MediaCleanup.\n(https://github.com/viniciusov/mediacleanup)".format(now.strftime("%Y-%m-%d %H:%M")))
+                f.write("\n---------------------------------------------\nCreated at {} with MediaCleanup.\n(https://github.com/viniciusov/mediacleanup)".format(now.strftime("%Y-%m-%d %H:%M")))
                 f.close()
             except:    
                 print("Error when creating 'mediacatalog.txt'.\n(Verify if you have permission to write in {}).".format(write_path))
