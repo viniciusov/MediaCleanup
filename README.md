@@ -142,8 +142,8 @@ If this file is removed or renamed, the script will show an error too.
 
 ## License
 All this project is under GPLv3 license. 
-You can find the complete license in the 'COPYING.txt' file and Copyrights notes inside the codes.
-These files and notes MUST NOT been removed if you're using or sharing this project.
+You can find the complete license in the 'COPYING.txt' file and a Copyright note inside the main script.
+These information must not been removed if you're using or sharing this project.
 
 ## Warning
 **Use at your own risk!**
