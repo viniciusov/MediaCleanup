@@ -149,7 +149,7 @@ def scan_rename(expressions_dict):
                 else:
                     print('***{} error(s) occurred.***'.format(errors))
         else:
-            print('Operation canceled.')    
+            print('Operation aborted.')    
 
     else:
         print('\nNo items to Rename!')
@@ -184,7 +184,8 @@ def scan_dirs(allowedextensions):
 
             else: #If path DOES have files
                 for file in glob.iglob(dirpath+'/**/*.*', recursive=True):
-                    if ('.'+file.split('.')[1]) in allowedextensions:
+                    print(file)
+                    if (os.path.splitext(file)[1]) in allowedextensions:
                         break
                 else:
                     if dirpath != initialdir: #Avoid deleting the top folder even if it doesn't have media files
@@ -234,7 +235,7 @@ def scan_dirs(allowedextensions):
                 else:
                     print('***{} error(s) occurred.***'.format(errors))
         else:
-            print('Operation canceled.')
+            print('Operation aborted.')
     else:
         print('\nNo items to Remove!')
     input('\n(Press ENTER to continue)')    
@@ -285,7 +286,7 @@ def scan_files(allowedextensions):
                 else:
                     print('***{} error(s) occurred.***'.format(errors))
         else:
-            print('Operation canceled.')
+            print('Operation aborted.')
     else:
         print('\nNo items to Remove!')
     input('\n(Press ENTER to continue)')    
@@ -343,7 +344,7 @@ def scan_list(allowedextensions):
                 print("***'media_catalog.txt' successfully created at '{}'.***".format(write_path))
         
         else:
-            print('Operation canceled.')
+            print('Operation aborted.')
             
     else:
         print('\nNo Media Files to show!')
@@ -378,7 +379,7 @@ After choosing the desired option, MediaCleanup will ask for the path to be scan
 About:
 * Created by Vinícius Orsi Valente (2018)
 * Licensed under GPLv3
-* Version 0.6 (Beta)
+* Version 0.7 (Beta)
 
 MediaCleanup is freely available at 'https://github.com/viniciusov/mediacleanup/'.
 Check it out to see more detailed information or download the newest versions.\n""")
@@ -442,7 +443,7 @@ while True:
         scan_list(open_mediaextensionsfile())
 
     print('-------------------------')
-    repeat = input("\nOPERATION COMPLETED!\nType 'r' to Run again or presse ENTER to Exit: ").lower()
+    repeat = input("\nOPERATION COMPLETED!\nType 'r' to Run again or press ENTER to Exit: ").lower()
     if repeat=='r':
         continue
     else:
