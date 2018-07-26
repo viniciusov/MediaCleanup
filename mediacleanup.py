@@ -151,23 +151,38 @@ def scan_rename(expressions_list):
             thereis = True
             print('({}) {}'.format(number,new))        
 
-    if len(rename_files) or len(rename_folders):    
+    if len(rename_files) or len(rename_folders):  
         rename_confirm = input("\nDo you want to Rename ALL of them?\nType 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if rename_confirm == 'y':
-            rename_dict = rename_files.copy()
-            rename_dict.update(rename_folders)
             errors = 0
-            for old,new in rename_dict.items():
-                try:
-                    os.replace(old,new) #os.replace() was chosen because is cross-plataform
-                except:
-                    print("Error when renaming '{}'.\n(Verify if you have Write Permission to rename it).".format(old))
-                    errors += 1
-            else:
-                if not errors:
-                    print('***All items renamed!***')
+            if len(rename_files):  
+                for old,new in rename_files.items():
+                    try:
+                        os.replace(old,new) #os.replace() was chosen because is cross-plataform
+                    except:
+                        print("Error when renaming '{}'.\n(Verify if you have Write Permission to rename it).".format(old))
+                        errors += 1
                 else:
-                    print('***{} error(s) occurred.***'.format(errors))
+                    if not errors:
+                        print('***All Files renamed!***')
+                    else:
+                        print('***{} error(s) occurred when removing files.***'.format(errors))
+
+            if len(rename_folders):
+                if len(rename_files):
+                    print()
+                errors = 0
+                for old,new in rename_folders.items():
+                    try:
+                        os.replace(old,new) #os.replace() was chosen because is cross-plataform
+                    except:
+                        print("Error when renaming '{}'.\n(Verify if you have Write Permission to rename it).".format(old))
+                        errors += 1
+                else:
+                    if not errors:
+                        print('***All Folders renamed!***')
+                    else:
+                        print('***{} error(s) occurred when removing folders.***'.format(errors))        
         else:
             print('Operation canceled.')    
 
