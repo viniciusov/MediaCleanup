@@ -116,8 +116,6 @@ typing 'y' and pressing ENTER.
 When it is done with the processing, it will wait for user press ENTER to continue until it reach the end.
 
 When all the operation is completed, the script gives the option to run again if user type 'r' and press ENTER.
-
-Further I'll add more functionalities to the code...  
     
 ##### *ps.3: May occur issues with your OS Terminal when displaying long lists of files/folders due its limited number of lines.*
 ##### *I recommend changing the Terminal preferences to the MAXIMUM scrollback or screen buffer size.*  
