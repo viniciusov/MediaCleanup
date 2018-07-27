@@ -118,10 +118,9 @@ def scan_rename(expressions_list):
     print('Total Files:',files)
 
     if len(rename_files) or len(rename_folders): 
+        print('\nItems to be Renamed [',len(rename_files+renamefolders),']:')
 
         if len(rename_files):
-            print('\nFiles to be Renamed [',len(rename_files),']:')
-
             thereis = False
             for number,old in enumerate(rename_files.keys(),1):
                 if not thereis:
@@ -137,8 +136,6 @@ def scan_rename(expressions_list):
                 print('({}) {}'.format(number,new))
 
         if len(rename_folders):
-            print('\nFiles to be Renamed [',len(rename_folders),']:')
-
             thereis = False
             for number,old in enumerate(rename_folders.keys(),1):
                 if not thereis:
@@ -409,7 +406,7 @@ To start with it, run MediaCleanup, choose one from main options, type the respe
 'l' - MediaCleanup will list all your media files (according 'config/mediaextensions.txt') and show them.
       The user will be asked to save the list as a .txt file (mediacatalog.txt) and the software will ask for destination path.
       If user type 'ENTER' to the destination path, the .txt file will be crated in the same scanned path.
-'A' - Will run ALL above options in a sequence.   
+'A' - Will run ALL options above. For best cleaning, it will run in the following sequence: f->d->c->l. 
 'h' - Show up all this information.
 'q' - The software will stop and quit.
 After choosing the desired option, MediaCleanup will ask for the path to be scanned.
@@ -417,7 +414,7 @@ After choosing the desired option, MediaCleanup will ask for the path to be scan
 About:
 * Created by Vinícius Orsi Valente (2018)
 * Licensed under GPLv3
-* Version 1.0b (Beta)
+* Version 1.1b (Beta)
 
 MediaCleanup is freely available at 'https://github.com/viniciusov/mediacleanup/'.
 Check it out to see more detailed information or download the newest versions.\n""")
@@ -441,7 +438,7 @@ while True:
     d - Scan for empty directories or with no media files inside;
     f - Scan for files with no media or subtitles extensions;
     l - Create a list with all your media files, like a catalog;
-    A - Run ALL above;
+    A - Run ALL options above (f->d->c->l);
     h - View help/about;
     q - Quit.\nAnd enter the respective key: """)
 
@@ -466,15 +463,15 @@ while True:
     if initialdir=='q':
         break
 
+    if option in ['f','A']:
+        scan_files(open_mediaextensionsfile())
+    
+    if option in ['d','A']:
+        scan_dirs(open_mediaextensionsfile())         
+
     if option in ['c','A']:
         scan_rename(open_expressionsfile())
-
-    if option in ['d','A']:
-        scan_dirs(open_mediaextensionsfile())
-
-    if option in ['f','A']:
-        scan_files(open_mediaextensionsfile())    
-
+ 
     if option in ['l','A']:
         scan_list(open_mediaextensionsfile())
 
