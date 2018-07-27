@@ -265,13 +265,19 @@ You should **choose a path that doesn't contain the MediaCleanup files or any ot
 
 As soon as it completed the scanning, it will show up the information according the chosen option.  
 Everytime some file or folder is about to be renamed or removed, the software will wait for user to confirm, 
-typing 'y' and pressing ENTER.  
-When it is done with the processing, it will wait for user press ENTER to continue until it reach the end.  
+typing 'y' and pressing ENTER.
   
-When all the operation is completed, the script gives the option to run again if user type 'r' and press ENTER.
+When processing is done, it will wait for the user to press ENTER to continue until it reaches the end.  
+  
+When all the operation is completed, the script gives the option to run again if the user type 'r' and press ENTER.
     
 ##### *ps.3: May occur issues with your OS Terminal when displaying long lists of files/folders due its limited number of lines.*
-##### *I recommend changing the Terminal preferences to the MAXIMUM scrollback or screen buffer size.*  
+##### *I recommend changing the Terminal preferences to the MAXIMUM scrollback or screen buffer size.*
+
+## Errors
+You may get errors when executing some options.  
+If removing or renaming items, be sure that you must have Write Permissions to do so, otherwise the script will not remove/rename. In addition, if you get errors when renaming, check if there isn't a file or folder already in that location with the same new name. 
+If you got an unexpected error, please let me know.
   
 ## Configuration Files
 As seen in the **Functionalities** section, some of MediaCleanup steps relies on configuration files.

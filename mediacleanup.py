@@ -118,40 +118,23 @@ def scan_rename(expressions_list):
     print('Total Files:',files)
 
     if len(rename_files) or len(rename_folders): 
+        print('\nItems to be Renamed [',len(rename_files)+len(rename_folders),']:')
 
         if len(rename_files):
-            print('\nFiles to be Renamed [',len(rename_files),']:')
-
             thereis = False
-            for number,old in enumerate(rename_files.keys(),1):
+            for old,new in rename_files.items():
                 if not thereis:
-                        print('\nOLD FILE NAMES')
+                        print('\nFILE(S) TO BE RENAMED')
                 thereis = True
-                print('({}) {}'.format(number,old))
-
-            thereis = False
-            for number,new in enumerate(rename_files.values(),1):
-                if not thereis:
-                        print('\nNEW FILE NAMES')
-                thereis = True
-                print('({}) {}'.format(number,new))
+                print('{} -> {}'.format(os.path.join(os.path.basename(os.path.dirname(old)),os.path.basename(old)), os.path.join(os.path.basename(os.path.dirname(new)),os.path.basename(new))))
 
         if len(rename_folders):
-            print('\nFiles to be Renamed [',len(rename_folders),']:')
-
             thereis = False
-            for number,old in enumerate(rename_folders.keys(),1):
+            for old,new in rename_folders.items():
                 if not thereis:
-                        print('\nOLD FOLDER NAMES')
+                        print('\nFOLDER(S) TO BE RENAMED')
                 thereis = True
-                print('({}) {}'.format(number,old))
-
-            thereis = False
-            for number,new in enumerate(rename_folders.values(),1):
-                if not thereis:
-                        print('\nNEW FOLDER NAMES')
-                thereis = True
-                print('({}) {}'.format(number,new))        
+                print('{} -> {}'.format(os.path.basename(old),os.path.basename(new)))     
 
         rename_confirm = input("\nDo you want to Rename ALL of them?\nType 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if rename_confirm == 'y':
@@ -161,7 +144,7 @@ def scan_rename(expressions_list):
                     try:
                         os.replace(old,new) #os.replace() was chosen because is cross-plataform
                     except:
-                        print("Error when renaming '{}'.\n(Verify if you have Write Permission to rename it).".format(old))
+                        print("Error when renaming '{}'".format(old))
                         errors += 1
 
             if len(rename_folders):
@@ -169,7 +152,7 @@ def scan_rename(expressions_list):
                     try:
                         os.replace(old,new) #os.replace() was chosen because is cross-plataform
                     except:
-                        print("Error when renaming '{}'.\n(Verify if you have Write Permission to rename it).".format(old))
+                        print("Error when renaming '{}'".format(old))
                         errors += 1
 
             if not errors:
@@ -258,7 +241,7 @@ def scan_dirs(allowedextensions):
                     else:
                         shutil.rmtree(path) #Remove folders containing files              
                 except:
-                    print("Error when removing '{}'.\n(Verify if you have Write Permission or if it isn't Read-Only).".format(path))
+                    print("Error when removing '{}'.".format(path))
                     errors += 1
             else:
                 if not errors:
@@ -313,7 +296,7 @@ def scan_files(allowedextensions):
                 try:
                     os.remove(file)
                 except:
-                    print("Error when removing '{}'.\n(Verify if you have Write Permission or if it isn't Read-Only).".format(file))
+                    print("Error when removing '{}'.".format(file))
                     errors += 1
             else:
                 if not errors:
@@ -409,7 +392,7 @@ To start with it, run MediaCleanup, choose one from main options, type the respe
 'l' - MediaCleanup will list all your media files (according 'config/mediaextensions.txt') and show them.
       The user will be asked to save the list as a .txt file (mediacatalog.txt) and the software will ask for destination path.
       If user type 'ENTER' to the destination path, the .txt file will be crated in the same scanned path.
-'A' - Will run ALL above options in a sequence.   
+'A' - Will run ALL options above. For best cleaning, it will run in the following sequence: f->d->c->l. 
 'h' - Show up all this information.
 'q' - The software will stop and quit.
 After choosing the desired option, MediaCleanup will ask for the path to be scanned.
@@ -417,7 +400,7 @@ After choosing the desired option, MediaCleanup will ask for the path to be scan
 About:
 * Created by Vinícius Orsi Valente (2018)
 * Licensed under GPLv3
-* Version 1.0b (Beta)
+* Version 1.1b (Beta)
 
 MediaCleanup is freely available at 'https://github.com/viniciusov/mediacleanup/'.
 Check it out to see more detailed information or download the newest versions.\n""")
@@ -441,7 +424,7 @@ while True:
     d - Scan for empty directories or with no media files inside;
     f - Scan for files with no media or subtitles extensions;
     l - Create a list with all your media files, like a catalog;
-    A - Run ALL above;
+    A - Run ALL options above (f->d->c->l);
     h - View help/about;
     q - Quit.\nAnd enter the respective key: """)
 
@@ -466,15 +449,15 @@ while True:
     if initialdir=='q':
         break
 
+    if option in ['f','A']:
+        scan_files(open_mediaextensionsfile())
+    
+    if option in ['d','A']:
+        scan_dirs(open_mediaextensionsfile())         
+
     if option in ['c','A']:
         scan_rename(open_expressionsfile())
-
-    if option in ['d','A']:
-        scan_dirs(open_mediaextensionsfile())
-
-    if option in ['f','A']:
-        scan_files(open_mediaextensionsfile())    
-
+ 
     if option in ['l','A']:
         scan_list(open_mediaextensionsfile())
 
