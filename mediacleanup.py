@@ -118,37 +118,23 @@ def scan_rename(expressions_list):
     print('Total Files:',files)
 
     if len(rename_files) or len(rename_folders): 
-        print('\nItems to be Renamed [',len(rename_files+renamefolders),']:')
+        print('\nItems to be Renamed [',len(rename_files)+len(rename_folders),']:')
 
         if len(rename_files):
             thereis = False
-            for number,old in enumerate(rename_files.keys(),1):
+            for old,new in rename_files.items():
                 if not thereis:
-                        print('\nOLD FILE NAMES')
+                        print('\nFILE(S) TO BE RENAMED')
                 thereis = True
-                print('({}) {}'.format(number,old))
-
-            thereis = False
-            for number,new in enumerate(rename_files.values(),1):
-                if not thereis:
-                        print('\nNEW FILE NAMES')
-                thereis = True
-                print('({}) {}'.format(number,new))
+                print('{} -> {}'.format(os.path.join(os.path.basename(os.path.dirname(old)),os.path.basename(old)), os.path.join(os.path.basename(os.path.dirname(new)),os.path.basename(new))))
 
         if len(rename_folders):
             thereis = False
-            for number,old in enumerate(rename_folders.keys(),1):
+            for old,new in rename_folders.items():
                 if not thereis:
-                        print('\nOLD FOLDER NAMES')
+                        print('\nFOLDER(S) TO BE RENAMED')
                 thereis = True
-                print('({}) {}'.format(number,old))
-
-            thereis = False
-            for number,new in enumerate(rename_folders.values(),1):
-                if not thereis:
-                        print('\nNEW FOLDER NAMES')
-                thereis = True
-                print('({}) {}'.format(number,new))        
+                print('{} -> {}'.format(os.path.basename(old),os.path.basename(new)))     
 
         rename_confirm = input("\nDo you want to Rename ALL of them?\nType 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if rename_confirm == 'y':
@@ -158,7 +144,7 @@ def scan_rename(expressions_list):
                     try:
                         os.replace(old,new) #os.replace() was chosen because is cross-plataform
                     except:
-                        print("Error when renaming '{}'.\n(Verify if you have Write Permission to rename it).".format(old))
+                        print("Error when renaming '{}'".format(old))
                         errors += 1
 
             if len(rename_folders):
@@ -166,7 +152,7 @@ def scan_rename(expressions_list):
                     try:
                         os.replace(old,new) #os.replace() was chosen because is cross-plataform
                     except:
-                        print("Error when renaming '{}'.\n(Verify if you have Write Permission to rename it).".format(old))
+                        print("Error when renaming '{}'".format(old))
                         errors += 1
 
             if not errors:
@@ -255,7 +241,7 @@ def scan_dirs(allowedextensions):
                     else:
                         shutil.rmtree(path) #Remove folders containing files              
                 except:
-                    print("Error when removing '{}'.\n(Verify if you have Write Permission or if it isn't Read-Only).".format(path))
+                    print("Error when removing '{}'.".format(path))
                     errors += 1
             else:
                 if not errors:
@@ -310,7 +296,7 @@ def scan_files(allowedextensions):
                 try:
                     os.remove(file)
                 except:
-                    print("Error when removing '{}'.\n(Verify if you have Write Permission or if it isn't Read-Only).".format(file))
+                    print("Error when removing '{}'.".format(file))
                     errors += 1
             else:
                 if not errors:
