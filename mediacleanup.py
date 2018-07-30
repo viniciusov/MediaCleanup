@@ -191,7 +191,7 @@ def scan_dirs(allowedextensions):
                     if (os.path.splitext(os.path.join(dirpath,file))[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
                         break
                 else:
-                    remove_list.append([dirpath,1]) #Reason 1: Folder with No Video Files inside
+                    remove_list.append([dirpath,1]) #Reason 1: Folder with No Media Files inside
 
         else:
             if not len(glob.glob(dirpath+'/**/*.*', recursive=True)): #If path DOESN'T have any file
@@ -205,7 +205,7 @@ def scan_dirs(allowedextensions):
                         break
                 else:
                     if dirpath != initialdir: #Avoid deleting the top folder even if it doesn't have media files
-                        remove_list.append([dirpath,1]) #Reason 1: Folder with No Video Files inside
+                        remove_list.append([dirpath,1]) #Reason 1: Folder with No Media Files inside
     
     print('Total Folders:',folders)
     print('Total Files:',files)
@@ -227,7 +227,7 @@ def scan_dirs(allowedextensions):
         for path,reason, in remove_list:
             if reason==1:
                 if not thereis:
-                    print('\nFOLDERS WITH NO VIDEO FILES INSIDE')
+                    print('\nFOLDERS WITH NO MEDIA FILES INSIDE')
                 thereis = True
                 print(path)    
 
