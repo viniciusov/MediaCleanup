@@ -124,17 +124,17 @@ def scan_rename(expressions_list):
             thereis = False
             for old,new in rename_files.items():
                 if not thereis:
-                        print('\nFILE(S) TO BE RENAMED')
+                        print('\nFILES TO BE RENAMED')
                 thereis = True
-                print('{} -> {}'.format(os.path.join(os.path.basename(os.path.dirname(old)),os.path.basename(old)), os.path.join(os.path.basename(os.path.dirname(new)),os.path.basename(new))))
+                print('{} -> {}'.format(old[len(initialdir):],new[len(initialdir):]))
 
         if len(rename_folders):
             thereis = False
             for old,new in rename_folders.items():
                 if not thereis:
-                        print('\nFOLDER(S) TO BE RENAMED')
+                        print('\nFOLDERS TO BE RENAMED')
                 thereis = True
-                print('{} -> {}'.format(os.path.basename(old),os.path.basename(new)))     
+                print('{} -> {}'.format(old[len(initialdir):],new[len(initialdir):]))     
 
         rename_confirm = input("\nDo you want to Rename ALL of them?\nType 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if rename_confirm == 'y':
@@ -185,7 +185,8 @@ def scan_dirs(allowedextensions):
 
         if len(dirnames)==0:
             if len(filenames)==0:  #If don't have any directory inside AND don't have any file
-                remove_list.append([dirpath,0]) #Reason 0: Empty Folder
+                if dirpath != initialdir: #Avoid deleting the top folder even if it is empty
+                    remove_list.append([dirpath,0]) #Reason 0: Empty Folder
             else: #If there is files
                 for file in filenames:        
                     if (os.path.splitext(os.path.join(dirpath,file))[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
@@ -200,7 +201,6 @@ def scan_dirs(allowedextensions):
 
             else: #If path DOES have files
                 for file in glob.iglob(dirpath+'/**/*.*', recursive=True):
-                    print(file)
                     if (os.path.splitext(file)[1]) in allowedextensions:
                         break
                 else:
@@ -400,7 +400,7 @@ After choosing the desired option, MediaCleanup will ask for the path to be scan
 About:
 * Created by Vinícius Orsi Valente (2018)
 * Licensed under GPLv3
-* Version 1.1b (Beta)
+* Version 1.2b (Beta)
 
 MediaCleanup is freely available at 'https://github.com/viniciusov/mediacleanup/'.
 Check it out to see more detailed information or download the newest versions.\n""")
@@ -448,18 +448,20 @@ while True:
         
     if initialdir=='q':
         break
+    else:
+        print('-'*len(initialdir))    
 
-    if option in ['f','A']:
-        scan_files(open_mediaextensionsfile())
-    
-    if option in ['d','A']:
-        scan_dirs(open_mediaextensionsfile())         
+        if option in ['f','A']:
+            scan_files(open_mediaextensionsfile())
+        
+        if option in ['d','A']:
+            scan_dirs(open_mediaextensionsfile())         
 
-    if option in ['c','A']:
-        scan_rename(open_expressionsfile())
- 
-    if option in ['l','A']:
-        scan_list(open_mediaextensionsfile())
+        if option in ['c','A']:
+            scan_rename(open_expressionsfile())
+     
+        if option in ['l','A']:
+            scan_list(open_mediaextensionsfile())
 
     print('-'*45)
     repeat = input("\nType 'r' to Run again or press ENTER to Exit: ").lower()
