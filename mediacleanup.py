@@ -10,12 +10,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Mediacleanup is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with Mediacleanup. If not, see <https://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------
@@ -25,61 +25,61 @@ import re, os, glob, shutil, datetime
 #----------------------- Open 'expressions.txt' -----------------------
 
 def open_expressionsfile():
-    
+
     while True:
+        try:
+            with open('./config/expressions.txt', 'r', encoding="utf-8-sig") as file: #if running .py script
+                data = file.readlines()
+        except:
             try:
-                with open('./config/expressions.txt','r', encoding="utf-8-sig") as file: #if running .py script
+                with open('../config/expressions.txt', 'r', encoding="utf-8-sig") as file: #if running .exe
                     data = file.readlines()
             except:
-                try:
-                    with open('../config/expressions.txt','r', encoding="utf-8-sig") as file: #if running .exe
-                        data = file.readlines()
-                except:     
-                    input("\nError when oppenning 'expressions.txt'.\nVerify if the file is inside the 'config/' folder and press any key to Retry: ")
-                else:
-                    break
+                input("\nError when oppenning 'expressions.txt'.\nVerify if the file is inside the 'config/' folder and press any key to Retry: ")
             else:
                 break
-            
+        else:
+            break
+
     expressions_list = [] #Format: [(old,new)...]
     for line in data: #Analyze every line that don't start with '#'
-        if not (line.startswith('#') or line==''): #Avoid reading empty lines
+        if not (line.startswith('#') or line == ''): #Avoid reading empty lines
             old, new = line.strip().strip("'").split('=')
-            expressions_list.append((old,new))
+            expressions_list.append((old, new))
 
     return expressions_list
 
 #--------------------- Open 'mediaextensions.txt' ---------------------
 
 def open_mediaextensionsfile():
-    
+
     while True:
         try:
-            with open('./config/mediaextensions.txt','r', encoding="utf-8") as file: #if running .py script
+            with open('./config/mediaextensions.txt', 'r', encoding="utf-8") as file: #if running .py script
                 data = file.readlines()
         except:
             try:
-                with open('../config/mediaextensions.txt','r', encoding="utf-8") as file: #if running .exe
+                with open('../config/mediaextensions.txt', 'r', encoding="utf-8") as file: #if running .exe
                     data = file.readlines()
-            except:     
+            except:
                 input("\nError when oppenning 'mediaextensions.txt'.\nVerify if the file is inside the 'config' folder and press any key to Retry: ")
             else:
                 break
         else:
             break
-        
+
     allowedextensions = []
     for line in data: #Analyze every line that don't start with '#'
-        if not (line.startswith('#') or line==''): #Avoid reading empty lines
+        if not (line.startswith('#') or line == ''): #Avoid reading empty lines
             allowedextensions.append(line.strip().lower())
 
-    return allowedextensions         
+    return allowedextensions
 
 #-------------------------- Scan and Rename ---------------------------
 
 def scan_rename(expressions_list):
-          
-    folders,files = 0,0
+
+    folders, files = 0, 0
     rename_files = {} #Format: {'old':'new',...}
     rename_folders = {} #Format: {'old':'new',...}
 
@@ -93,86 +93,86 @@ def scan_rename(expressions_list):
         for file in filenames:
             extension = os.path.splitext(file)[1]
             for exp_old, exp_new in expressions_list:
-                if os.path.join(dirpath,file) not in rename_files.keys(): #If Path NOT in dict  
+                if os.path.join(dirpath, file) not in rename_files.keys(): #If Path NOT in dict
                     temp_file = os.path.splitext(file)[0] #Using filename without extension
-                else: #If Path ALREADY in dict  
-                    temp_file = os.path.splitext(os.path.basename(rename_files[os.path.join(dirpath,file)]))[0] #.basename is needed here to separate file from path
+                else: #If Path ALREADY in dict
+                    temp_file = os.path.splitext(os.path.basename(rename_files[os.path.join(dirpath, file)]))[0] #.basename is needed here to separate file from path
                 if exp_old in temp_file:
-                    temp_file = ' '.join(temp_file.replace(exp_old,exp_new).split()) #Removes extra spacing
-                    temp_file = re.sub(r'[\(\)]','',temp_file) #Don't let '()' remaining in the string
-                    rename_files[os.path.join(dirpath,file)]=os.path.join(dirpath,temp_file+extension)
+                    temp_file = ' '.join(temp_file.replace(exp_old, exp_new).split()) #Removes extra spacing
+                    temp_file = re.sub(r'[\(\)]', '', temp_file) #Don't let '()' remaining in the string
+                    rename_files[os.path.join(dirpath, file)] = os.path.join(dirpath, temp_file+extension)
 
         for directory in dirnames: #Only folders
             for exp_old, exp_new in expressions_list: #Compare with each expression
-                if os.path.join(dirpath,directory) not in rename_folders.keys(): #If Path NOT in dict  
+                if os.path.join(dirpath, directory) not in rename_folders.keys(): #If Path NOT in dict
                     temp_dir = directory
-                else: #If Path ALREADY in dict   
-                    temp_dir = os.path.split(rename_folders[os.path.join(dirpath,directory)])[1] #Get only last DIR
+                else: #If Path ALREADY in dict
+                    temp_dir = os.path.split(rename_folders[os.path.join(dirpath, directory)])[1] #Get only last DIR
                 if exp_old in temp_dir: #Only directories
-                    temp_dir = ' '.join(temp_dir.replace(exp_old,exp_new).split())
-                    temp_dir = re.sub(r'[\(\)]','',temp_dir) #Don't let '()' remaining in the string
-                    rename_folders[os.path.join(dirpath,directory)]=os.path.join(dirpath,temp_dir)
+                    temp_dir = ' '.join(temp_dir.replace(exp_old, exp_new).split())
+                    temp_dir = re.sub(r'[\(\)]', '', temp_dir) #Don't let '()' remaining in the string
+                    rename_folders[os.path.join(dirpath, directory)] = os.path.join(dirpath, temp_dir)
 
-    print('Total Folders:',folders)
-    print('Total Files:',files)
+    print('Total Folders:', folders)
+    print('Total Files:', files)
 
-    if len(rename_files) or len(rename_folders): 
-        print('\nItems to be Renamed [',len(rename_files)+len(rename_folders),']:')
+    if rename_files or rename_folders:
+        print('\nItems to be Renamed [', len(rename_files)+len(rename_folders), ']:')
 
-        if len(rename_files):
+        if rename_files:
             thereis = False
-            for old,new in rename_files.items():
+            for old, new in rename_files.items():
                 if not thereis:
-                        print('\nFILES TO BE RENAMED')
+                    print('\nFILES TO BE RENAMED')
                 thereis = True
-                print('{} -> {}'.format(old[len(initialdir):],new[len(initialdir):]))
+                print('{} -> {}'.format(old[len(initialdir):], new[len(initialdir):]))
 
-        if len(rename_folders):
+        if rename_folders:
             thereis = False
-            for old,new in rename_folders.items():
+            for old, new in rename_folders.items():
                 if not thereis:
-                        print('\nFOLDERS TO BE RENAMED')
+                    print('\nFOLDERS TO BE RENAMED')
                 thereis = True
-                print('{} -> {}'.format(old[len(initialdir):],new[len(initialdir):]))     
+                print('{} -> {}'.format(old[len(initialdir):], new[len(initialdir):]))
 
         rename_confirm = input("\nDo you want to Rename ALL of them?\nType 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if rename_confirm == 'y':
             errors = 0
-            if len(rename_files):  
-                for old,new in rename_files.items():
+            if rename_files:
+                for old, new in rename_files.items():
                     try:
-                        os.replace(old,new) #os.replace() was chosen because is cross-plataform
+                        os.replace(old, new) #os.replace() was chosen because is cross-plataform
                     except:
                         print("Error when renaming file '{}'".format(old))
                         errors += 1
 
-            if len(rename_folders):
-                for old,new in rename_folders.items():
+            if rename_folders:
+                for old, new in rename_folders.items():
                     try:
-                        os.replace(old,new) #os.replace() was chosen because is cross-plataform
+                        os.replace(old, new) #os.replace() was chosen because is cross-plataform
                     except:
                         print("Error when renaming folder '{}'".format(old))
                         errors += 1
 
             if not errors:
-                        print('\n***All items renamed!***')
+                print('\n***All items renamed!***')
             else:
-                print('\n***{} error(s) occurred when renaming.***'.format(errors))                  
+                print('\n***{} error(s) occurred when renaming.***'.format(errors))
         else:
-            print('Operation canceled.')    
+            print('Operation canceled.')
 
     else:
         print('\nNo items to Rename.')
 
-    if option == 'A':     
+    if option == 'A':
         input('\n(Press ENTER to continue)')
-        print('-------------------------')   
+        print('-------------------------')
 
 #--------------------------- Scan for Dirs ----------------------------
 
 def scan_dirs(allowedextensions):
-          
-    folders,files = 0,0
+
+    folders, files = 0, 0
     remove_list = [] #Format: [[path,reason],...]
 
     print("\nScanning '{}' for Empty Folders or with no Media Files inside...".format(initialdir))
@@ -184,101 +184,100 @@ def scan_dirs(allowedextensions):
 
         if dirpath != initialdir: #Avoid deleting the top folder even if it is empty
 
-            if len(dirnames)==0:
-                if len(filenames)==0:  #If don't have any directory inside AND don't have any file
-                    remove_list.append([dirpath,0]) #Reason 0: Empty Folder
+            if dirnames == 0:
+                if filenames == 0:  #If don't have any directory inside AND don't have any file
+                    remove_list.append([dirpath, 0]) #Reason 0: Empty Folder
                 else: #If there is files
-                    for file in filenames:        
-                        if (os.path.splitext(os.path.join(dirpath,file))[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
+                    for file in filenames:
+                        if os.path.splitext(os.path.join(dirpath, file))[1].lower() in allowedextensions: #[1] is the second item of the generated tuple (the extension, in this case)
                             break
                     else:
-                        remove_list.append([dirpath,1]) #Reason 1: Folder with No Media Files inside
+                        remove_list.append([dirpath, 1]) #Reason 1: Folder with No Media Files inside
 
             else:
-                if not len(glob.glob(dirpath+'/**/*.*', recursive=True)): #If path DOESN'T have any file
-                    remove_list.append([dirpath,0]) #Reason 0: Empty Folder
+                if not glob.glob(dirpath+'/**/*.*', recursive=True): #If path DOESN'T have any file
+                    remove_list.append([dirpath, 0]) #Reason 0: Empty Folder
 
                 else: #If path DOES have files
                     for file in glob.iglob(dirpath+'/**/*.*', recursive=True):
-                        if (os.path.splitext(file)[1]) in allowedextensions:
+                        if os.path.splitext(file)[1] in allowedextensions:
                             break
                     else:
-                        remove_list.append([dirpath,1]) #Reason 1: Folder with No Media Files inside
-    
-    print('Total Folders:',folders)
-    print('Total Files:',files)
-    
-    if len(remove_list):
+                        remove_list.append([dirpath, 1]) #Reason 1: Folder with No Media Files inside
+
+    print('Total Folders:', folders)
+    print('Total Files:', files)
+
+    if remove_list:
         remove_list.sort(key=lambda x: x[1]) #sorts Inplace
-        
-        print('\nItems to be Removed [',len(remove_list),']:')
+
+        print('\nItems to be Removed [', len(remove_list), ']:')
 
         thereis = False
-        for path,reason in remove_list:
-            if reason==0:
+        for path, reason in remove_list:
+            if reason == 0:
                 if not thereis:
                     print('\nEMPTY FOLDERS')
                 thereis = True
                 print(path)
-        
+
         thereis = False
-        for path,reason, in remove_list:
-            if reason==1:
+        for path, reason in remove_list:
+            if reason == 1:
                 if not thereis:
                     print('\nFOLDERS WITH NO MEDIA FILES INSIDE')
                 thereis = True
-                print(path)    
+                print(path)
 
         remove_confirm = input("\nDo you want to Remove ALL of them?\nType 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if remove_confirm == 'y':
             errors = 0
-            for path,reason in remove_list:
+            for path, reason in remove_list:
                 try:
-                    if reason==0:
-                        os.rmdir(path) #Remove only empty folders                   
+                    if reason == 0:
+                        os.rmdir(path) #Remove only empty folders
                     else:
-                        shutil.rmtree(path) #Remove folders containing files              
+                        shutil.rmtree(path) #Remove folders containing files
                 except:
                     print("Error when removing '{}'.".format(path))
                     errors += 1
+            if not errors:
+                print('\n***All items removed!***')
             else:
-                if not errors:
-                    print('\n***All items removed!***')
-                else:
-                    print('\n***{} error(s) occurred.***'.format(errors))
+                print('\n***{} error(s) occurred.***'.format(errors))
         else:
             print('Operation canceled.')
 
     else:
-        print('\nNo items to Remove.')       
+        print('\nNo items to Remove.')
 
-    if option == 'A':  
+    if option == 'A':
         input('\n(Press ENTER to continue)')
-        print('-------------------------')   
+        print('-------------------------')
 
 #-------------------------- Scan for Files ----------------------------
 
 def scan_files(allowedextensions):
 
-    folders,files = 0,0
+    folders, files = 0, 0
     remove_list = []
 
     print("\nScanning '{}' for extensions that match 'mediaextensions.txt'...".format(initialdir))
-    
+
     for dirpath, dirnames, filenames in os.walk(initialdir):
 
         folders += len(dirnames)
         files += len(filenames)
 
         for file in filenames:
-            if not ((os.path.splitext(os.path.join(dirpath,file))[1].lower() in allowedextensions+['.srt','.sub']) or file=='mediacatalog.txt'): #'.lower' avoids it remove the file if its extension is .AVI
-                remove_list.append(os.path.join(dirpath,file)) #Reason 2: File with No Media Extension
-                
-    print('Total Folders:',folders)
-    print('Total Files:',files)
+            if not ((os.path.splitext(os.path.join(dirpath, file))[1].lower() in allowedextensions+['.srt', '.sub']) or file == 'mediacatalog.txt'): #'.lower' avoids it remove .AVI
+                remove_list.append(os.path.join(dirpath, file)) #Reason 2: File with No Media Extension
 
-    if len(remove_list):
-        print('\nItems to be Removed [',len(remove_list),']:')
+    print('Total Folders:', folders)
+    print('Total Files:', files)
+
+    if remove_list:
+        print('\nItems to be Removed [', len(remove_list), ']:')
 
         thereis = False
         for path in remove_list:
@@ -286,36 +285,35 @@ def scan_files(allowedextensions):
                 print("\nFILE EXTENSIONS DOESN'T MATCH")
             thereis = True
             print(path)
-        
+
         remove_confirm = input("\nDo you want to Remove ALL of them?\nType 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if remove_confirm == 'y':
-            errors = 0            
+            errors = 0
             for file in remove_list:
                 try:
                     os.remove(file)
                 except:
                     print("Error when removing '{}'.".format(file))
                     errors += 1
+            if not errors:
+                print('\n***All items removed!***')
             else:
-                if not errors:
-                    print('\n***All items removed!***')
-                else:
-                    print('\n***{} error(s) occurred.***'.format(errors))
+                print('\n***{} error(s) occurred.***'.format(errors))
         else:
             print('Operation canceled.')
 
     else:
         print('\nNo items to Remove.')
 
-    if option == 'A': 
+    if option == 'A':
         input('\n(Press ENTER to continue)')
-        print('-------------------------')  
+        print('-------------------------')
 
 #--------------------------- Scan and List ----------------------------
 
-def scan_list(allowedextensions): 
+def scan_list(allowedextensions):
 
-    folders,files = 0,0
+    folders, files = 0, 0
     catalog = []
 
     print("\nScanning '{}' for Media Files...".format(initialdir))
@@ -326,15 +324,15 @@ def scan_list(allowedextensions):
         files += len(filenames)
 
         for file in filenames:
-            if (os.path.splitext(os.path.join(dirpath,file))[1].lower() in allowedextensions):
-                catalog.append(os.path.join(os.path.basename(dirpath),file))
-                    
-    print('Total Folders:',folders)
-    print('Total Files:',files)
-        
-    if len(catalog):
-        print('\nYour Media Files [',len(catalog),']:\n')
-        
+            if os.path.splitext(os.path.join(dirpath, file))[1].lower() in allowedextensions:
+                catalog.append(os.path.join(os.path.basename(dirpath), file))
+
+    print('Total Folders:', folders)
+    print('Total Files:', files)
+
+    if catalog:
+        print('\nYour Media Files [', len(catalog), ']:\n')
+
         catalog.sort()
         for file in catalog:
             print(file)
@@ -343,36 +341,36 @@ def scan_list(allowedextensions):
         if write_confirm == 'y':
             write_path = input("\nType the Path where do you want to save or press ENTER to use the same Path:\n(Current Path: {})\n".format(initialdir))
 
-            while not (os.access(write_path, os.W_OK) or write_path==''):
+            while not (os.access(write_path, os.W_OK) or write_path == ''):
                 write_path = input("\nInvalid Path. Type the Path again or press ENTER to use the same directory:\n")
 
-            if write_path=='':
-                write_path=initialdir
+            if write_path == '':
+                write_path = initialdir
             try:
-                f= open(write_path+"/mediacatalog.txt","w+", encoding="utf-8")
+                f = open(write_path+"/mediacatalog.txt", "w+", encoding="utf-8")
                 f.write("Media files in '{}':\n\n".format(initialdir))
-                
-                for number,file in enumerate(catalog,1): #counting starts with 1
+
+                for number, file in enumerate(catalog, 1): #counting starts with 1
                     f.write("("+str(number)+") "+str(file)+"\n")
-                    
+
                 now = datetime.datetime.now()
                 f.write("\n---------------------------------------------\nCreated at {} with MediaCleanup.\n(https://github.com/viniciusov/mediacleanup)".format(now.strftime("%Y-%m-%d %H:%M")))
                 f.close()
-            except:    
+            except:
                 print("Error when creating 'mediacatalog.txt'.\n(Verify if you have permission to write in {}).".format(write_path))
             else:
                 print("***'mediacatalog.txt' successfully created at '{}'.***".format(write_path))
-        
+
         else:
             print('Operation canceled.')
-            
+
     else:
-        print('\nNo Media Files to show.')       
+        print('\nNo Media Files to show.')
 
 #-------------------------- Show help/about ---------------------------
 
 def show_help():
-    clear_screen() 
+    clear_screen()
     print("""MediaCleanup is a free tool to cleanup your media files and folders.
 It will scan a provided path for folders and media files, can find specific expressions and extensions, allowing to rename or remove them.
 
@@ -390,7 +388,7 @@ To start with it, run MediaCleanup, choose one from main options, type the respe
 'l' - MediaCleanup will list all your media files (according 'config/mediaextensions.txt') and show them.
       The user will be asked to save the list as a .txt file (mediacatalog.txt) and the software will ask for destination path.
       If user type 'ENTER' to the destination path, the .txt file will be crated in the same scanned path.
-'A' - Will run ALL options above. For best cleaning, it will run in the following sequence: f->d->c->l. 
+'A' - Will run ALL options above. For best cleaning, it will run in the following sequence: f->d->c->l.
 'h' - Show up all this information.
 'q' - The software will stop and quit.
 After choosing the desired option, MediaCleanup will ask for the path to be scanned.
@@ -398,20 +396,20 @@ After choosing the desired option, MediaCleanup will ask for the path to be scan
 About:
 * Created by Vinícius Orsi Valente (2018)
 * Licensed under GPLv3
-* Version 1.2b (Beta)
+* Version 1.3b (Beta)
 
 MediaCleanup is freely available at 'https://github.com/viniciusov/mediacleanup/'.
 Check it out to see more detailed information or download the newest versions.\n""")
     input("(Press ENTER to Quit help/about and return)")
 
-#---------------------------- Clear Screen ----------------------------    
+#---------------------------- Clear Screen ----------------------------
 
 def clear_screen():
-    if os.name =='nt':
+    if os.name == 'nt':
         os.system('cls')
     else:
-        os.system('clear')   
-        
+        os.system('clear')
+
 #---------------------- Main Program starts below ---------------------
 
 while True:
@@ -426,44 +424,44 @@ while True:
     h - View help/about;
     q - Quit.\nAnd enter the respective key: """)
 
-    while not (option in ['c','d','f','l','A','h','q']):
+    while not (option in ['c', 'd', 'f', 'l', 'A', 'h', 'q']):
         option = input("Invalid Option. Please choose one of the options above or type 'q' to quit: ")
 
-    if option=='h':
+    if option == 'h':
         show_help()
-        continue    
+        continue
 
-    if option=='q':
-        break    
+    if option == 'q':
+        break
 
-    if os.name=='nt':
+    if os.name == 'nt':
         initialdir = input('\nType the Path do you wanto to Scan (for example, C:\\Users\\<user>\\Videos):\n')
     else:
-        initialdir = input('\nType the Path do you wanto to Scan (for example, /home/<user>/Videos):\n') 
-    
-    while not (os.access(initialdir, os.W_OK) or initialdir=='q'):
+        initialdir = input('\nType the Path do you wanto to Scan (for example, /home/<user>/Videos):\n')
+
+    while not (os.access(initialdir, os.W_OK) or initialdir == 'q'):
         initialdir = input("\nInvalid Path or you don't have permission to Read it.\nType the Path again or type 'q' to quit:\n")
-        
-    if initialdir=='q':
+
+    if initialdir == 'q':
         break
     else:
-        print('-'*len(initialdir))    
+        print('-'*len(initialdir))
 
-        if option in ['f','A']:
+        if option in ['f', 'A']:
             scan_files(open_mediaextensionsfile())
-        
-        if option in ['d','A']:
-            scan_dirs(open_mediaextensionsfile())         
 
-        if option in ['c','A']:
+        if option in ['d', 'A']:
+            scan_dirs(open_mediaextensionsfile())
+
+        if option in ['c', 'A']:
             scan_rename(open_expressionsfile())
-     
-        if option in ['l','A']:
+
+        if option in ['l', 'A']:
             scan_list(open_mediaextensionsfile())
 
     print('-'*45)
     repeat = input("\nType 'r' to Run again or press ENTER to Exit: ").lower()
-    if repeat=='r':
+    if repeat == 'r':
         continue
     else:
         break
