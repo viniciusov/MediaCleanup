@@ -82,7 +82,6 @@ def scan_rename(expressions_list):
     folders,files = 0,0
     rename_files = {} #Format: {'old':'new',...}
     rename_folders = {} #Format: {'old':'new',...}
-    rename_dic = {} #Format: {'old':'new',...}
 
     print("\nScanning '{}' for Folders and Filenames that match 'expressions.txt'...".format(initialdir))
 
@@ -144,7 +143,7 @@ def scan_rename(expressions_list):
                     try:
                         os.replace(old,new) #os.replace() was chosen because is cross-plataform
                     except:
-                        print("Error when renaming '{}'".format(old))
+                        print("Error when renaming file '{}'".format(old))
                         errors += 1
 
             if len(rename_folders):
@@ -152,7 +151,7 @@ def scan_rename(expressions_list):
                     try:
                         os.replace(old,new) #os.replace() was chosen because is cross-plataform
                     except:
-                        print("Error when renaming '{}'".format(old))
+                        print("Error when renaming folder '{}'".format(old))
                         errors += 1
 
             if not errors:
@@ -204,8 +203,7 @@ def scan_dirs(allowedextensions):
                         if (os.path.splitext(file)[1]) in allowedextensions:
                             break
                     else:
-                        if dirpath != initialdir: #Avoid deleting the top folder even if it doesn't have media files
-                            remove_list.append([dirpath,1]) #Reason 1: Folder with No Media Files inside
+                        remove_list.append([dirpath,1]) #Reason 1: Folder with No Media Files inside
     
     print('Total Folders:',folders)
     print('Total Files:',files)
