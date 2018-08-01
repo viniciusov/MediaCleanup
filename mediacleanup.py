@@ -183,29 +183,29 @@ def scan_dirs(allowedextensions):
         folders += len(dirnames)
         files += len(filenames)
 
-        if len(dirnames)==0:
-            if len(filenames)==0:  #If don't have any directory inside AND don't have any file
-                if dirpath != initialdir: #Avoid deleting the top folder even if it is empty
-                    remove_list.append([dirpath,0]) #Reason 0: Empty Folder
-            else: #If there is files
-                for file in filenames:        
-                    if (os.path.splitext(os.path.join(dirpath,file))[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
-                        break
-                else:
-                    remove_list.append([dirpath,1]) #Reason 1: Folder with No Media Files inside
+        if dirpath != initialdir: #Avoid deleting the top folder even if it is empty
 
-        else:
-            if not len(glob.glob(dirpath+'/**/*.*', recursive=True)): #If path DOESN'T have any file
-                if dirpath != initialdir: #Avoid deleting the top folder even if it is empty
+            if len(dirnames)==0:
+                if len(filenames)==0:  #If don't have any directory inside AND don't have any file
                     remove_list.append([dirpath,0]) #Reason 0: Empty Folder
-
-            else: #If path DOES have files
-                for file in glob.iglob(dirpath+'/**/*.*', recursive=True):
-                    if (os.path.splitext(file)[1]) in allowedextensions:
-                        break
-                else:
-                    if dirpath != initialdir: #Avoid deleting the top folder even if it doesn't have media files
+                else: #If there is files
+                    for file in filenames:        
+                        if (os.path.splitext(os.path.join(dirpath,file))[1].lower() in allowedextensions): #[1] is the second item of the generated tuple (the extension, in this case)
+                            break
+                    else:
                         remove_list.append([dirpath,1]) #Reason 1: Folder with No Media Files inside
+
+            else:
+                if not len(glob.glob(dirpath+'/**/*.*', recursive=True)): #If path DOESN'T have any file
+                    remove_list.append([dirpath,0]) #Reason 0: Empty Folder
+
+                else: #If path DOES have files
+                    for file in glob.iglob(dirpath+'/**/*.*', recursive=True):
+                        if (os.path.splitext(file)[1]) in allowedextensions:
+                            break
+                    else:
+                        if dirpath != initialdir: #Avoid deleting the top folder even if it doesn't have media files
+                            remove_list.append([dirpath,1]) #Reason 1: Folder with No Media Files inside
     
     print('Total Folders:',folders)
     print('Total Files:',files)
