@@ -209,7 +209,7 @@ There are two ways for running this script:
   > python mediacleanup.py
 
 #### 2) If you don't have Python>=3
-- If you are on **Windows**: there's no need to install python. I've already create a .Exe file ready to be executed. 
+- If you are on **Windows**, there's no need to install python. I've already create a .exe file ready to be executed. 
   - Go to the folder 'mediacleanup/exe/';
   - Click on the executable file 'mediacleanup.exe'.
 
@@ -244,7 +244,8 @@ The user will be asked to save the list as a .txt file (mediacatalog.txt) and th
 If user type 'ENTER' to the destination path, the .txt file will be crated in the same scanned path.*
 
 - **A**:
-*If user choose A (note the Caps here), the script will run ALL above options in a sequence.*
+*If user choose A (note the Caps here), the script will run ALL above options in a sequence.  
+For best cleaning, it will run in the following sequence: f->d->c->l.*   
 
 - **h**:
 *Show up help and about information.*
@@ -273,11 +274,6 @@ When all the operation is completed, the script gives the option to run again if
     
 ##### *ps.3: May occur issues with your OS Terminal when displaying long lists of files/folders due its limited number of lines.*
 ##### *I recommend changing the Terminal preferences to the MAXIMUM scrollback or screen buffer size.*
-
-## Errors
-You may get errors when executing some options.  
-If removing or renaming items, be sure that you must have Write Permissions to do so, otherwise the script will not remove/rename. In addition, if you get errors when renaming, check if there isn't a file or folder already in that location with the same new name. 
-If you got an unexpected error, please let me know.
   
 ## Configuration Files
 As seen in the **Functionalities** section, some of MediaCleanup steps relies on configuration files.
@@ -285,28 +281,33 @@ The configuration files are .txt files inside 'config/' folder.
 
 There are 2 configuration files:
 - **mediaextensions.txt**:
-The content of this file tells to the MediaCleanup which extensions will be considered MEDIA EXTENSIONS.
-All extensions written in a single line that doesn't start with '#' will be used to compare against the files extensions.
-You can edit this this file, as long you maintain the same format: one extension per line, starting with a dot.
-If this file is removed or renamed, the script will show an error.
+The content of this file tells to the MediaCleanup which extensions will be considered media extensions.  
+All extensions written in a single line that doesn't start with '#' will be used to compare against the files extensions.  
+You can edit this this file, as long you maintain the same format: one extension per line, starting with a dot.  
+If this file is removed or renamed, the script will show an error.  
 
 - **expressions.txt**:
-In this file there are all the options you want to find in folders and filenames and the expressions you want to replace them.
-You can edit this file too, but you have to maintain this specific format: 'old=new'.
-For example, if you want to replace all letter 'x' in folder and filenames for 'y', you just have to write 'x=y'.
-As the 'mediaextensions.txt', you should write one expression per line, in a line that doesn't start with '#'.
-If this file is removed or renamed, the script will show an error too.
+In this file there are all the options you want to find in folders and filenames and the expressions you want to replace them.  
+You can edit this file too, but you have to maintain this specific format: 'old=new'.  
+For example, if you want to replace all letter 'x' in folder and filenames for 'y', you just have to write 'x=y'.  
+As the 'mediaextensions.txt', you should write one expression per line, in a line that doesn't start with '#'.  
+If this file is removed or renamed, the script will show an error too.  
 
-## License
-All this project is under GPLv3 license. 
-You can find the complete license in the 'COPYING.txt' file and a Copyright note inside the main script.
-These information must not been removed if you're using or sharing this project.
+## Errors
+You may get errors when executing some options.  
+If removing or renaming items, be sure that you must have Write Permissions to do so, otherwise the script will not remove/rename. In addition, if you get errors when renaming, check if there isn't a file or folder already in that location with the same new name.  
+If you got an unexpected error, please let me know.  
 
 ## Warning
 **Use at your own risk!**
 
 Although the script always shows what's going to be renamed or removed and asks for confirmation, if you have very important data 
 inside the path informed I recommend you backup your data.
+
+## License
+All this project is under GPLv3 license. 
+You can find the complete license in the 'COPYING.txt' file and a Copyright note inside the main script.
+These information must not been removed if you're using or sharing this project.
 
 ## Contact
 If you have any doubt, suggestions or want to contact me, use my email viniciusov@hotmail.com.

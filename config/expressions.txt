@@ -45,10 +45,6 @@
 ﻿#Expressions to find and replace in folders and filenames
 #They are Case-sensitive to avoid mixing up filenames
 #You must maintain the format 'old=new'
-'[=('
-']=)'
-'_= '
-'.= '
 'DvDrip='
 'DVDRip='
 'XVID='
@@ -59,6 +55,7 @@
 'aXXo='
 'STV='
 'FXG='
+'ETRG='
 'torrent='
 'www='
 'WWW='
@@ -66,7 +63,6 @@
 '.COM='
 '.br='
 '.BR='
-'ETRG='
 'AAC='
 'aac='
 'x264='
@@ -81,8 +77,8 @@
 'MAXSPEED='
 'DTS='
 'JYK='
-'RARBG='
 'AC3='
+'5.1='
 'BRRip='
 'BrRip='
 'ViZNU='
@@ -100,4 +96,12 @@
 'ShAaNiG='
 'ORENJi='
 'SaM='
+<<<<<<< HEAD
 >>>>>>> 327fc784839d8cb0a74c44d79e763b186a80721a
+=======
+'[=('
+']=)'
+'.= '
+'-= '
+'_= '
+>>>>>>> f17ff6e7badaa8d7f24e12fd615cfbc467310f40
