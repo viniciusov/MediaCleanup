@@ -1,8 +1,9 @@
-#Expressions to find and replace in folders and filenames
+﻿#Expressions to find and replace in folders and filenames
 #They are Case-sensitive to avoid mixing up filenames
 #You must maintain the format 'old=new'
 'DvDrip='
 'DVDRip='
+'DVDScr='
 'XVID='
 'XviD='
 'XViD='
@@ -12,6 +13,7 @@
 'STV='
 'FXG='
 'ETRG='
+'RARBG='
 'torrent='
 'www='
 'WWW='
