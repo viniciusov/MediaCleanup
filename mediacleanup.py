@@ -100,7 +100,7 @@ def scan_rename(expressions_list):
                 if exp_old in temp_file:
                     temp_file = ' '.join(temp_file.replace(exp_old, exp_new).split()) #Removes extra spacing
                     temp_file = ' '.join(re.sub(r'\(\)', '', temp_file).split()) #Don't let '()' remaining in the string and removes extra spaces again
-                    if temp_file.endswith('-'):
+                    while temp_file.endswith('-') or temp_file.endswith('_') or temp_file.endswith('.') or temp_file.endswith(' '):
                         temp_file = temp_file[:-1]
                     rename_files[os.path.join(dirpath, file)] = os.path.join(dirpath, temp_file+extension)
 
@@ -113,7 +113,7 @@ def scan_rename(expressions_list):
                 if exp_old in temp_dir: #Only directories
                     temp_dir = ' '.join(temp_dir.replace(exp_old, exp_new).split()) #Removes extra spaces
                     temp_dir = ' '.join(re.sub(r'\(\)', '', temp_dir).split()) #Don't let '()' remaining in the string and removes extra spaces again
-                    if temp_dir.endswith('-'):
+                    if temp_dir.endswith('-') or temp_dir.endswith('_') or temp_dir.endswith('.') or temp_dir.endswith(' '):
                         temp_dir = temp_dir[:-1]
                     rename_folders[os.path.join(dirpath, directory)] = os.path.join(dirpath, temp_dir)
 
