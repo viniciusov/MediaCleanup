@@ -28,15 +28,21 @@
    'Scripts\\mediacleanup\\mediacleanup.py',
    'PYSOURCE'),
 <<<<<<< HEAD
+<<<<<<< HEAD
   ('api-ms-win-crt-runtime-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-crt-runtime-l1-1-0.dll',
 =======
+=======
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
   ('api-ms-win-crt-stdio-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-crt-stdio-l1-1-0.dll',
    'BINARY'),
   ('python36.dll', 'c:\\programdata\\anaconda3\\python36.dll', 'BINARY'),
   ('api-ms-win-crt-locale-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-crt-locale-l1-1-0.dll',
+<<<<<<< HEAD
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
+=======
 >>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
    'BINARY'),
   ('VCRUNTIME140.dll',
@@ -44,13 +50,17 @@
    'BINARY'),
   ('api-ms-win-crt-runtime-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-crt-runtime-l1-1-0.dll',
+<<<<<<< HEAD
    'BINARY'),
   ('api-ms-win-crt-heap-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-crt-heap-l1-1-0.dll',
+=======
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
    'BINARY'),
   ('api-ms-win-crt-math-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-crt-math-l1-1-0.dll',
    'BINARY'),
+<<<<<<< HEAD
 <<<<<<< HEAD
   ('api-ms-win-crt-stdio-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-crt-stdio-l1-1-0.dll',
@@ -64,6 +74,12 @@
    'c:\\programdata\\anaconda3\\api-ms-win-crt-heap-l1-1-0.dll',
    'BINARY'),
   ('ucrtbase.dll', 'c:\\programdata\\anaconda3\\ucrtbase.dll', 'BINARY'),
+=======
+  ('api-ms-win-crt-heap-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-crt-heap-l1-1-0.dll',
+   'BINARY'),
+  ('ucrtbase.dll', 'c:\\programdata\\anaconda3\\ucrtbase.dll', 'BINARY'),
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
   ('api-ms-win-crt-string-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-crt-string-l1-1-0.dll',
    'BINARY'),
@@ -72,17 +88,24 @@
    'BINARY'),
   ('api-ms-win-crt-conio-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-crt-conio-l1-1-0.dll',
+<<<<<<< HEAD
+=======
    'BINARY'),
   ('api-ms-win-crt-filesystem-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-crt-filesystem-l1-1-0.dll',
 >>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
    'BINARY'),
-  ('api-ms-win-crt-string-l1-1-0.dll',
-   'c:\\programdata\\anaconda3\\api-ms-win-crt-string-l1-1-0.dll',
+  ('api-ms-win-crt-filesystem-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-crt-filesystem-l1-1-0.dll',
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
+   'BINARY'),
+  ('api-ms-win-crt-convert-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-crt-convert-l1-1-0.dll',
    'BINARY'),
   ('api-ms-win-crt-time-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-crt-time-l1-1-0.dll',
    'BINARY'),
+<<<<<<< HEAD
 <<<<<<< HEAD
   ('api-ms-win-crt-filesystem-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-crt-filesystem-l1-1-0.dll',
@@ -128,10 +151,15 @@
    'BINARY'),
   ('api-ms-win-core-timezone-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-timezone-l1-1-0.dll',
+=======
+  ('api-ms-win-core-processthreads-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-processthreads-l1-1-0.dll',
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
    'BINARY'),
-  ('api-ms-win-core-processenvironment-l1-1-0.dll',
-   'c:\\programdata\\anaconda3\\api-ms-win-core-processenvironment-l1-1-0.dll',
+  ('api-ms-win-core-synch-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-synch-l1-1-0.dll',
    'BINARY'),
+<<<<<<< HEAD
 <<<<<<< HEAD
   ('api-ms-win-core-handle-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-handle-l1-1-0.dll',
@@ -141,6 +169,40 @@
    'BINARY'),
   ('api-ms-win-core-synch-l1-2-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-synch-l1-2-0.dll',
+=======
+  ('api-ms-win-core-util-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-util-l1-1-0.dll',
+=======
+  ('api-ms-win-core-processthreads-l1-1-1.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-processthreads-l1-1-1.dll',
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
+   'BINARY'),
+  ('api-ms-win-core-handle-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-handle-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-file-l2-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-file-l2-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-file-l1-2-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-file-l1-2-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-timezone-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-timezone-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-console-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-console-l1-1-0.dll',
+   'BINARY'),
+<<<<<<< HEAD
+  ('api-ms-win-core-processenvironment-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-processenvironment-l1-1-0.dll',
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
+   'BINARY'),
+  ('api-ms-win-core-processthreads-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-processthreads-l1-1-0.dll',
+   'BINARY'),
+<<<<<<< HEAD
+  ('api-ms-win-core-string-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-string-l1-1-0.dll',
 =======
   ('api-ms-win-core-util-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-util-l1-1-0.dll',
@@ -155,16 +217,10 @@
    'c:\\programdata\\anaconda3\\api-ms-win-core-processenvironment-l1-1-0.dll',
 >>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
    'BINARY'),
-  ('api-ms-win-core-processthreads-l1-1-0.dll',
-   'c:\\programdata\\anaconda3\\api-ms-win-core-processthreads-l1-1-0.dll',
-   'BINARY'),
-<<<<<<< HEAD
-  ('api-ms-win-core-string-l1-1-0.dll',
-   'c:\\programdata\\anaconda3\\api-ms-win-core-string-l1-1-0.dll',
-   'BINARY'),
   ('api-ms-win-core-sysinfo-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-sysinfo-l1-1-0.dll',
    'BINARY'),
+<<<<<<< HEAD
   ('api-ms-win-core-heap-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-heap-l1-1-0.dll',
    'BINARY'),
@@ -201,10 +257,18 @@
 <<<<<<< HEAD
   ('api-ms-win-core-localization-l1-2-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-localization-l1-2-0.dll',
+=======
+  ('api-ms-win-core-file-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-file-l1-1-0.dll',
    'BINARY'),
-  ('api-ms-win-core-file-l1-2-0.dll',
-   'c:\\programdata\\anaconda3\\api-ms-win-core-file-l1-2-0.dll',
+  ('api-ms-win-core-synch-l1-2-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-synch-l1-2-0.dll',
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
    'BINARY'),
+  ('api-ms-win-core-libraryloader-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-libraryloader-l1-1-0.dll',
+   'BINARY'),
+<<<<<<< HEAD
   ('api-ms-win-core-util-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-util-l1-1-0.dll',
    'BINARY'),
@@ -214,6 +278,14 @@
   ('api-ms-win-core-profile-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-profile-l1-1-0.dll',
    'BINARY'),
+=======
+  ('api-ms-win-core-rtlsupport-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-rtlsupport-l1-1-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-profile-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-profile-l1-1-0.dll',
+   'BINARY'),
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
   ('api-ms-win-core-namedpipe-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-namedpipe-l1-1-0.dll',
    'BINARY'),
@@ -222,6 +294,7 @@
    'BINARY'),
   ('api-ms-win-core-errorhandling-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-errorhandling-l1-1-0.dll',
+<<<<<<< HEAD
    'BINARY'),
   ('api-ms-win-core-localization-l1-2-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-localization-l1-2-0.dll',
@@ -237,11 +310,23 @@
   ('api-ms-win-core-file-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-file-l1-1-0.dll',
 =======
+=======
+   'BINARY'),
+  ('api-ms-win-core-localization-l1-2-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-localization-l1-2-0.dll',
+   'BINARY'),
+  ('api-ms-win-core-interlocked-l1-1-0.dll',
+   'c:\\programdata\\anaconda3\\api-ms-win-core-interlocked-l1-1-0.dll',
+   'BINARY'),
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
   ('api-ms-win-core-string-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-string-l1-1-0.dll',
    'BINARY'),
   ('api-ms-win-core-debug-l1-1-0.dll',
    'c:\\programdata\\anaconda3\\api-ms-win-core-debug-l1-1-0.dll',
+<<<<<<< HEAD
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
+=======
 >>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
    'BINARY'),
   ('_ssl', 'c:\\programdata\\anaconda3\\DLLs\\_ssl.pyd', 'EXTENSION'),
@@ -266,7 +351,11 @@
  False,
  False,
 <<<<<<< HEAD
+<<<<<<< HEAD
  1533362927,
+=======
+ 1533398942,
+>>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
 =======
  1533398942,
 >>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
