@@ -197,9 +197,12 @@
   ('pydoc', 'c:\\programdata\\anaconda3\\lib\\pydoc.py', 'PYMODULE'),
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
+=======
+>>>>>>> v1.3b
   ('copy', 'c:\\programdata\\anaconda3\\lib\\copy.py', 'PYMODULE'),
   ('gettext', 'c:\\programdata\\anaconda3\\lib\\gettext.py', 'PYMODULE'),
   ('getopt', 'c:\\programdata\\anaconda3\\lib\\getopt.py', 'PYMODULE'),
@@ -261,6 +264,7 @@
   ('doctest', 'c:\\programdata\\anaconda3\\lib\\doctest.py', 'PYMODULE'),
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   ('textwrap', 'c:\\programdata\\anaconda3\\lib\\textwrap.py', 'PYMODULE'),
   ('argparse', 'c:\\programdata\\anaconda3\\lib\\argparse.py', 'PYMODULE'),
   ('pprint', 'c:\\programdata\\anaconda3\\lib\\pprint.py', 'PYMODULE'),
@@ -292,6 +296,8 @@
 >>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
 =======
 >>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
+=======
+>>>>>>> v1.3b
   ('enum', 'c:\\programdata\\anaconda3\\lib\\enum.py', 'PYMODULE'),
   ('datetime', 'c:\\programdata\\anaconda3\\lib\\datetime.py', 'PYMODULE'),
   ('shutil', 'c:\\programdata\\anaconda3\\lib\\shutil.py', 'PYMODULE'),

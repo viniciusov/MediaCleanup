@@ -3,11 +3,14 @@ missing module named posix - imported by os, C:\Users\Vinícius\Documents\Python 
 missing module named _posixsubprocess - imported by subprocess, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 missing module named 'org.python' - imported by pickle, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py, xml.sax
 =======
 >>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
 =======
 >>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
+=======
+>>>>>>> v1.3b
 missing module named readline - imported by cmd, code, pdb, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
 excluded module named _frozen_importlib - imported by importlib, importlib.abc, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
 missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
@@ -26,6 +29,9 @@ missing module named 'org.python' - imported by copy, C:\Users\Vinícius\Document
 missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py, netrc, getpass
 missing module named org - imported by pickle, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
 =======
 >>>>>>> ce2ee737c53e0bc0ae463e8b38eeb122ba374464
+=======
+>>>>>>> v1.3b
