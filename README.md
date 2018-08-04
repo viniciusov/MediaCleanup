@@ -44,7 +44,7 @@ There are two ways for running this script:
   - Ctrl + Alt + T (for Linux)
   - Click on 'Start Menu', type 'cmd' and hit ENTER (for Windows)
 
-- Go to the folder where do you extracted MediaCleanup, for example, type:
+- Go to the folder where you extracted MediaCleanup, for example, type:
 
   > cd /home/\<user>/downloads/MediaCleanup-master (for **Linux**, **Mac OS**)  
   > cd C:\Users\<user>\downloads\MediaCleanup-master (for **Windows**)  
