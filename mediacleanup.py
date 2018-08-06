@@ -99,7 +99,11 @@ def scan_rename(expressions_list):
                     temp_file = os.path.splitext(os.path.basename(rename_files[os.path.join(dirpath, file)]))[0] #.basename is needed here to separate file from path
                 if exp_old in temp_file:
                     temp_file = ' '.join(temp_file.replace(exp_old, exp_new).split()) #Removes extra spacing
-                    temp_file = re.sub(r'[\(\)]', '', temp_file) #Don't let '()' remaining in the string
+                    temp_file = ' '.join(re.sub(r'\(\)', '', temp_file).split()) #Don't let '()' remaining in the string and removes extra spaces again
+                    while temp_file.endswith('-') or temp_file.endswith('_') or temp_file.endswith('.') or temp_file.endswith(' '):
+                        temp_file = temp_file[:-1]
+                    if temp_file == '':
+                        temp_file = 'media'    
                     rename_files[os.path.join(dirpath, file)] = os.path.join(dirpath, temp_file+extension)
 
         for directory in dirnames: #Only folders
@@ -109,8 +113,12 @@ def scan_rename(expressions_list):
                 else: #If Path ALREADY in dict
                     temp_dir = os.path.split(rename_folders[os.path.join(dirpath, directory)])[1] #Get only last DIR
                 if exp_old in temp_dir: #Only directories
-                    temp_dir = ' '.join(temp_dir.replace(exp_old, exp_new).split())
-                    temp_dir = re.sub(r'[\(\)]', '', temp_dir) #Don't let '()' remaining in the string
+                    temp_dir = ' '.join(temp_dir.replace(exp_old, exp_new).split()) #Removes extra spaces
+                    temp_dir = ' '.join(re.sub(r'\(\)', '', temp_dir).split()) #Don't let '()' remaining in the string and removes extra spaces again
+                    while temp_dir.endswith('-') or temp_dir.endswith('_') or temp_dir.endswith('.') or temp_dir.endswith(' '):
+                        temp_dir = temp_dir[:-1]
+                    if temp_dir == '':
+                        temp_dir = 'media'    
                     rename_folders[os.path.join(dirpath, directory)] = os.path.join(dirpath, temp_dir)
 
     print('Total Folders:', folders)
@@ -121,19 +129,23 @@ def scan_rename(expressions_list):
 
         if rename_files:
             thereis = False
-            for old, new in rename_files.items():
+            rename_files_list = [(old, new) for old, new in rename_files.items()]
+            rename_files_list.sort(key=lambda x: x[0]) #sorts by 'old'
+            for old, new in rename_files_list:
                 if not thereis:
                     print('\nFILES TO BE RENAMED')
                 thereis = True
-                print('{} -> {}'.format(old[len(initialdir):], new[len(initialdir):]))
+                print('{} -> {}'.format(os.path.basename(old), os.path.basename(new)))
 
         if rename_folders:
             thereis = False
-            for old, new in rename_folders.items():
+            rename_folders_list = [(old, new) for old, new in rename_folders.items()]
+            rename_folders_list.sort(key=lambda x: x[0]) #sorts by 'old'
+            for old, new in rename_folders_list:
                 if not thereis:
                     print('\nFOLDERS TO BE RENAMED')
                 thereis = True
-                print('{} -> {}'.format(old[len(initialdir):], new[len(initialdir):]))
+                print('{} -> {}'.format(os.path.basename(old), os.path.basename(new)))
 
         rename_confirm = input("\nDo you want to Rename ALL of them?\nType 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if rename_confirm == 'y':
@@ -183,9 +195,8 @@ def scan_dirs(allowedextensions):
         files += len(filenames)
 
         if dirpath != initialdir: #Avoid deleting the top folder even if it is empty
-
-            if dirnames == 0:
-                if filenames == 0:  #If don't have any directory inside AND don't have any file
+            if not dirnames:
+                if not filenames:  #If don't have any directory inside AND don't have any file
                     remove_list.append([dirpath, 0]) #Reason 0: Empty Folder
                 else: #If there is files
                     for file in filenames:
@@ -195,11 +206,12 @@ def scan_dirs(allowedextensions):
                         remove_list.append([dirpath, 1]) #Reason 1: Folder with No Media Files inside
 
             else:
-                if not glob.glob(dirpath+'/**/*.*', recursive=True): #If path DOESN'T have any file
-                    remove_list.append([dirpath, 0]) #Reason 0: Empty Folder
+                glob_path = dirpath.replace('[', '[[]') #workaround to use 'glob' if there are brackets in folder or filenames
+                if not glob.glob(glob_path+'/**/*.*', recursive=True): #If path DOESN'T have any file
+                    remove_list.append([dirpath, 1]) #Reason 1: Folder with No Media Files inside
 
                 else: #If path DOES have files
-                    for file in glob.iglob(dirpath+'/**/*.*', recursive=True):
+                    for file in glob.iglob(glob_path+'/**/*.*', recursive=True):
                         if os.path.splitext(file)[1] in allowedextensions:
                             break
                     else:
@@ -209,7 +221,8 @@ def scan_dirs(allowedextensions):
     print('Total Files:', files)
 
     if remove_list:
-        remove_list.sort(key=lambda x: x[1]) #sorts Inplace
+        remove_list.sort(key=lambda x: x[0]) #sorts Inplace (First by name)
+        remove_list.sort(key=lambda x: x[1]) #sorts Inplace (After sorts by Reason)
 
         print('\nItems to be Removed [', len(remove_list), ']:')
 
@@ -232,6 +245,8 @@ def scan_dirs(allowedextensions):
         remove_confirm = input("\nDo you want to Remove ALL of them?\nType 'y' to confirm (WARNING: YOU CAN'T UNDO THIS OPERATION): ").lower()
         if remove_confirm == 'y':
             errors = 0
+            remove_list.sort(key=lambda x: x[0], reverse=True) #/dir/subdir must be removed before /dir to avoid errors
+            remove_list.sort(key=lambda x: x[1]) #First removes empty files
             for path, reason in remove_list:
                 try:
                     if reason == 0:
