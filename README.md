@@ -52,8 +52,9 @@ There are two ways for running this script:
   Where \<user> should be the name of your user.
 
 - And then type the command below to execute the script:
-  > mediacleanup.py
-
+  > ./mediacleanup.py (for **Linux**, **Mac OS**)  
+  > mediacleanup.py (for **Windows**)
+  
 - If you can't get it running, try execute:
   > python mediacleanup.py
 
