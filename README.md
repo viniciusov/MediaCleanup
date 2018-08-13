@@ -52,8 +52,9 @@ There are two ways for running this script:
   Where \<user> should be the name of your user.
 
 - And then type the command below to execute the script:
-  > mediacleanup.py
-
+  > ./mediacleanup.py (for **Linux**, **Mac OS**)  
+  > mediacleanup.py (for **Windows**)
+  
 - If you can't get it running, try execute:
   > python mediacleanup.py
 
@@ -144,7 +145,7 @@ If this file is removed or renamed, the script will show an error too.
 
 ## Errors
 You may get errors when executing some options.  
-If removing or renaming items, be sure that you must have Write Permissions to do so, otherwise the script will not remove/rename. In addition, if you get errors when renaming, check if there isn't a file or folder already in that location with the same new name.  
+If removing or renaming items, be sure that you must have Write Permissions to do so and if the file or folder aren't Read-Only, otherwise the script will not remove/rename them. In addition, if you get errors when renaming, check if there isn't a file or folder already in that location with the same new name.  
 If you got an unexpected error, please let me know.  
 
 ## Warning
