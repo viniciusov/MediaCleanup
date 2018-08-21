@@ -1,17 +1,19 @@
-missing module named resource - imported by posix, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
-missing module named posix - imported by os, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
-missing module named _posixsubprocess - imported by subprocess, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
-missing module named readline - imported by cmd, code, pdb, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
-excluded module named _frozen_importlib - imported by importlib, importlib.abc, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
-missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
-missing module named _winreg - imported by platform, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
+missing module named resource - imported by posix, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py
+missing module named posix - imported by os, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py
+missing module named _posixsubprocess - imported by subprocess, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py
+missing module named org - imported by pickle, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py
+missing module named readline - imported by cmd, code, pdb, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py
+excluded module named _frozen_importlib - imported by importlib, importlib.abc, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py
+missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py
+missing module named _winreg - imported by platform, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py
 missing module named _scproxy - imported by urllib.request
-missing module named java - imported by platform, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
-missing module named 'java.lang' - imported by platform, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py, xml.sax._exceptions
-missing module named vms_lib - imported by platform, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
-missing module named termios - imported by tty, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py, getpass
-missing module named grp - imported by shutil, tarfile, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
-missing module named _dummy_threading - imported by dummy_threading, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
-missing module named 'org.python' - imported by copy, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py, xml.sax
-missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py, netrc, getpass
-missing module named org - imported by pickle, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
+missing module named java - imported by platform, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py
+missing module named 'java.lang' - imported by platform, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py, xml.sax._exceptions
+missing module named vms_lib - imported by platform, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py
+missing module named termios - imported by tty, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py, getpass
+missing module named urllib.quote - imported by urllib, send2trash.plat_other
+missing module named grp - imported by shutil, tarfile, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py
+missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py, netrc, getpass
+missing module named _dummy_threading - imported by dummy_threading, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py
+missing module named 'org.python' - imported by copy, C:\Users\ldf\Documents\mediacleanup\mediacleanup.py, xml.sax
+missing module named gi - imported by send2trash.plat_gio
