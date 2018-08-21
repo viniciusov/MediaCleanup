@@ -61,7 +61,7 @@ There are two ways for running this script:
 #### 2) If you don't have Python>=3
 - If you are on **Windows**, there's no need to install python. I've already create a .exe file ready to be executed. 
   - Go to the folder 'mediacleanup/exe/';
-  - Click on the executable file 'mediacleanup.exe'.
+  - Execute file 'mediacleanup.exe'.
 
 - If you are on **another OS**:
   - Download the latest Python version from [Python.org](https://www.python.org/getit/) and install it;
@@ -149,10 +149,9 @@ If removing or renaming items, be sure that you must have Write Permissions to d
 If you got an unexpected error, please let me know.  
 
 ## Warning
-**Use at your own risk!**
-
-Although the script always shows what's going to be renamed or removed and asks for confirmation, if you have very important data 
-inside the path informed I recommend you backup your data.
+**Use at your own risk!**  
+Although the script always shows what's going to be renamed or removed (sent to trash) and asks for confirmation, if you have very important data 
+inside the path informed I recommend you backup your data.  
 
 ## License
 All this project is under GPLv3 license. 
