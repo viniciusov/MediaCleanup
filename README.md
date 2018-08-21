@@ -121,7 +121,7 @@ typing 'y' and pressing ENTER.
 When processing is done, it will wait for the user to press ENTER to continue until it reaches the end.  
   
 When all the operation is completed, the script gives the option to run again if the user type 'r' and press ENTER.
-    
+   
 ##### *ps.3: May occur issues with your OS Terminal when displaying long lists of files/folders due its limited number of lines.*
 ##### *I recommend changing the Terminal preferences to the MAXIMUM scrollback or screen buffer size.*
   
@@ -150,8 +150,7 @@ If you got an unexpected error, please let me know.
 
 ## Warning
 **Use at your own risk!**  
-Although the script always shows what's going to be renamed or removed (sent to trash) and asks for confirmation, if you have very important data 
-inside the path informed I recommend you backup your data.  
+Although the script always shows what's going to be renamed or removed (sent to trash) and asks for confirmation, if you have very important data inside the informed path I recommend you backup your data.  
 
 ## License
 All this project is under GPLv3 license. 
