@@ -34,9 +34,8 @@ On the top of this page you should see a button with a 'Clone or download' label
 - Click on it and choose **Download ZIP**.
 - After completing the download, **Unzip** the downloaded file (Right-click and 'Extract Here').
 
-### Run
-Now you have to run the main script.
-There are two ways for running this script:  
+### Install & Run
+Now there are **two ways** to proceed:  
   
 #### 1) If you have Python>=3 installed on your OS:
 
@@ -50,13 +49,16 @@ There are two ways for running this script:
   > cd C:\Users\<user>\downloads\MediaCleanup-master (for **Windows**)  
 
   Where \<user> should be the name of your user.
-
-- And then type the command below to execute the script:
+  
+- Install the requirements with the command below:
+  > python3 setup.py install
+  
+- And execute the script:
   > ./mediacleanup.py (for **Linux**, **Mac OS**)  
   > mediacleanup.py (for **Windows**)
-  
+
 - If you can't get it running, try execute:
-  > python mediacleanup.py
+  > python3 mediacleanup.py
 
 #### 2) If you don't have Python>=3
 - If you are on **Windows**, there's no need to install python. I've already create a .exe file ready to be executed. 
