@@ -123,7 +123,7 @@ typing 'y' and pressing ENTER.
   
 When processing is done, it will wait for the user to press ENTER to continue until it reaches the end.  
   
-When all the operation is completed, the script gives the option to run again if the user type 'r' and press ENTER.
+After all the operation completed, the script gives the option to run again if the user type 'r' and press ENTER.
    
 ##### *ps.3: May occur issues with your OS Terminal when displaying long lists of files/folders due its limited number of lines.*
 ##### *I recommend changing the Terminal preferences to the MAXIMUM scrollback or screen buffer size.*
