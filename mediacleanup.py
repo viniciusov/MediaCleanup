@@ -20,7 +20,11 @@
 # along with Mediacleanup. If not, see <https://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------
 
-import re, os, glob, shutil, datetime
+import re
+import os
+import glob
+import datetime
+import send2trash
 
 #----------------------- Open 'expressions.txt' -----------------------
 
@@ -249,10 +253,7 @@ def scan_dirs(allowedextensions):
             remove_list.sort(key=lambda x: x[1]) #First removes empty files
             for path, reason in remove_list:
                 try:
-                    if reason == 0:
-                        os.rmdir(path) #Remove only empty folders
-                    else:
-                        shutil.rmtree(path) #Remove folders containing files
+                    send2trash.send2trash(path) #move items to trash
                 except:
                     print("Error when removing '{}'.".format(path))
                     errors += 1
@@ -411,7 +412,7 @@ After choosing the desired option, MediaCleanup will ask for the path to be scan
 About:
 * Created by Vinícius Orsi Valente (2018)
 * Licensed under GPLv3
-* Version 1.3b (Beta)
+* Version 1.4b (Beta)
 
 MediaCleanup is freely available at 'https://github.com/viniciusov/mediacleanup/'.
 Check it out to see more detailed information or download the newest versions.\n""")
