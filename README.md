@@ -34,9 +34,8 @@ On the top of this page you should see a button with a 'Clone or download' label
 - Click on it and choose **Download ZIP**.
 - After completing the download, **Unzip** the downloaded file (Right-click and 'Extract Here').
 
-### Run
-Now you have to run the main script.
-There are two ways for running this script:  
+### Install & Run
+Now there are **two ways** to proceed:  
   
 #### 1) If you have Python>=3 installed on your OS:
 
@@ -49,19 +48,23 @@ There are two ways for running this script:
   > cd /home/\<user>/downloads/MediaCleanup-master (for **Linux**, **Mac OS**)  
   > cd C:\Users\<user>\downloads\MediaCleanup-master (for **Windows**)  
 
-  Where \<user> should be the name of your user.
-
-- And then type the command below to execute the script:
+  Where \<user> should be the name of your user.  
+  
+- Install the requirements with the command below:
+  > sudo python3 setup.py install (for **Linux**, **Mac OS**)  
+  > python3 setup.py install (for **Windows**)  
+  
+- And execute the script:
   > ./mediacleanup.py (for **Linux**, **Mac OS**)  
   > mediacleanup.py (for **Windows**)
   
 - If you can't get it running, try execute:
-  > python mediacleanup.py
+  > python3 mediacleanup.py
 
 #### 2) If you don't have Python>=3
 - If you are on **Windows**, there's no need to install python. I've already create a .exe file ready to be executed. 
   - Go to the folder 'mediacleanup/exe/';
-  - Click on the executable file 'mediacleanup.exe'.
+  - Execute file 'mediacleanup.exe'.
 
 - If you are on **another OS**:
   - Download the latest Python version from [Python.org](https://www.python.org/getit/) and install it;
@@ -103,25 +106,23 @@ For best cleaning, it will run in the following sequence: f->d->c->l.*
 - **q**:
 *If user type 'q' and press Enter, the software will stop and quit.*
 
-Choose one of the options above, type the respective letter and press ENTER.
-
+Choose one of the options above, type the respective letter and press ENTER.  
 After choosing the desired option, MediaCleanup will ask for the path to be scanned.
 
 Provide a path for the search, like:  
 > /home/\<user>/videos (for **Linux**, **MacOS**)  
 > C:\Users\<user>\Videos (for **Windows**)  
-
-If a selected path was entered, the script will start the scanning process (this can take a while, depending on how many files and folders are there).  
-You should **choose a path that doesn't contain the MediaCleanup files or any other installed software**, otherwise you may have problems when running them.
-
+  
+If a valid path was entered, the script will start the scanning process (this can take a while, depending on how many files and folders are there).  
+You should **choose a path that doesn't contain the MediaCleanup files or any other installed software**, otherwise you may have problems when running them.  
+  
 As soon as it completed the scanning, it will show up the information according the chosen option.  
 Everytime some file or folder is about to be renamed or removed, the software will wait for user to confirm, 
 typing 'y' and pressing ENTER.
   
-When processing is done, it will wait for the user to press ENTER to continue until it reaches the end.  
-  
-When all the operation is completed, the script gives the option to run again if the user type 'r' and press ENTER.
-    
+When processing has done, it will wait for the user to press ENTER to continue until it reaches the end.  
+After all operations have finished, the script gives the option to run again if the user type 'r' and press ENTER.
+   
 ##### *ps.3: May occur issues with your OS Terminal when displaying long lists of files/folders due its limited number of lines.*
 ##### *I recommend changing the Terminal preferences to the MAXIMUM scrollback or screen buffer size.*
   
@@ -149,10 +150,8 @@ If removing or renaming items, be sure that you must have Write Permissions to d
 If you got an unexpected error, please let me know.  
 
 ## Warning
-**Use at your own risk!**
-
-Although the script always shows what's going to be renamed or removed and asks for confirmation, if you have very important data 
-inside the path informed I recommend you backup your data.
+**Use at your own risk!**  
+Although the script always shows what's going to be renamed or removed (sent to trash) and asks for confirmation, if you have very important data inside the informed path I recommend you backup your data.  
 
 ## License
 All this project is under GPLv3 license. 
