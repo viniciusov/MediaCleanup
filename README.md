@@ -8,7 +8,7 @@ So, I decided to code a script to cleanup these folders, removing automatically 
 expressions from folders and filenames, removing files with unwanted extensions and listing all of them as a catalog.
 
 I know there are some alternatives on the web with more complex features like graphical interface and other stuff, but I would like to create something efficient and simple. More portable, just click and run.  
-Just to give you an idea, I tried 2 different software for execute these tasks: I couldn't run one of them on my OS (and I can't unninstall it completely - a lot of bugs!); and another require Java updates as soon as it was installed.
+Just to give you an idea, I tried 2 different software for execute these tasks: I couldn't run one of them on my OS (and I can't unninstall it completely - a lot of bugs!) and another require Java updates as soon as it was installed.
 
 *And this is how MediaCleanup was born...*
 
