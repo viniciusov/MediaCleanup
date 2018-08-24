@@ -52,15 +52,16 @@ Now there are **two ways** to proceed:
   
 - Install the requirements with the command below:
   > sudo python3 setup.py install (for **Linux**, **Mac OS**)  
-  > python3 setup.py install (for **Windows**)  
+  > python setup.py install (for **Windows**)  
   
 - And execute the script:
   > ./mediacleanup.py (for **Linux**, **Mac OS**)  
   > mediacleanup.py (for **Windows**)
   
 - If you can't get it running, try execute:
-  > python3 mediacleanup.py
-
+  > python3 mediacleanup.py (for **Linux**, **Mac OS**)  
+  > python mediacleanup.py (for **Windows**)   
+  
 #### 2) If you don't have Python>=3
 - If you are on **Windows**, there's no need to install python. I've already create a .exe file ready to be executed. 
   - Go to the folder 'mediacleanup/exe/';
