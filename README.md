@@ -106,8 +106,7 @@ For best cleaning, it will run in the following sequence: f->d->c->l.*
 - **q**:
 *If user type 'q' and press Enter, the software will stop and quit.*
 
-Choose one of the options above, type the respective letter and press ENTER.
-
+Choose one of the options above, type the respective letter and press ENTER.  
 After choosing the desired option, MediaCleanup will ask for the path to be scanned.
 
 Provide a path for the search, like:  
@@ -121,9 +120,8 @@ As soon as it completed the scanning, it will show up the information according 
 Everytime some file or folder is about to be renamed or removed, the software will wait for user to confirm, 
 typing 'y' and pressing ENTER.
   
-When processing is done, it will wait for the user to press ENTER to continue until it reaches the end.  
-  
-After all the operation completed, the script gives the option to run again if the user type 'r' and press ENTER.
+When processing has done, it will wait for the user to press ENTER to continue until it reaches the end.  
+After all operations have finished, the script gives the option to run again if the user type 'r' and press ENTER.
    
 ##### *ps.3: May occur issues with your OS Terminal when displaying long lists of files/folders due its limited number of lines.*
 ##### *I recommend changing the Terminal preferences to the MAXIMUM scrollback or screen buffer size.*
