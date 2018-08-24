@@ -48,10 +48,11 @@ Now there are **two ways** to proceed:
   > cd /home/\<user>/downloads/MediaCleanup-master (for **Linux**, **Mac OS**)  
   > cd C:\Users\<user>\downloads\MediaCleanup-master (for **Windows**)  
 
-  Where \<user> should be the name of your user.
+  Where \<user> should be the name of your user.  
   
 - Install the requirements with the command below:
-  > python3 setup.py install
+  > sudo python3 setup.py install (for **Linux**, **Mac OS**)  
+  > python3 setup.py install (for **Windows**)  
   
 - And execute the script:
   > ./mediacleanup.py (for **Linux**, **Mac OS**)  
