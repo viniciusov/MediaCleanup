@@ -128,17 +128,17 @@ After all operations have finished, the script gives the option to run again if 
 ##### *I recommend changing the Terminal preferences to the MAXIMUM scrollback or screen buffer size.*
   
 ## Configuration Files
-As seen in the **Functionalities** section, some of MediaCleanup steps relies on configuration files.
+As seen in the [Functionalities](#https://github.com/viniciusov/MediaCleanup/edit/master/README.md#L18) section, some of MediaCleanup steps relies on configuration files.
 The configuration files are .txt files inside 'config/' folder.
 
 There are 2 configuration files:
-- **mediaextensions.txt**:
+- **mediaextensions.txt**  
 The content of this file tells to the MediaCleanup which extensions will be considered media extensions.  
 All extensions written in a single line that doesn't start with '#' will be used to compare against the files extensions.  
 You can edit this this file, as long you maintain the same format: one extension per line, starting with a dot.  
 If this file is removed or renamed, the script will show an error.  
 
-- **expressions.txt**:
+- **expressions.txt**  
 In this file there are all the options you want to find in folders and filenames and the expressions you want to replace them.  
 You can edit this file too, but you have to maintain this specific format: 'old=new'.  
 For example, if you want to replace all letter 'x' in folder and filenames for 'y', you just have to write 'x=y'.  
