@@ -73,7 +73,7 @@ Now there are **two ways** to proceed:
 
 ##### *ps.1: Not sure if it is supported by Python2.*
 ##### *ps.2: Not tested on MacOS, but I think it should work fine.*
-
+  
 ### Functionalities
 Now you are with the main script running let's go through its functionalities.  
 As soon as the MediaCleanup script starts, it will appear a bunch of options with the respective letter for user choose.
@@ -128,7 +128,7 @@ After all operations have finished, the script gives the option to run again if 
 ##### *I recommend changing the Terminal preferences to the MAXIMUM scrollback or screen buffer size.*
   
 ## Configuration Files
-As seen in the [Functionalities](#https://github.com/viniciusov/MediaCleanup/edit/master/README.md#L18) section, some of MediaCleanup steps relies on configuration files.
+As seen in the Functionalities section, some of MediaCleanup steps relies on configuration files.
 The configuration files are .txt files inside 'config/' folder.
 
 There are 2 configuration files:
