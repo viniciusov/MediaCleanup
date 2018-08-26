@@ -8,7 +8,7 @@ So, I decided to code a script to cleanup these folders, removing automatically 
 expressions from folders and filenames, removing files with unwanted extensions and listing all of them as a catalog.
 
 I know there are some alternatives on the web with more complex features like graphical interface and other stuff, but I would like to create something efficient and simple. More portable, just click and run.  
-Just to give you an idea, I tried 2 different software for execute these tasks: I couldn't run one of them on my OS (and I can't unninstall it completely - a lot of bugs!); and another require Java updates as soon as it was installed.
+Just to give you an idea, I tried 2 different software for execute these tasks: I couldn't run one of them on my OS (and I can't unninstall it completely - a lot of bugs!) and another require Java updates as soon as it was installed.
 
 *And this is how MediaCleanup was born...*
 
@@ -52,15 +52,16 @@ Now there are **two ways** to proceed:
   
 - Install the requirements with the command below:
   > sudo python3 setup.py install (for **Linux**, **Mac OS**)  
-  > python3 setup.py install (for **Windows**)  
+  > python setup.py install (for **Windows**)  
   
 - And execute the script:
   > ./mediacleanup.py (for **Linux**, **Mac OS**)  
   > mediacleanup.py (for **Windows**)
-
+  
 - If you can't get it running, try execute:
-  > python3 mediacleanup.py
-
+  > python3 mediacleanup.py (for **Linux**, **Mac OS**)  
+  > python mediacleanup.py (for **Windows**)   
+  
 #### 2) If you don't have Python>=3
 - If you are on **Windows**, there's no need to install python. I've already create a .exe file ready to be executed. 
   - Go to the folder 'mediacleanup/exe/';
@@ -72,7 +73,7 @@ Now there are **two ways** to proceed:
 
 ##### *ps.1: Not sure if it is supported by Python2.*
 ##### *ps.2: Not tested on MacOS, but I think it should work fine.*
-
+  
 ### Functionalities
 Now you are with the main script running let's go through its functionalities.  
 As soon as the MediaCleanup script starts, it will appear a bunch of options with the respective letter for user choose.
@@ -127,17 +128,17 @@ After all operations have finished, the script gives the option to run again if 
 ##### *I recommend changing the Terminal preferences to the MAXIMUM scrollback or screen buffer size.*
   
 ## Configuration Files
-As seen in the **Functionalities** section, some of MediaCleanup steps relies on configuration files.
+As seen in the Functionalities section, some of MediaCleanup steps relies on configuration files.
 The configuration files are .txt files inside 'config/' folder.
 
 There are 2 configuration files:
-- **mediaextensions.txt**:
+- **mediaextensions.txt**  
 The content of this file tells to the MediaCleanup which extensions will be considered media extensions.  
 All extensions written in a single line that doesn't start with '#' will be used to compare against the files extensions.  
 You can edit this this file, as long you maintain the same format: one extension per line, starting with a dot.  
 If this file is removed or renamed, the script will show an error.  
 
-- **expressions.txt**:
+- **expressions.txt**  
 In this file there are all the options you want to find in folders and filenames and the expressions you want to replace them.  
 You can edit this file too, but you have to maintain this specific format: 'old=new'.  
 For example, if you want to replace all letter 'x' in folder and filenames for 'y', you just have to write 'x=y'.  
