@@ -412,7 +412,7 @@ After choosing the desired option, MediaCleanup will ask for the path to be scan
 About:
 * Created by Vinícius Orsi Valente (2018)
 * Licensed under GPLv3
-* Version 1.4b (Beta)
+* Version 1.1
 
 MediaCleanup is freely available at 'https://github.com/viniciusov/mediacleanup/'.
 Check it out to see more detailed information or download the newest versions.\n""")

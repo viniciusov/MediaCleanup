@@ -14,6 +14,6 @@ missing module named termios - imported by tty, C:\Users\Vinícius\Documents\Pyth
 missing module named urllib.quote - imported by urllib, send2trash.plat_other
 missing module named grp - imported by shutil, tarfile, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
 missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py, netrc, getpass
-missing module named org - imported by copy, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
 missing module named _dummy_threading - imported by dummy_threading, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
+missing module named org - imported by copy, C:\Users\Vinícius\Documents\Python Scripts\mediacleanup\mediacleanup.py
 missing module named gi - imported by send2trash.plat_gio
