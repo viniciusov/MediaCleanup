@@ -387,34 +387,49 @@ def scan_list(allowedextensions):
 
 def show_help():
     clear_screen()
-    print("""MediaCleanup is a free tool to cleanup your media files and folders.
-It will scan a provided path for folders and media files, can find specific expressions and extensions, allowing to rename or remove them.
+    print("""
+MediaCleanup is a free tool to cleanup your media files and folders.
+It will scan recursively a provided path for folders and media files,
+allowing to rename or remove them.
 
 Help:
-To start with it, run MediaCleanup, choose one from main options, type the respective key and press Enter.
-'c' - Will scan a specific path for folders and filenames that match expressions inside the file 'config/expressions.txt'.
-      If any file/folder match, the software will list it to rename with the desired expression in 'config/expressions.txt'.
-      After the listing process, the user will be asked to confirm the files and folders renaming.
-'d' - Will scan a specific path for folders that are empty or don't have any file with media extensions.
-      The software will use all extensions inside 'config/mediaextensions.txt' to compare and determine if a file is a media file or not.
-      After the listing process, the user will be asked to confirm the removing.
-'f' - Will scan a specific path for files that don't have media extensions.
-      Like the 'd' option, it will use all extensions inside 'config/mediaextensions.txt' to compare against the files extensions.
-      If files extensions don't match, the software will list all and the user will be asked to remove them.
-'l' - MediaCleanup will list all your media files (according 'config/mediaextensions.txt') and show them.
-      The user will be asked to save the list as a .txt file (mediacatalog.txt) and the software will ask for destination path.
-      If user type 'ENTER' to the destination path, the .txt file will be crated in the same scanned path.
-'A' - Will run ALL options above. For best cleaning, it will run in the following sequence: f->d->c->l.
-'h' - Show up all this information.
-'q' - The software will stop and quit.
-After choosing the desired option, MediaCleanup will ask for the path to be scanned.
+To start with it, run MediaCleanup, choose one from main options,
+type the respective key and press Enter.
+* c - Will scan a specific path for folders and filenames that match 
+      expressions inside the file 'config/expressions.txt'.
+      If any file/folder match, the software will list it to rename with the
+      desired expression in 'config/expressions.txt'.
+      After the listing process, the user will be asked to confirm the files 
+      and folders renaming.
+* d - Will scan a specific path for folders that are empty or don't have any
+      file with media extensions.
+      The software will use all extensions inside 'config/mediaextensions.txt'
+      to compare and determine if a file is a media file or not.
+      After the listing process, the user will be asked to confirm the removal.
+* f - Will scan a specific path for files that don't have media extensions.
+      Like the 'd' option, it will use all extensions inside 
+      'config/mediaextensions.txt' to compare against the files extensions.
+      If files extensions don't match, the software will list all and the user
+      will be asked to remove them.
+* l - MediaCleanup will list all your media files (according 
+      'config/mediaextensions.txt') and show them.
+      The user will be asked to save the list as a .txt file (mediacatalog.txt)
+      and the software will ask for destination path.
+      If user type 'ENTER' to the destination path, the .txt file will be 
+      created in the same scanned path.
+* A - Will run ALL options above. For best cleaning, it will run in the 
+      following sequence: f->d->c->l.
+* h - Show up all this information.
+* q - The software will stop and quit.
+After choosing the desired option, MediaCleanup will ask for the path to be 
+scanned.
 
 About:
 * Created by Vinícius Orsi Valente (2018)
 * Licensed under GPLv3
 * Version 1.1
 
-MediaCleanup is freely available at 'https://github.com/viniciusov/mediacleanup/'.
+MediaCleanup is freely available at https://github.com/viniciusov/mediacleanup/.
 Check it out to see more detailed information or download the newest versions.\n""")
     input("(Press ENTER to Quit help/about and return)")
 
