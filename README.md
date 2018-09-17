@@ -44,7 +44,6 @@ Now there are **two ways** to proceed:
   - Click on 'Start Menu', type 'cmd' and hit ENTER (for Windows)
 
 - Go to the folder where you extracted MediaCleanup, for example, type:
-
   > cd /home/\<user>/downloads/MediaCleanup-master (for **Linux**, **Mac OS**)  
   > cd C:\Users\<user>\downloads\MediaCleanup-master (for **Windows**)  
 
@@ -52,7 +51,10 @@ Now there are **two ways** to proceed:
   
 - Install the requirements with the command below:
   > sudo python3 setup.py install (for **Linux**, **Mac OS**)  
-  > python setup.py install (for **Windows**)  
+  > python setup.py install (for **Windows**) 
+  
+  If you got the "No Module named Setuptools" error, you should install the Setuptools module.  
+  Check on the web how to install it and repeat the above process before proceeding.  
   
 - And execute the script:
   > ./mediacleanup.py (for **Linux**, **Mac OS**)  
