@@ -22,6 +22,7 @@
 
 import re
 import os
+import sys
 import glob
 import datetime
 import send2trash
@@ -465,13 +466,15 @@ while True:
     if option == 'q':
         break
 
-    if os.name == 'nt':
-        initialdir = input('\nType the Path do you wanto to Scan (for example, C:\\Users\\<user>\\Videos):\n')
-    else:
-        initialdir = input('\nType the Path do you wanto to Scan (for example, /home/<user>/Videos):\n')
-
-    while not (os.access(initialdir, os.W_OK) or initialdir == 'q'):
-        initialdir = input("\nInvalid Path or you don't have permission to Read it.\nType the Path again or type 'q' to quit:\n")
+    if len(sys.argv)>1:
+        initialdir = sys.argv[1]
+    else:    
+        if os.name == 'nt':
+            initialdir = input('\nType the Path do you wanto to Scan (for example, C:\\Users\\<user>\\Videos):\n')
+        else:
+            initialdir = input('\nType the Path do you wanto to Scan (for example, /home/<user>/Videos):\n')
+        while not (os.access(initialdir, os.W_OK) or initialdir == 'q'):
+            initialdir = input("\nInvalid Path or you don't have permission to Read it.\nType the Path again or type 'q' to quit:\n")
 
     if initialdir == 'q':
         break
