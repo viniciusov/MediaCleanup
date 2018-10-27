@@ -428,7 +428,7 @@ scanned.
 About:
 * Created by Vinícius Orsi Valente (2018)
 * Licensed under GPLv3
-* Version 1.1
+* Version 1.2
 
 MediaCleanup is freely available at https://github.com/viniciusov/mediacleanup/.
 Check it out to see more detailed information or download the newest versions.\n""")
@@ -470,11 +470,12 @@ while True:
         initialdir = sys.argv[1]
     else:    
         if os.name == 'nt':
-            initialdir = input('\nType the Path do you wanto to Scan (for example, C:\\Users\\<user>\\Videos):\n')
+            initialdir = input('\nType the Path do you want to Scan (e.g. C:\\Users\\<user>\\Videos):\n')
         else:
-            initialdir = input('\nType the Path do you wanto to Scan (for example, /home/<user>/Videos):\n')
-        while not (os.access(initialdir, os.W_OK) or initialdir == 'q'):
-            initialdir = input("\nInvalid Path or you don't have permission to Read it.\nType the Path again or type 'q' to quit:\n")
+            initialdir = input('\nType the Path do you want to Scan (e.g. /home/<user>/Videos):\n')
+    
+    while not (os.access(initialdir, os.W_OK) or initialdir == 'q'):
+        initialdir = input("\nInvalid Path or you don't have permission to Read it.\nType the Path again or type 'q' to quit:\n")
 
     if initialdir == 'q':
         break
