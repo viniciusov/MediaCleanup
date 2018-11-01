@@ -32,12 +32,13 @@ import send2trash
 def open_expressionsfile():
 
     while True:
-        try:
-            with open('./config/expressions.txt', 'r', encoding="utf-8-sig") as file: #if running .py script
+        try: 
+            with open('./config/expressions.txt', 'r', encoding="utf-8-sig") as file:
                 data = file.readlines()
         except:
-            try:
-                with open('../config/expressions.txt', 'r', encoding="utf-8-sig") as file: #if running .exe
+            try: #if running from another directory
+                command_path = os.path.split(os.path.abspath(sys.argv[0]))[0]
+                with open(command_path+'/config/expressions.txt', 'r', encoding="utf-8-sig") as file:
                     data = file.readlines()
             except:
                 input("\nError when oppenning 'expressions.txt'.\nVerify if the file is inside the 'config/' folder and press any key to Retry: ")
@@ -60,11 +61,12 @@ def open_mediaextensionsfile():
 
     while True:
         try:
-            with open('./config/mediaextensions.txt', 'r', encoding="utf-8") as file: #if running .py script
+            with open('./config/mediaextensions.txt', 'r', encoding="utf-8") as file:
                 data = file.readlines()
         except:
-            try:
-                with open('../config/mediaextensions.txt', 'r', encoding="utf-8") as file: #if running .exe
+            try: #if running from another directory
+                command_path = os.path.split(os.path.abspath(sys.argv[0]))[0]
+                with open(command_path+'/config/mediaextensions.txt', 'r', encoding="utf-8-sig") as file:
                     data = file.readlines()
             except:
                 input("\nError when oppenning 'mediaextensions.txt'.\nVerify if the file is inside the 'config' folder and press any key to Retry: ")
@@ -499,4 +501,5 @@ while True:
     if repeat == 'r':
         continue
     else:
+        print()
         break
