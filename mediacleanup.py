@@ -392,40 +392,41 @@ def show_help():
     clear_screen()
     print("""
 MediaCleanup is a free tool to cleanup your media files and folders.
-It will scan recursively a provided path for folders and media files,
-allowing to rename or remove them.
+It will recursively scan a path for folders and media files, allowing
+to rename or remove them (send to Trash).
 
 Help:
 To start with it, run MediaCleanup, choose one from main options,
 type the respective key and press Enter.
+
+These are the avaliable options:
 * c - Will scan a specific path for folders and filenames that match 
-      expressions inside the file 'config/expressions.txt'.
-      If any file/folder match, the software will list it to rename with the
-      desired expression in 'config/expressions.txt'.
-      After the listing process, the user will be asked to confirm the files 
-      and folders renaming.
-* d - Will scan a specific path for folders that are empty or don't have any
-      file with media extensions.
+      expressions inside the file 'config/expressions.txt'. If any file/folder
+      matches, the software will list it to rename with the desired expression
+      in 'config/expressions.txt'. After the listing process, the user will be 
+      asked to confirm the files and folders renaming.
+* d - Will scan for folders that are empty or don't have any media file within.
       The software will use all extensions inside 'config/mediaextensions.txt'
-      to compare and determine if a file is a media file or not.
-      After the listing process, the user will be asked to confirm the removal.
+      to compare and determine if a file is a media file or not. After the 
+      listing process, the user will be asked to confirm the removal.
 * f - Will scan a specific path for files that don't have media extensions.
       Like the 'd' option, it will use all extensions inside 
-      'config/mediaextensions.txt' to compare against the files extensions.
-      If files extensions don't match, the software will list all and the user
-      will be asked to remove them.
+      'config/mediaextensions.txt' to compare against the files extensions. If
+      files extensions don't match, the software will list them all and the
+      user will be asked to remove them.
 * l - MediaCleanup will list all your media files (according 
-      'config/mediaextensions.txt') and show them.
-      The user will be asked to save the list as a .txt file (mediacatalog.txt)
-      and the software will ask for destination path.
-      If user type 'ENTER' to the destination path, the .txt file will be 
-      created in the same scanned path.
-* A - Will run ALL options above. For best cleaning, it will run in the 
+      'config/mediaextensions.txt'). The user will be asked to save the list as
+      a .txt file (mediacatalog.txt) and the software will ask for destination
+      path. If the user just type 'ENTER', the .txt file will be  created in 
+      the same scanned path.
+* A - Will run ALL options above. For best cleaning, it will run in the
       following sequence: f->d->c->l.
 * h - Show up all this information.
 * q - The software will stop and quit.
+
 After choosing the desired option, MediaCleanup will ask for the path to be 
-scanned.
+scanned. If the path was already informed as a command line argument, the
+software will skip this step and use the provided path.
 
 About:
 * Created by Vinícius Orsi Valente (2018)
