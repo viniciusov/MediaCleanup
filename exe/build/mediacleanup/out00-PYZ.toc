@@ -1,4 +1,4 @@
-('exe/build\\mediacleanup\\out00-PYZ.pyz',
+('exe/build/mediacleanup\\out00-PYZ.pyz',
  [('ntpath', 'c:\\users\\ldf\\anaconda3\\lib\\ntpath.py', 'PYMODULE'),
   ('_strptime', 'c:\\users\\ldf\\anaconda3\\lib\\_strptime.py', 'PYMODULE'),
   ('stringprep', 'c:\\users\\ldf\\anaconda3\\lib\\stringprep.py', 'PYMODULE'),
