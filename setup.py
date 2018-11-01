@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = 'MediaCleanup',
-    version = '1.1',
+    version = '1.2',
     description = 'Cleanup your Media files and folders',
     author = 'Vinícius Orsi Valente',
     author_email = 'viniciusov@hotmail.com',
