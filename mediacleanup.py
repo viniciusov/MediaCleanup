@@ -424,6 +424,11 @@ These are the avaliable options:
 * h - Show up all this information.
 * q - The software will stop and quit.
 
+Alternatively, you can provide the desired option and path as command-line 
+paramaters to run in a single command:
+> python3 mediacleanup.py -A /home/user/videos (for Linux, MacOS)
+> mediacleanup.exe -A C:\\Users\\user\\Videos (for Windows)
+
 After choosing the desired option, MediaCleanup will ask for the path to be 
 scanned. If the path was already informed as a command line argument, the
 software will skip this step and use the provided path.
@@ -448,13 +453,14 @@ def clear_screen():
 #---------------------- Main Program starts below ---------------------
 
 while True:
-    if len(sys.argv)>=2:
-        if len(sys.argv)>3 or sys.argv[1] not in ['-c', '-d', '-f', '-l', '-A', '-h', '-q']:
-            print("Invalid Parameters.")
+    if len(sys.argv) >= 2:
+        if len(sys.argv) > 3 or sys.argv[1] not in ['-c', '-d', '-f', '-l', '-A', '-h', '-q']:
+            print("Invalid Parameters. Use the -h parameter to see help/about.")
+            break
         else:
             option = sys.argv[1][1]
 
-        if len(sys.argv)==3:
+        if len(sys.argv) == 3:
             initialdir = sys.argv[2]
     else:
         clear_screen()
@@ -473,7 +479,10 @@ while True:
 
     if option == 'h':
         show_help()
-        continue
+        if len(sys.argv) >= 2:
+            break
+        else:
+            continue    
 
     if option == 'q':
         break                    
