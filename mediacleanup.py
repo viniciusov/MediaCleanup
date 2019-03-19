@@ -429,9 +429,9 @@ scanned. If the path was already informed as a command line argument, the
 software will skip this step and use the provided path.
 
 About:
-* Created by Vinícius Orsi Valente (2018)
+* Created by Vinícius Orsi Valente (2019)
 * Licensed under GPLv3
-* Version 1.2
+* Version 1.3
 
 MediaCleanup is freely available at https://github.com/viniciusov/mediacleanup/.
 Check it out to see more detailed information or download the newest versions.\n""")
@@ -448,36 +448,44 @@ def clear_screen():
 #---------------------- Main Program starts below ---------------------
 
 while True:
-    clear_screen()
-    print('Welcome to the MediaCleanup!')
-    option = input("""\nChoose one of the options below:
-    c - Clean up folder and file names;
-    d - Scan for empty directories or with no media files inside;
-    f - Scan for files with no media or subtitles extensions;
-    l - Create a list with all your media files, like a catalog;
-    A - Run ALL options above (f->d->c->l);
-    h - View help/about;
-    q - Quit.\nAnd enter the respective key: """)
+    if len(sys.argv)>=2:
+        if len(sys.argv)>3 or sys.argv[1] not in ['-c', '-d', '-f', '-l', '-A', '-h', '-q']:
+            print("Invalid Parameters.")
+        else:
+            option = sys.argv[1][1]
 
-    while not (option in ['c', 'd', 'f', 'l', 'A', 'h', 'q']):
-        option = input("Invalid Option. Please choose one of the options above or type 'q' to quit: ")
+        if len(sys.argv)==3:
+            initialdir = sys.argv[2]
+    else:
+        clear_screen()
+        print('Welcome to the MediaCleanup!')
+        option = input("""\nChoose one of the options below:
+        c - Clean up folder and file names;
+        d - Scan for empty directories or with no media files inside;
+        f - Scan for files with no media or subtitles extensions;
+        l - Create a list with all your media files, like a catalog;
+        A - Run ALL options above (f->d->c->l);
+        h - View help/about;
+        q - Quit.\nAnd enter the respective key: """)
+
+        while not (option in ['c', 'd', 'f', 'l', 'A', 'h', 'q']):
+            option = input("Invalid Option. Please choose one of the options above or type 'q' to quit: ")
 
     if option == 'h':
         show_help()
         continue
 
     if option == 'q':
-        break
+        break                    
 
-    if len(sys.argv)>1:
-        initialdir = sys.argv[1]
-    else:    
+    if len(sys.argv)<3:
         if os.name == 'nt':
             initialdir = input('\nType the Path do you want to Scan (e.g. C:\\Users\\<user>\\Videos):\n')
         else:
             initialdir = input('\nType the Path do you want to Scan (e.g. /home/<user>/Videos):\n')
-    
+
     while not (os.access(initialdir, os.W_OK) or initialdir == 'q'):
+        print(initialdir)
         initialdir = input("\nInvalid Path or you don't have permission to Read it.\nType the Path again or type 'q' to quit:\n")
 
     if initialdir == 'q':
@@ -502,5 +510,4 @@ while True:
     if repeat == 'r':
         continue
     else:
-        print()
         break
