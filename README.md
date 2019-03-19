@@ -118,7 +118,7 @@ Provide a path for the search, like:
   
 If a valid path was entered, the script will start the scanning process (this can take a while, depending on how many files and folders are there).  
 
-**Alternatively, you can provide the desired option and path as command-line paramaters to run in a single command:**  
+Alternatively, you can provide the desired option and path as command-line paramaters to run in a single command:  
 > python3 mediacleanup.py -A /home/user/videos (for **Linux**, **MacOS**)  
 > mediacleanup.exe -A C:\Users\user\Videos (for **Windows**)  
   
