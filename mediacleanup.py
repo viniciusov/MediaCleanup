@@ -485,7 +485,6 @@ while True:
             initialdir = input('\nType the Path do you want to Scan (e.g. /home/<user>/Videos):\n')
 
     while not (os.access(initialdir, os.W_OK) or initialdir == 'q'):
-        print(initialdir)
         initialdir = input("\nInvalid Path or you don't have permission to Read it.\nType the Path again or type 'q' to quit:\n")
 
     if initialdir == 'q':
