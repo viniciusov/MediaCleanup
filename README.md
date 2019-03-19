@@ -117,7 +117,10 @@ Provide a path for the search, like:
 > C:\Users\<user>\Videos (for **Windows**)  
   
 If a valid path was entered, the script will start the scanning process (this can take a while, depending on how many files and folders are there).  
-You should **choose a path that doesn't contain the MediaCleanup files or any other installed software**, otherwise you may have problems when running them.  
+
+Alternatively, you can provide the desired option and path as command-line paramaters to run in a single command:  
+> python3 mediacleanup.py -A /home/user/videos (for **Linux**, **MacOS**)  
+> mediacleanup.exe -A C:\Users\user\Videos (for **Windows**)  
   
 As soon as it completed the scanning, it will show up the information according the chosen option.  
 Everytime some file or folder is about to be renamed or removed, the software will wait for user to confirm, 
