@@ -37,10 +37,10 @@ On the top of this page you should see a button with a 'Clone or download' label
 ### Install & Run
 Now there are **two ways** to proceed:  
   
-#### 1) If you have Python>=3 installed on your OS:
+#### 1) If you have Python>=3 installed on your Operating System:
 
 - Open up your OS Terminal/Prompt:
-  - Ctrl + Alt + T (for Linux)
+  - Search for Terminal in your OS main menu (for Linux)
   - Click on 'Start Menu', type 'cmd' and hit ENTER (for Windows)
 
 - Go to the folder where you extracted MediaCleanup, for example, type:
